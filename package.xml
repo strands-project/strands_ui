@@ -48,6 +48,7 @@
   <run_depend>actionlib_msgs</run_depend>
   <run_depend>rospy</run_depend>
   <run_depend>stdmsgs</run_depend>
+  <run_depend>java</run_depend>
 
 
   <!-- The export tag contains other, unspecified, tags -->
