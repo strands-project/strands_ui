@@ -1,0 +1,4 @@
+<launch>
+	<node name="maryserver" pkg="ros_mary_tts" type="marytts-server.sh" cwd="node"/>
+	<node name="ros_mary_bridge" pkg="ros_mary_tts" type="marybridge.py" />
+</launch>
