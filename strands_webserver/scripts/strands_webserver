@@ -185,12 +185,19 @@ class RosControlInterface(object):
     """ Display provided content in selected display. This is done by publishing to the subscriber that was created in that page """                                           
     def display_page_srv_cb(self,req):
         rospy.loginfo(str(self._displays))
-        display=[a for a in self._displays if a[0]==req.display_number]
-        if len(display)!=1:
-            return False
-        display=display[0]
-        display[1].publish(req.content)
-        return True # can't actually get feedback, no services in rosbridge.
+        # publishing to a specific display
+        if req.display_number > 0: 
+            display=[a for a in self._displays if a[0]==req.display_number]
+            if len(display)!=1:
+                return False
+            display=display[0]
+            display[1].publish(req.content)
+        # publishing to all displays
+        elif req.display_number == 0:
+            for a in self._displays:
+                a[1].publish(req.content)
+        # can't actually get feedback, no services in rosbridge.
+        return True 
     display_page_srv_cb.type=SetDisplay
     
 
