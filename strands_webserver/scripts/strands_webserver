@@ -43,8 +43,10 @@ class DisplayWebHandler(SimpleHTTPRequestHandler):
     
     def do_GET(self):
         print "Request for: ",self.path
+
+
+        # Request for / so we render the main page
         if self.path=="/":
-            # Request for main page....
             self.send_response(200)
             self.send_header('Content-type','text/html')
             self.end_headers()
@@ -60,39 +62,33 @@ class DisplayWebHandler(SimpleHTTPRequestHandler):
             #                                            {'bridge_server':'ws://%s:9090'%hostname})
             self.wfile.write(data)
             return
-        if self.path=="/eventemitter2.js":
-            # Request for event emitter js
+        # A request for Twitter Bootstrap bits
+        elif self.path.startswith('/bootstrap'):
             self.send_response(200)
-            self.send_header('Content-type','text/javascript')
-            self.end_headers()
-            with open(os.path.join(roslib.packages.get_pkg_dir("strands_webserver"),
-                                   "data/eventemitter2.js"),"r") as f:
-                data = f.read()
-            self.wfile.write(data)
-            return
-        if self.path=="/roslib.js":
-            # Request for event emitter js
-            self.send_response(200)
-            self.send_header('Content-type','text/javascript')
-            self.end_headers()
-            with open(os.path.join(roslib.packages.get_pkg_dir("strands_webserver"),
-                                   "data/roslib.js"),"r") as f:
-                data = f.read()
-            self.wfile.write(data)
-            return
-        if self.path=="/bootstrap.css":
             # Request for bootstrap css
-            print "doing it"
-            self.send_response(200)
-            self.send_header('Content-type','text/css')
+            if self.path.endswith('css'):                
+                print "doing bootstrap css"            
+                self.send_header('Content-type','text/css')
+            #assuming everything else in their is javascript -- will probably be wrong at some point    
+            else:   
+                print "doing bootstrap javascript"              
+                self.send_header('Content-type','text/javascript')
             self.end_headers()
-            print os.path.join(roslib.packages.get_pkg_dir("ros_twitter_bootstrap"),
-                                   "bootstrap/dist/css/bootstrap.css")
-            with open(os.path.join(roslib.packages.get_pkg_dir("ros_twitter_bootstrap"),
-                                   "bootstrap/dist/css/bootstrap.css"),"r") as f:
+            with open(os.path.join(roslib.packages.get_pkg_dir("ros_twitter_bootstrap"),self.path[1:]),"r") as f:
                 data = f.read()
             self.wfile.write(data)
             return
+        # A request for Javascript bits
+        elif self.path.endswith('.js'):   
+            print "doing JAVASCRIPT"          
+            self.send_response(200)
+            self.send_header('Content-type','text/javascript')
+            self.end_headers()
+            with open(os.path.join(roslib.packages.get_pkg_dir("strands_webtools"), self.path[1:]),"r") as f:
+                data = f.read()
+            self.wfile.write(data)
+            return
+       
 
         url = urlparse(self.path)
 
