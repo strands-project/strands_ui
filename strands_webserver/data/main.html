@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+
+    		<script type="text/javascript" src="eventemitter2.js"></script>
+		<script type="text/javascript" src="roslib.js"></script>
+
+		<script type="text/javascript" type="text/javascript">
+			// Connecting to ROS
+			// -----------------
+			var display_number = -1;
+            var page_topic;
+
+            var hostname = location.hostname;
+
+			var ros = new ROSLIB.Ros({
+                // this is filled by the ros node when writing this page to the web server, but doesn't currently work
+				// url : '<dynamic>bridge_server</dynamic>'
+                url : 'ws://'+hostname+':9090'
+			});
+
+            var setup = function() {
+                // Subscribing to page topic
+                // -------------------------
+                console.log("Trying to setup");
+                page_topic = new ROSLIB.Topic({
+                    ros : ros,
+                    name : '/strands_webserver/display_' + window.display_number + '/page',
+                    messageType : 'std_msgs/String'
+                });
+                page_topic.subscribe(function(message) {
+                    //if message.data.beg
+                    if (message.data.indexOf("http") == 0) {
+                        // we have a URL so wrap in iframe...
+                        document.getElementById("content").innerHTML = "<iframe src=\"" + message.data
+                                + "\" frameborder=\"0\" style=\"overflow:hidden;overflow-x:hidden;overflow-y:hidden;height:100%;width:100%;position:absolute;top:0px;left:0px;right:0px;bottom:0px\" height=\"100%\" width=\"100%\"></iframe> ";
+                    } else {
+                        // some html content
+                        document.getElementById("content").innerHTML = message.data;
+                    }
+
+                });
+                document.getElementById("content").innerHTML = "Ready; display = "+window.display_number;
+            }
+
+            var shutdown = function () {
+                page_topic.unsubscribe();
+                console.log("Stoped subscription.");
+            }
+
+
+            // Register the display with the manager
+			var registerDisplayClient = new ROSLIB.Service({
+				ros : ros,
+				name : '/strands_webserver/register_display',
+				serviceType : 'strands_webserver/RegisterDisplay'
+			});
+
+			var request = new ROSLIB.ServiceRequest({});
+
+            console.log("Calling service....");
+			registerDisplayClient.callService(request, function(result) {
+				window.display_number = result.display_number;
+                console.log("Registered => " + result.display_number);
+
+                setup();
+            });
+
+			window.onbeforeunload = function() {
+                shutdown();
+				var unregisterDisplayClient = new ROSLIB.Service({
+					ros : ros,
+					name : '/strands_webserver/unregister_display',
+					serviceType : 'strands_webserver/UnregisterDisplay'
+				});
+
+				var request = new ROSLIB.ServiceRequest({
+					"display_number" : window.display_number
+				});
+
+				unregisterDisplayClient.callService(request, function(result) {
+                    console.log("Done.");
+				});
+			}
+
+
+		</script>
+	</head>
+
+	<body style="margin:0px;padding:0px;overflow:hidden" onClick="handleClick()">
+
+	<!--	<iframe id="content" src="http://www.google.com" frameborder="0" style="overflow:hidden;overflow-x:hidden;overflow-y:hidden;height:100%;width:100%;position:absolute;top:0px;left:0px;right:0px;bottom:0px" height="100%" width="100%"></iframe> -->
+    <div id="header">
+
+    </div>
+    <div id="content" style="width: 100%; height: 100%;">
+        <p> The Page Content Is Here</p>
+    </div>
+
+
+	</body>
+</html>

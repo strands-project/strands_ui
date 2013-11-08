@@ -1,0 +1,208 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*- 
+
+"""
+This is a display server for HRI information display.
+
+It is a webserver that runs on localhost. When a request comes in for the main
+page, ie http://localhost/, a page is served that uses roslibjs to register the display. The display is assigned a number 1..10. 
+rosjs/rosbridge. The page subscribes to /strands_webserver/display_%d/page (std_msgs/String) using rosbridge. When a URL is received on this topic, it gets displayed inside an IFrame.
+
+A service is provided for triggering a different page to be shown: /strands_webserver/display_page. This just checks the display is registered and sends publishes data on the topic.
+
+Page can be either HTML or URL. The page can make use of rosbridge to publish/subscribe to topics and call services.
+
+In addition to the server, there are some "standard" template pages that can be server. For example, centered text on display. [not implemented].
+
+"""
+
+import sys
+import os
+import roslib
+import rospy
+from  threading import Timer
+from urlparse import urlparse
+
+from strands_webserver.srv import *
+from std_msgs.msg import String
+
+from  BaseHTTPServer import HTTPServer
+from SimpleHTTPServer import SimpleHTTPRequestHandler
+
+
+class DisplayWebHandler(SimpleHTTPRequestHandler):
+    @staticmethod
+    def fill_page_content(text, fields):
+        """
+        Fills in the dynamic parts of a page with the data in the 'fields' dictionary
+        """
+        for f in fields:
+            if text.find("<dynamic>%s</dynamic>"%f)!=-1:
+                text = text.replace("<dynamic>%s</dynamic>"%f, fields[f])
+        return text
+    
+    def do_GET(self):
+        print "Request for: ",self.path
+        if self.path=="/":
+            # Request for main page....
+            self.send_response(200)
+            self.send_header('Content-type','text/html')
+            self.end_headers()
+            # Send the page
+            with open(os.path.join(roslib.packages.get_pkg_dir("strands_webserver"),
+                                   "data/main.html"),"r") as f:
+                data = f.read()
+            # Populate dynamic fields
+            # todo: this currently produces an odd result for me, so returning to hard coded url in main.html
+            # hostname = self.server.server_name
+            # rospy.loginfo("Webserver host: %s" % hostname)
+            # data = DisplayWebHandler.fill_page_content(data,
+            #                                            {'bridge_server':'ws://%s:9090'%hostname})
+            self.wfile.write(data)
+            return
+        if self.path=="/eventemitter2.js":
+            # Request for event emitter js
+            self.send_response(200)
+            self.send_header('Content-type','text/javascript')
+            self.end_headers()
+            with open(os.path.join(roslib.packages.get_pkg_dir("strands_webserver"),
+                                   "data/eventemitter2.js"),"r") as f:
+                data = f.read()
+            self.wfile.write(data)
+            return
+        if self.path=="/roslib.js":
+            # Request for event emitter js
+            self.send_response(200)
+            self.send_header('Content-type','text/javascript')
+            self.end_headers()
+            with open(os.path.join(roslib.packages.get_pkg_dir("strands_webserver"),
+                                   "data/roslib.js"),"r") as f:
+                data = f.read()
+            self.wfile.write(data)
+            return
+        if self.path=="/bootstrap.css":
+            # Request for bootstrap css
+            print "doing it"
+            self.send_response(200)
+            self.send_header('Content-type','text/css')
+            self.end_headers()
+            print os.path.join(roslib.packages.get_pkg_dir("ros_twitter_bootstrap"),
+                                   "bootstrap/dist/css/bootstrap.css")
+            with open(os.path.join(roslib.packages.get_pkg_dir("ros_twitter_bootstrap"),
+                                   "bootstrap/dist/css/bootstrap.css"),"r") as f:
+                data = f.read()
+            self.wfile.write(data)
+            return
+
+        url = urlparse(self.path)
+
+        if url.path.endswith(".tplate.html"):
+            # It is a template file, fill it in with content
+            params={}
+            for i in url.query.split("&"):
+                param = i.split("=")
+                print param
+                params[param[0]]=param[1]
+            print params
+            self.send_response(200)
+            self.send_header('Content-type','text/html')
+            self.end_headers()
+            try:
+                with open(url.path[1:], "r") as f:
+                    data = f.read()
+                data =  DisplayWebHandler.fill_page_content(data, params)
+                self.wfile.write(data)
+            except:
+                self.wfile.write("Problem with template file: %s"%url.path)
+            return
+        # If nothing special, treat as normal.        
+        SimpleHTTPRequestHandler.do_GET(self)
+
+class DisplayWebServer(HTTPServer):
+    def __init__(self, server_address="127.0.0.1", server_port=8000):
+        HTTPServer.__init__(self, (server_address, server_port), DisplayWebHandler)
+
+    def set_root(self, root):
+        try:
+            os.chdir(root)
+        except:
+            return False
+        return True
+        
+
+class RosControlInterface(object):
+    def __init__(self):
+        server_host = rospy.get_param("~host_ip", "127.0.0.1")
+        server_port = rospy.get_param("~port", 8090)
+        rospy.loginfo("Creating RosControlInterface")
+        self._web_server = DisplayWebServer(server_host, server_port )
+
+        self._displays_available=set(range(1,10))
+        self._displays=[]
+
+        # set up services
+        for s in dir(self):
+            if s.endswith("_srv_cb"):
+                rospy.Service("/strands_webserver/"+s[:-7],
+                              getattr(self,s).type, getattr(self,s))
+                
+
+    """ Creates a new display, appends the pair (disply no., display publisher) to the self._displays list"""
+    def register_display_srv_cb(self, req):
+        new_no=self._displays_available.pop()
+        rospy.loginfo("Registering display, id=%d", new_no)
+        self._displays.append( (new_no,
+                                rospy.Publisher("/strands_webserver/display_%d/page"%new_no, String ) )
+                               )
+        return self._displays[-1][0]
+    register_display_srv_cb.type=RegisterDisplay
+
+    """ Unregisters display. Not really sure what effect this will have """
+    def unregister_display_srv_cb(self,req):
+        rospy.loginfo("Unregistering display, id=%d", req.display_number)
+        display=[a for a in self._displays if a[0]==req.display_number]
+        if len(display)!=1:
+            return False
+        display=display[0]
+        self._displays.remove(display) 
+        self._displays_available.add(req.display_number)
+
+        def dispose_of_publisher(pub):
+            rospy.loginfo("Unregistering old page topic")
+            pub.unregister()
+        t = Timer(3.0,dispose_of_publisher,[display[1]])
+        t.start()
+        return True
+    unregister_display_srv_cb.type=UnregisterDisplay
+
+
+    """ Change the http root of the whole server -- not linked to individual displays """
+    def set_http_root_srv_cb(self,req):
+        return self._web_server.set_root(req.path)
+    set_http_root_srv_cb.type=SetRoot
+                                           
+
+    """ Display provided content in selected display. This is done by publishing to the subscriber that was created in that page """                                           
+    def display_page_srv_cb(self,req):
+        rospy.loginfo(str(self._displays))
+        display=[a for a in self._displays if a[0]==req.display_number]
+        if len(display)!=1:
+            return False
+        display=display[0]
+        display[1].publish(req.content)
+        return True # can't actually get feedback, no services in rosbridge.
+    display_page_srv_cb.type=SetDisplay
+    
+
+if __name__ == '__main__':
+    rospy.init_node("strands_webserver")
+
+#    httpd = DisplayWebServer(server_port=8080)
+#httpd.set_root()
+
+#    sa = httpd.socket.getsockname()
+    dm = RosControlInterface()
+    
+    sa = dm._web_server.socket.getsockname()
+    print "Serving HTTP on", sa[0], "port", sa[1], "..."
+    dm._web_server.serve_forever()
