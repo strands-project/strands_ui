@@ -1,11 +1,3 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*- 
-
-"""
-Test client for strands_webserver
-
-"""
-
 import sys
 import os
 import roslib
@@ -34,4 +26,13 @@ def display_relative_page(displayNo, page):
 	except rospy.ServiceException as exc:
   		print("Service did not process request: " + str(exc))
 
+
+""" tell server to display the provided html content """
+def display_content(displayNo, html):
+	rospy.wait_for_service('/strands_webserver/display_page')
+ 	display_page = rospy.ServiceProxy('/strands_webserver/display_page', SetDisplay)
+	try:
+  		resp = display_page(displayNo, html)
+	except rospy.ServiceException as exc:
+  		print("Service did not process request: " + str(exc))
 
