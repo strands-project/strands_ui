@@ -2,9 +2,25 @@
 
 User interfaces for the robots, displayed using a web browser.
 
-# Requirements
+# Installation
 
-`rosdep` should give you most requirements, but we don't yet have a rosdep for [web.py](http://webpy.org) which is required by `strands_webserver`. This can be installed using, e.g., `sudo pip install web.py`
+You can add the STRANDS UI source to your catkin workspace (if it's not there already) using `wstool`:
+```bash
+wstool merge https://raw.github.com/hawesie/strands_ui/master/strands_ui_rosinstall.yaml
+wstool update strands_ui ros_twitter_bootstrap
+```
+
+`rosdep` should give you most requirements as usual (e.g. `rosdep install --from-paths src --ignore-src --rosdistro groovy -y -r`), but we don't yet have a rosdep for [web.py](http://webpy.org) which is required by `strands_webserver`. This can be installed using, e.g., 
+
+```bash
+sudo apt-get install python-webpy
+```
+or
+```
+sudo pip install web.py
+```
+
+You can then run `catkin_make` as usual.
 
 
 # `strands_webserver`
@@ -170,6 +186,8 @@ This package uses the `strands_webserver` to create an interface for the patroll
 	# note that this service must be provided by some other node
 	on_completion = 'robot_moved'
 	marathon_touch_gui.client.nav_fail(displayNo, service_prefix, on_completion)
+
+	rospy.sleep(2)
 
 	# Return to main page
 	marathon_touch_gui.client.display_main_page(displayNo)
