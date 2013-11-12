@@ -26,6 +26,14 @@ def display_relative_page(displayNo, page):
 	except rospy.ServiceException as exc:
   		print("Service did not process request: " + str(exc))
 
+""" tell server to display an arbitrary url -- this must start with http """
+def display_url(displayNo, url):
+	rospy.wait_for_service('/strands_webserver/display_page')
+ 	display_page = rospy.ServiceProxy('/strands_webserver/display_page', SetDisplay)
+	try:
+  		resp = display_page(displayNo, url)
+	except rospy.ServiceException as exc:
+  		print("Service did not process request: " + str(exc))
 
 """ tell server to display the provided html content """
 def display_content(displayNo, html):
