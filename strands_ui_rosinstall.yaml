@@ -1,0 +1,7 @@
+- git: 
+   local-name: strands_ui
+   uri: 'https://github.com/strands-project/strands_ui.git'
+
+- git: 
+   local-name: ros_twitter_bootstrap
+   uri: 'https://github.com/strands-project/ros_twitter_bootstrap.git'
