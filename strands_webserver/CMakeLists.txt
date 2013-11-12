@@ -8,6 +8,7 @@ find_package(catkin REQUIRED COMPONENTS
   rosbridge_server
   rospy
   std_msgs
+  std_srvs
   message_generation
 )
 
