@@ -46,6 +46,8 @@ if __name__ == '__main__':
 	on_completion = 'robot_moved'
 	marathon_touch_gui.client.nav_fail(displayNo, service_prefix, on_completion)
 
+	rospy.sleep(2)
+
 	# Return to main page
 	marathon_touch_gui.client.display_main_page(displayNo)
 	
