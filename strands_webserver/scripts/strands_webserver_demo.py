@@ -26,7 +26,7 @@ if __name__ == '__main__':
 	# display a start-up page
 	strands_webserver.client_utils.display_url(display_no, 'http://strands-project.eu')
 
-	# sleep for 2 seconds
+	# sleep for 5 seconds
 	rospy.sleep(5.)
 
 	# tell the webserver where it should look for web files to serve
@@ -36,15 +36,14 @@ if __name__ == '__main__':
 	# start with a basic page pretending things are going normally
 	strands_webserver.client_utils.display_relative_page(display_no, 'example-page.html')
 
-	# sleep for 2 seconds
+	# sleep for 5 seconds
 	rospy.sleep(5.)
 
 	# now ask for help
-	name = 'Help me, I am <em>stuck</em>'
-	# buttons = [('Button %i' % i, 'service_%i' % i) for i in range(2)]
+	notice = 'Help me, I am <em>stuck</em>'
 	buttons = [('No', 'trigger_pleading'), ('Sure', 'party_time')]
 	service_prefix = '/caller_services'
-	content = strands_webserver.page_utils.generate_alert_button_page(name, buttons, service_prefix)	
+	content = strands_webserver.page_utils.generate_alert_button_page(notice, buttons, service_prefix)	
 	strands_webserver.client_utils.display_content(display_no, content) 
 	rospy.Service('/caller_services/trigger_pleading', std_srvs.srv.Empty, trigger_pleading) 
 	rospy.Service('/caller_services/party_time', std_srvs.srv.Empty, party_time) 

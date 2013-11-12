@@ -79,7 +79,9 @@ The `strands_webserver` package also provides functionality for automatically ge
 	content = strands_webserver.page_utils.generate_alert_button_page(notice, buttons, service_prefix)	
 	strands_webserver.client_utils.display_content(display_no, content) 
 ```
-In this `notice` is the used to generate a large banner notice and `buttons` maps between a button label (e.g. No) and the service call which will be triggered when the button is pressed, e.g. (`'/caller_services/trigger_pleading'`). This service is of type `std_srvs/Empty`. The full example is as follows (also available as `strands_webserver/scripts/strands_webserver_demo.py`).
+In this `notice` is the used to generate a large banner notice and `buttons` maps between a button label (e.g. No) and the service call which will be triggered when the button is pressed, e.g. (`'/caller_services/trigger_pleading'`). This service is of type `std_srvs/Empty`. Instead of `generate_alert_button_page` you can use `generate_button_page` which accepts arbitrary html instead of a banner notice.
+
+The full example is as follows (also available as `strands_webserver/scripts/strands_webserver_demo.py`).
 
 ```python
 #! /usr/bin/env python
@@ -110,7 +112,7 @@ if __name__ == '__main__':
 	# display a start-up page
 	strands_webserver.client_utils.display_url(display_no, 'http://strands-project.eu')
 
-	# sleep for 2 seconds
+	# sleep for 5 seconds
 	rospy.sleep(5.)
 
 	# tell the webserver where it should look for web files to serve
@@ -120,7 +122,7 @@ if __name__ == '__main__':
 	# start with a basic page pretending things are going normally
 	strands_webserver.client_utils.display_relative_page(display_no, 'example-page.html')
 
-	# sleep for 2 seconds
+	# sleep for 5 seconds
 	rospy.sleep(5.)
 
 	# now ask for help
@@ -134,5 +136,55 @@ if __name__ == '__main__':
 	rospy.spin()
 ```
 
+## Includes
+
+Need to describe where the webserver fetches javascript and css from, and the standard includes available.
+
+# `marathon_touch_gui`
+
+This package uses the `strands_webserver` to create an interface for the patroller during the marathon event. It's not very pretty, but it's a start. There is a main page (map, pause button) which is displayed using `strands_webserver.client_utils.display_relative_page` and two pages for recovery methods which are generated using `strands_webserver.page_utils.generate_alert_button_page`. These are wrapped up in `marathon_touch_gui.client` for ease of use. They can be called as follows:
+```python
+	# Setup -- must be done before other marathon_touch_gui calls
+	marathon_touch_gui.client.init_marathon_gui()
+
+	# Show the main page of the GUI
+	marathon_touch_gui.client.display_main_page(displayNo)
+
+	rospy.sleep(2)
+	
+	# All callback services should be under this prefix
+	service_prefix = '/patroller'
+
+	# Do something like this on bumper collision
+
+	# when the human gives the 'ok' then /patroller/bumper_recovered is called
+	# note that this service must be provided by some other node
+	on_completion = 'bumper_recovered'
+	marathon_touch_gui.client.bumper_stuck(displayNo, service_prefix, on_completion)
+
+	rospy.sleep(2)
+
+	# Do something like this on move_base failure
+
+	# when the human gives the 'ok' then /patroller/robot_moved is called
+	# note that this service must be provided by some other node
+	on_completion = 'robot_moved'
+	marathon_touch_gui.client.nav_fail(displayNo, service_prefix, on_completion)
+
+	# Return to main page
+	marathon_touch_gui.client.display_main_page(displayNo)
+```
+The full example is in `marathon_touch_gui/scripts/demo.py`
+
+## Running
+
+To run the marathon GUI, first launch `strands_webserver` plus rosbridge and the necessary additional publishers:
+```bash
+roslaunch marathon_touch_gui marathon_gui_dependencies.launch
+```
+The you can call the `marathon_touch_gui` functions. To test you can cycle through them with 
+```bash
+rosrun marathon_touch_gui demo.py 
+```
 
 
