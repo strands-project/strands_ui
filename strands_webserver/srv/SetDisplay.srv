@@ -1,5 +1,4 @@
 int32 display_number
 string content
-string script
 ---
 bool success

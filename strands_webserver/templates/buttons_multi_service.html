@@ -1,35 +1,5 @@
 $def with (notice, buttons, servicePrefix)
 
-
-<script>
-
-var hostname = location.hostname;
-
-// Connecting to ROS.
-var ros = new ROSLIB.Ros({
-	url : 'ws://'+hostname+':9090'
-});
-
-$for (label,service) in buttons:
-	$ serviceName = '\'%s/%s\'' % (servicePrefix, service)
-	$ callback = '%s()' % service
-    var service_$service = new ROSLIB.Service({
-    	ros : ros, 
-    	name : $:serviceName, 
-    	serviceType : 'ap_msgs/PauseResumePatroller'
-    }); 
-
-    var request_$service = new ROSLIB.ServiceRequest({});
-
-    function $callback {
-    	console.log("Calling service $:serviceName ");
-    	service_$service .callService(request_$service, function(result) {
-    		console.log("Called service $:serviceName ");
-        });
-    }    
-     
-</script>
-
 <div class="row">
 	<div class="col-md-12">
 		$:notice
@@ -39,9 +9,10 @@ $for (label,service) in buttons:
 	$ buttonCol = 12/len(buttons)
 	$ colClass = 'col-md-%s' % buttonCol
 	$for (label,service) in buttons: 
-		$ callback = '%s()' % service
+		$ serviceName = '\'%s/%s\'' % (servicePrefix, service)	
 		<div class="$colClass"> 
-			<button type="button" onclick="$callback" class="btn btn-default btn-block">$:label</button>
+			<!-- Sorry this is so ugly, but this seems to be the only way to get the script executed -->
+			<button type="button" onclick="var service_$service = new ROSLIB.Service({ros : ros, name : $:serviceName, serviceType : 'ap_msgs/PauseResumePatroller'}); var request_$service = new ROSLIB.ServiceRequest({});  service_$service .callService(request_$service, function(result) {console.log('Called service'); }); console.log('Called')" class="btn btn-default btn-block">$:label</button>
 		</div> 
 </div>
 
