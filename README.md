@@ -23,7 +23,7 @@ sudo pip install web.py
 You can then run `catkin_make` as usual.
 
 
-# `strands_webserver`
+# strands_webserver
 
 The `strands_webserver` is a node which both acts as a webserver and a ROS node which can receive input from other nodes. This allows these other nodes to control what the webserver displays and receive feedback from user interaction with the pages.
 
@@ -156,7 +156,7 @@ if __name__ == '__main__':
 
 Need to describe where the webserver fetches javascript and css from, and the standard includes available.
 
-# `marathon_touch_gui`
+# marathon_touch_gui
 
 This package uses the `strands_webserver` to create an interface for the patroller during the marathon event. It's not very pretty, but it's a start. There is a main page (map, pause button) which is displayed using `strands_webserver.client_utils.display_relative_page` and two pages for recovery methods which are generated using `strands_webserver.page_utils.generate_alert_button_page`. These are wrapped up in `marathon_touch_gui.client` for ease of use. They can be called as follows:
 ```python
@@ -200,7 +200,9 @@ To run the marathon GUI, first launch `strands_webserver` plus rosbridge and the
 ```bash
 roslaunch marathon_touch_gui marathon_gui_dependencies.launch
 ```
-The you can call the `marathon_touch_gui` functions. To test you can cycle through them with 
+This will launch the webserver on localhost port 8090, so browse to [http://localhost:8090](http://localhost:8090).
+
+Then you can call the `marathon_touch_gui` functions. To test you can cycle through them with 
 ```bash
 rosrun marathon_touch_gui demo.py 
 ```
