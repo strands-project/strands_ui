@@ -16,8 +16,10 @@
   <build_depend>ros_twitter_bootstrap</build_depend>
   <build_depend>strands_webtools</build_depend>
   <build_depend>strands_webserver</build_depend>
+  <build_depend>ap_msgs</build_depend>  
   <run_depend>ros_twitter_bootstrap</run_depend>
   <run_depend>strands_webtools</run_depend>
   <run_depend>strands_webserver</run_depend>
+  <run_depend>ap_msgs</run_depend>    
 
 </package>
