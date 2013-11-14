@@ -121,7 +121,7 @@
       // var gridClient = new ROS2D.OccupancyGridClient({
       //  ros : ros,
       //  rootObject : viewer.scene
-     });
+     //});
 
       //    // Setup the nav client.
       // var gridClient =  NAV2D.OccupancyGridClientNav({
@@ -191,23 +191,23 @@
 
  //  });
  // });
- //      //assume patroller is not paused during start-up, need a way initialise this correctly though
- //      var patrollerPaused=false;
+      //assume patroller is not paused during start-up, need a way initialise this correctly though
+      var patrollerPaused=false;
 
- //      function pausePatrol() {
- //        console.log("Calling service....");
- //        patrollerPauseService.callService(request, function(result) {
- //          $("#pause-btn").button("toggle");
- //          patrollerPaused=!patrollerPaused;
- //          if(patrollerPaused) {
- //            document.getElementById("pause-btn").innerHTML="<strong>Paused</strong>";              
- //          }
- //          else {
- //            document.getElementById("pause-btn").innerHTML="Pause";              
- //          }
- //          console.log("Called pause");
- //        });
- //      }
+      function pausePatrol() {
+        console.log("Calling service....");
+        patrollerPauseService.callService(request, function(result) {
+          $("#pause-btn").button("toggle");
+          patrollerPaused=!patrollerPaused;
+          if(patrollerPaused) {
+            document.getElementById("pause-btn").innerHTML="<strong>Paused</strong>";              
+          }
+          else {
+            document.getElementById("pause-btn").innerHTML="Pause";              
+          }
+          console.log("Called pause");
+        });
+      }
 
 
 
