@@ -196,9 +196,9 @@ The full example is in `marathon_touch_gui/scripts/demo.py`
 
 ## Running
 
-To run the marathon GUI, first launch `strands_webserver` plus rosbridge and the necessary additional publishers:
+To run the marathon GUI, first launch `strands_webserver` plus rosbridge and the necessary additional publishers (with HOST_IP set to an external ip for your machine if you want this to be externally accessible, else leave blank for 127.0.0.1):
 ```bash
-roslaunch marathon_touch_gui marathon_gui_dependencies.launch
+HOST_IP=10.0.11.158 roslaunch marathon_touch_gui marathon_gui_dependencies.launch
 ```
 This will launch the webserver on localhost port 8090, so browse to [http://localhost:8090](http://localhost:8090).
 
