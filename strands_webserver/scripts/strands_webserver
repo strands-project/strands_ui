@@ -215,5 +215,6 @@ if __name__ == '__main__':
     dm = RosControlInterface()
     
     sa = dm._web_server.socket.getsockname()
-    print "Serving HTTP on", sa[0], "port", sa[1], "..."
+    rospy.loginfo("Serving HTTP on http://%s/%d", sa[0],  sa[1])
+    # print "Serving HTTP on ", sa[0], " port ", sa[1], " ... "
     dm._web_server.serve_forever()
