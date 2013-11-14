@@ -1,3 +1,5 @@
 
 ---
-strands_webserver/ServerAddress address
+string hostname
+uint16 port
+

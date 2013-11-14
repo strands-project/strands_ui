@@ -147,7 +147,7 @@ class RosControlInterface(object):
     """ Returns the hostname and port of the webserver"""
     def get_hostname_srv_cb(self, req):
         sa = dm._web_server.socket.getsockname()
-        return strands_webserver.msg.ServerAddress(sa[0], sa[1])
+        return (sa[0], sa[1])
     get_hostname_srv_cb.type=GetServerAddress
 
 
