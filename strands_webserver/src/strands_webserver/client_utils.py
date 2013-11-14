@@ -20,9 +20,13 @@ def set_http_root(dir):
 """ tell server to display the page relative to server root """
 def display_relative_page(displayNo, page):
 	rospy.wait_for_service('/strands_webserver/display_page')
+	rospy.wait_for_service('/strands_webserver/get_hostname')
  	display_page = rospy.ServiceProxy('/strands_webserver/display_page', SetDisplay)
+ 	get_hostname = rospy.ServiceProxy('/strands_webserver/get_hostname', GetServerAddress)
 	try:
-  		resp = display_page(displayNo, 'http://localhost:8090/' + page)
+		resp = get_hostname()
+		server = 'http://%s:%d/' % (resp.hostname, resp.port) 
+  		resp = display_page(displayNo, server + page)
 	except rospy.ServiceException as exc:
   		print("Service did not process request: " + str(exc))
 

@@ -25,11 +25,10 @@ catkin_python_setup()
 ## Declare ROS messages and services ##
 #######################################
 
-## Generate messages in the 'msg' folder
+# Generate messages in the 'msg' folder
 # add_message_files(
 #   FILES
-#   Message1.msg
-#   Message2.msg
+#   ServerAddress.msg
 # )
 
 ## Generate services in the 'srv' folder
@@ -39,6 +38,7 @@ add_service_files(
   UnregisterDisplay.srv
   SetRoot.srv
   SetDisplay.srv
+  GetServerAddress.srv
 )
 
 ## Generate added messages and services with any dependencies listed here
