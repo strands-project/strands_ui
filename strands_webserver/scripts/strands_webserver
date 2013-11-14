@@ -24,7 +24,6 @@ from  threading import Timer
 from urlparse import urlparse
 
 from strands_webserver.srv import *
-from strands_webserver.msg import *
 from std_msgs.msg import String
 
 from  BaseHTTPServer import HTTPServer
