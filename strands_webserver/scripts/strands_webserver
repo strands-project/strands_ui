@@ -24,6 +24,7 @@ from  threading import Timer
 from urlparse import urlparse
 
 from strands_webserver.srv import *
+from strands_webserver.msg import *
 from std_msgs.msg import String
 
 from  BaseHTTPServer import HTTPServer
@@ -142,6 +143,13 @@ class RosControlInterface(object):
                 rospy.Service("/strands_webserver/"+s[:-7],
                               getattr(self,s).type, getattr(self,s))
                 
+
+    """ Returns the hostname and port of the webserver"""
+    def get_hostname_srv_cb(self, req):
+        sa = dm._web_server.socket.getsockname()
+        return strands_webserver.msg.ServerAddress(sa[0], sa[1])
+    get_hostname_srv_cb.type=GetServerAddress
+
 
     """ Creates a new display, appends the pair (disply no., display publisher) to the self._displays list"""
     def register_display_srv_cb(self, req):
