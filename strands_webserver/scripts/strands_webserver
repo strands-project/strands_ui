@@ -79,16 +79,16 @@ class DisplayWebHandler(SimpleHTTPRequestHandler):
             self.wfile.write(data)
             return
         # A request for Javascript bits
-        elif self.path.endswith('.js'):   
-            print "doing JAVASCRIPT"          
-            self.send_response(200)
-            self.send_header('Content-type','text/javascript')
-            self.end_headers()
-            target = os.path.join(roslib.packages.get_pkg_dir("strands_webtools"), self.path[1:])
+        elif self.path.endswith('.js'):               
             try:
+                target = os.path.join(roslib.packages.get_pkg_dir("strands_webtools"), self.path[1:])
                 with open(target,"r") as f:
+                    print "doing JAVASCRIPT"          
+                    self.send_response(200)
+                    self.send_header('Content-type','text/javascript')
+                    self.end_headers()                    
                     data = f.read()
-                self.wfile.write(data)
+                    self.wfile.write(data)
                 return
             except IOError:
                 print "%s not available in strands_webtools" % target 
