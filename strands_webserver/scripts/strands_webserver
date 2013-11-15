@@ -84,11 +84,15 @@ class DisplayWebHandler(SimpleHTTPRequestHandler):
             self.send_response(200)
             self.send_header('Content-type','text/javascript')
             self.end_headers()
-            with open(os.path.join(roslib.packages.get_pkg_dir("strands_webtools"), self.path[1:]),"r") as f:
-                data = f.read()
-            self.wfile.write(data)
-            return
-       
+            target = os.path.join(roslib.packages.get_pkg_dir("strands_webtools"), self.path[1:])
+            try:
+                with open(target,"r") as f:
+                    data = f.read()
+                self.wfile.write(data)
+                return
+            except IOError:
+                print "%s not available in strands_webtools" % target 
+
 
         url = urlparse(self.path)
 
