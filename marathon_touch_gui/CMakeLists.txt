@@ -7,6 +7,7 @@ project(marathon_touch_gui)
 find_package(catkin REQUIRED COMPONENTS
   ros_twitter_bootstrap
   strands_webtools
+  ap_msgs
 )
 
 ## System dependencies are found with CMake's conventions
