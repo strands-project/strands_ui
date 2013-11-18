@@ -80,16 +80,6 @@
     <!-- Ros2djs provides 2D scene support, including mapping and more -->
     <script src="ros2djs/build/ros2d.js"></script>
 
-    <!-- ROS3DJS -->
-    <!-- Three.js is the WebGL rendering library -->
-    <script src="ros3djs/include/threejs/three.js"></script>
-    <!-- ColladaLoader2 loads collada models of the robot -->
-    <script src="ros3djs/include/ColladaAnimationCompress/ColladaLoader2.js"></script>
-    <!-- Ros3djs provides 3D scene support, including mapping and more -->
-    <script src="ros3djs/build/ros3d.min.js"></script>
-
-    <script src="nav2djs/build/nav2d.js"></script> 
-
 
     <script src="bootstrap/dist/js/bootstrap.js"></script>
     
@@ -114,8 +104,8 @@
       // Create the main viewer.
       var viewer = new ROS2D.Viewer({
         divID : 'nav',
-        width : window.innerWidth/2,
-        height : window.innerHeight/2
+        width : 600,
+        height : 600
       });
 
       // Subscribes to the robot's OccupancyGrid, which is ROS representation of
@@ -128,8 +118,10 @@
       gridClient.on('change', function() {
 
         // scale the viewer to fit the map
-        viewer.scaleToDimensions(gridClient.currentGrid.width, gridClient.currentGrid.height);
-        viewer.shift(gridClient.currentGrid.x,gridClient.currentGrid.y);
+        viewer.scaleToDimensions(gridClient.currentGrid.width, 
+          gridClient.currentGrid.height);
+
+        viewer.shift(gridClient.currentGrid.x, gridClient.currentGrid.y);
 
 
         // get a handle to the stage
@@ -140,10 +132,9 @@
           stage = viewer.scene.getStage();
         }
 
-
         // marker for the robot
         var robotMarker = new ROS2D.NavigationArrow({
-          size : 12,
+          size : 8,
           strokeSize : 1,
           fillColor : createjs.Graphics.getRGB(255, 128, 0, 0.66),
           pulse : false
@@ -152,7 +143,6 @@
         // wait for a pose to come in first
         robotMarker.visible = false;
        
-       // gridClient.addChild(robotMarker);
         viewer.scene.addChild(robotMarker);
 
         var initScaleSet = false;
