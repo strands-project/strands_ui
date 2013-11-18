@@ -59,6 +59,8 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     
+    <!-- Includes for this  -->
+    <!-- <script src="marathon.js"></script> -->
 
     <!-- jQuery and display.js are conveniences for interacting with the DOM -->
     <script src="js/jquery.js"></script>
@@ -109,88 +111,88 @@
 
       var request = new ROSLIB.ServiceRequest({});
 
-      // // Create the main viewer.
-      // var viewer = new ROS2D.Viewer({
-      //   divID : 'nav',
-      //   width : window.innerWidth/2,
-      //   height : window.innerHeight/2
-      // });
+      // Create the main viewer.
+      var viewer = new ROS2D.Viewer({
+        divID : 'nav',
+        width : window.innerWidth/2,
+        height : window.innerHeight/2
+      });
 
-      // // Subscribes to the robot's OccupancyGrid, which is ROS representation of
-      // // the map, and renders the map in the scene.
-      // var gridClient = new ROS2D.OccupancyGridClient({
-      //  ros : ros,
-      //  rootObject : viewer.scene
-     //});
+      // Subscribes to the robot's OccupancyGrid, which is ROS representation of
+      // the map, and renders the map in the scene.
+      var gridClient = new ROS2D.OccupancyGridClient({
+       ros : ros,
+       rootObject : viewer.scene
+     });
 
-      //    // Setup the nav client.
-      // var gridClient =  NAV2D.OccupancyGridClientNav({
-      // ros : ros,
-      // rootObject : viewer.scene,
-      // viewer : viewer,
-      // serverName : '/move_base',
-      // withOrientation : true
-      // });
+         // Setup the nav client.
+      var gridClient =  NAV2D.OccupancyGridClientNav({
+      ros : ros,
+      rootObject : viewer.scene,
+      viewer : viewer,
+      serverName : '/move_base',
+      withOrientation : true
+      });
 
- //      gridClient.on('change', function() {
+      gridClient.on('change', function() {
 
- //    // scale the viewer to fit the map
- //    viewer.scaleToDimensions(gridClient.currentGrid.width, gridClient.currentGrid.height);
- //    viewer.shift(gridClient.currentGrid.x,gridClient.currentGrid.y);
+    // scale the viewer to fit the map
+    viewer.scaleToDimensions(gridClient.currentGrid.width, gridClient.currentGrid.height);
+    viewer.shift(gridClient.currentGrid.x,gridClient.currentGrid.y);
  
 
 
- //  // get a handle to the stage
- //  var stage;
- //  if (viewer.scene instanceof createjs.Stage) {
- //    stage = viewer.scene;
- //  } else {
- //    stage = viewer.scene.getStage();
- //  }
+  // get a handle to the stage
+  var stage;
+  if (viewer.scene instanceof createjs.Stage) {
+    stage = viewer.scene;
+  } else {
+    stage = viewer.scene.getStage();
+  }
 
 
- //  // marker for the robot
- //  var robotMarker = new ROS2D.NavigationArrow({
- //    size : 12,
- //    strokeSize : 1,
- //    fillColor : createjs.Graphics.getRGB(255, 128, 0, 0.66),
- //    pulse : false
- //  });
+  // marker for the robot
+  var robotMarker = new ROS2D.NavigationArrow({
+    size : 12,
+    strokeSize : 1,
+    fillColor : createjs.Graphics.getRGB(255, 128, 0, 0.66),
+    pulse : false
+  });
 
- //  // wait for a pose to come in first
- //  robotMarker.visible = false;
+  // wait for a pose to come in first
+  robotMarker.visible = false;
  
- // // gridClient.addChild(robotMarker);
- //  viewer.scene.addChild(robotMarker);
+ // gridClient.addChild(robotMarker);
+  viewer.scene.addChild(robotMarker);
 
- //  var initScaleSet = false;
+  var initScaleSet = false;
 
- //  // setup a listener for the robot pose
- //  var poseListener = new ROSLIB.Topic({
- //    ros : ros,
- //    name : '/robot_pose',
- //    messageType : 'geometry_msgs/Pose',
- //    throttle_rate : 10
- //  });
+  // setup a listener for the robot pose
+  var poseListener = new ROSLIB.Topic({
+    ros : ros,
+    name : '/robot_pose',
+    messageType : 'geometry_msgs/Pose',
+    throttle_rate : 10
+  });
 
- //  poseListener.subscribe(function(pose) {
- //    // update the robots position on the map
- //    robotMarker.x = pose.position.x;
- //    robotMarker.y = -pose.position.y;
+  poseListener.subscribe(function(pose) {
+    // update the robots position on the map
+    robotMarker.x = pose.position.x;
+    robotMarker.y = -pose.position.y;
     
- //    if (!initScaleSet) {
- //      robotMarker.scaleX = 1.0 / stage.scaleX;
- //      robotMarker.scaleY = 1.0 / stage.scaleY;
- //      initScaleSet = true;
- //    }
+    if (!initScaleSet) {
+      robotMarker.scaleX = 1.0 / stage.scaleX;
+      robotMarker.scaleY = 1.0 / stage.scaleY;
+      initScaleSet = true;
+    }
 
- //    // change the angle
- //    robotMarker.rotation = stage.rosQuaternionToGlobalTheta(pose.orientation);
+    // change the angle
+    robotMarker.rotation = stage.rosQuaternionToGlobalTheta(pose.orientation);
 
- //    robotMarker.visible = true;
+    robotMarker.visible = true;
 
- //  });
- // });
+  });
+ });
       //assume patroller is not paused during start-up, need a way initialise this correctly though
       var patrollerPaused=false;
 
