@@ -16,7 +16,7 @@
   <link href="bootstrap/dist/css/bootstrap.css" rel="stylesheet">
 
   <!-- Custom styles for this template -->
-  <link href="grid.css" rel="stylesheet">
+  <!-- <link href="grid.css" rel="stylesheet"> -->
 
   <!-- Just for debugging purposes. Don't actually copy this line! -->
   <!--[if lt IE 9]><script src="../../docs-assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
@@ -46,10 +46,19 @@
           <div class="col-md-8" id="nav"></div>
           <div class="col-md-4">
 
-            <!-- Pause button -->
-            <button type="button" onclick="pausePatrol()" id="pause-btn" class="btn btn-default btn-block">Pause</button>
-
+  <div class="row">
+     <div class="col-md-12">
+           <div id="summary"></div>
           </div>
+        </div>
+
+  <div class="row">
+     <div class="col-md-12">
+            <!-- Pause button -->
+            <button type="button" onclick="pausePatrol()" id="pause-btn" class="btn btn-default btn-block btn-primary">Pause</button>
+          </div>
+        </div>
+
         </div> 
 
       </div> <!-- /container -->
@@ -82,6 +91,9 @@
 
 
     <script src="bootstrap/dist/js/bootstrap.js"></script>
+
+    <script src="js/marathon.js"></script>
+    <script src="js/mustache.js"></script>
     
     <script type="text/javascript">
 
@@ -194,7 +206,11 @@
       }
 
 
+  function onTimer() {
+      writeLatestEpisodeSummary(ros, "#summary");
+    }
 
+    setInterval(function(){onTimer()}, 500);
 
 
 

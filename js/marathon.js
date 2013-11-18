@@ -49,22 +49,27 @@ function getLatestEpisodeSummary(ros, fn) {
 
 
 /**
-Fills the given node with a summary of the stats of the current episode.
+Fills the node which matches the jquery selector with a summary of the stats of the current episode.
 */
 
-function writeLatestEpisodeSummary(ros, id) {
+function writeLatestEpisodeSummary(ros, selector) {
+  
+
 
     getLatestEpisodeSummary(ros, function(summary) {
-var t = $.template('<div><img src="${url}" />${name}</div>');
 
-$(selector).append( t , {
-     url: jsonObj.url,
-     name: jsonObj.name
-});
         // document.getElementById(id).innerHTML = JSON.stringify(summary);
-        document.getElementById(id).innerHTML = t;
 
-      console.dir(JSON.stringify(summary));
+// {"distance":0,"bump_recoveries":0,"episode_name":"1384810429.189048051","charge_cycles":0,"date":"2013-11-18 21:33:49.189087","run_duration":"0:28:37.061954"}
+
+        var table = '<p>Episode Summary: <table class="table"> <tr> <td>Run time</td><td>{{run_duration}}</td></tr><tr><td>Distance Covered</td> <td>{{distance}}</td></tr> <tr><td>Bumps</td> <td>{{bump_recoveries}}</td></tr> <tr><td>Charge Cycles</td> <td>{{charge_cycles}}</td></tr> </table>';
+
+        var output = Mustache.render(table, summary);
+     
+        //select the template and transform it
+        $(selector).html(output)
+
+        //console.dir(JSON.stringify(summary));
     });
 
 
