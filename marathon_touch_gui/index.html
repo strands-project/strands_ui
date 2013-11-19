@@ -34,13 +34,10 @@
     <body>
       <div class="container">
 
-        <div class="page-header">
-          <h1>STRANDS Robo GUI</h1>
-          <p class="lead">Marathon Time!</p>
-        </div>
-
-
-
+      <div >
+        <!-- <p> -->
+        <p class="lead text-right">STRANDS Robot Marathon 2013</p>
+      </div>
 
         <div class="row">
           <div class="col-md-8" id="nav"></div>
@@ -48,6 +45,27 @@
 
   <div class="row">
      <div class="col-md-12">
+                     <h2>Hello, my name is Bob.</h2>
+          </div>
+        </div>
+
+
+  <div class="row">
+     <div class="col-md-12" id="battery">
+        
+          </div>
+        </div>
+
+<div class="row">
+     <div class="col-md-12">
+      &nbsp;
+          </div>
+        </div>
+
+  
+  <div class="row">
+     <div class="col-md-12">
+      <!-- <h3>My marathon progress so far:</h3> -->
            <div id="summary"></div>
           </div>
         </div>
@@ -116,8 +134,8 @@
       // Create the main viewer.
       var viewer = new ROS2D.Viewer({
         divID : 'nav',
-        width : 600,
-        height : 600
+        width : 550,
+        height : 550
       });
 
       // Subscribes to the robot's OccupancyGrid, which is ROS representation of
@@ -204,6 +222,9 @@
           console.log("Called pause");
         });
       }
+
+
+  writeBatteryLevelFromTemplate(ros, "#battery", '<p class="lead text-right">My battery level is {{level}}&#37;</p>');
 
 
   function onTimer() {
