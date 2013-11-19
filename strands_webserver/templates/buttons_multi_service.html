@@ -12,7 +12,7 @@ $def with (notice, buttons, servicePrefix)
 		$ serviceName = '\'%s/%s\'' % (servicePrefix, service)	
 		<div class="$colClass"> 
 			<!-- Sorry this is so ugly, but this seems to be the only way to get the script executed -->
-			<button type="button" onclick="var service_$service = new ROSLIB.Service({ros : ros, name : $:serviceName, serviceType : 'std_srvs/Empty'}); var request_$service = new ROSLIB.ServiceRequest({});  service_$service .callService(request_$service, function(result) {console.log('Called service'); }); console.log('Called')" class="btn btn-default btn-block">$:label</button>
+			<button type="button" onclick="var service_$service = new ROSLIB.Service({ros : ros, name : $:serviceName, serviceType : 'std_srvs/Empty'}); var request_$service = new ROSLIB.ServiceRequest({});  service_$service .callService(request_$service, function(result) {console.log('Called service'); }); console.log('Called')" class="btn btn-lg btn-default btn-block">$:label</button>
 		</div> 
 </div>
 
