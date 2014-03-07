@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link rel="shortcut icon" href="../../docs-assets/ico/favicon.png">
+
+
+
+  <title>STRANDS Marathon GUI</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="bootstrap/dist/css/bootstrap.css" rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+  <!-- <link href="grid.css" rel="stylesheet"> -->
+
+  <!-- Just for debugging purposes. Don't actually copy this line! -->
+  <!--[if lt IE 9]><script src="../../docs-assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+
+  <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+      <![endif]-->
+
+
+
+    </head>
+
+    <body>
+      <div class="container">
+
+      <div >
+        <!-- <p> -->
+        <p>&nbsp</p>
+        <p class="lead text-right">STRANDS</p>
+      </div>
+
+        <div class="row">
+          <div class="col-md-8" id="nav"></div>
+          <div class="col-md-4">
+
+  <div class="row">
+     <div class="col-md-12">
+                     <h2>Hello, my name is Bob.</h2>
+          </div>
+        </div>
+
+
+  <div class="row">
+     <div class="col-md-12" id="battery">
+        
+          </div>
+        </div>
+
+<div class="row">
+     <div class="col-md-12">
+      &nbsp;
+          </div>
+        </div>
+
+  
+  <div class="row">
+     <div class="col-md-12">
+      <!-- <h3>My marathon progress so far:</h3> -->
+           <div id="summary"></div>
+          </div>
+        </div>
+
+  <div class="row">
+     <div class="col-md-12">
+            <!-- Pause button -->
+            <button type="button" onclick="pausePatrol()" id="pause-btn" class="btn-lg btn-default btn-block btn-primary">Pause</button>
+          </div>
+        </div>
+
+        </div> 
+
+
+
+
+      </div> <!-- /container -->
+
+  <div class="row">
+     <div class="col-md-12">
+      <!-- <h3>My marathon progress so far:</h3> -->
+           <div id="footer">
+            <p>&nbsp</p>
+                  <p class="lead text-center">See what I'm up to at <b>@BobStrands</b></p>
+                </div>
+          </div>
+        </div>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    
+    <!-- Includes for this  -->
+    <!-- <script src="marathon.js"></script> -->
+
+    <!-- jQuery and display.js are conveniences for interacting with the DOM -->
+    <script src="js/jquery.js"></script>
+    <script src="js/display.js"></script>
+
+    <script type="text/javascript" src="js/jquery-ui.js"></script>
+
+    <!-- ROSLIBJS -->
+    <!-- EventEmitter2 is the sole dependency of roslibjs -->
+    <script src="roslibjs/include/EventEmitter2/eventemitter2.js"></script>
+    <!-- Roslibjs handles core ROS functionality in the browser -->
+    <script src="roslibjs/build/roslib.js"></script>
+
+    <!-- ROS2DJS -->
+    <!-- EaselJS is a dependency of ros2djs -->
+    <script src="ros2djs/include/EaselJS/easeljs.js"></script>
+    <!-- Ros2djs provides 2D scene support, including mapping and more -->
+    <script src="ros2djs/build/ros2d.js"></script>
+
+
+    <script src="bootstrap/dist/js/bootstrap.js"></script>
+
+<!--    <script src="js/marathon.js"></script>
+    <script src="js/mustache.js"></script>
+    -->
+    <script type="text/javascript">
+
+    var hostname = location.hostname;
+
+      // Connecting to ROS.
+      var ros = new ROSLIB.Ros({
+        url : 'ws://'+hostname+':9090'
+      });
+
+      // Service for pause/resume of patroller
+      var patrollerPauseService = new ROSLIB.Service({
+        ros : ros,
+        name : '/pause_resume_patroller',
+        serviceType : 'ap_msgs/PauseResumePatroller'
+      });
+
+      var request = new ROSLIB.ServiceRequest({});
+
+      // Create the main viewer.
+      var viewer = new ROS2D.Viewer({
+        divID : 'nav',
+        width : 550,
+        height : 550
+      });
+
+      // Subscribes to the robot's OccupancyGrid, which is ROS representation of
+      // the map, and renders the map in the scene.
+      var gridClient = new ROS2D.OccupancyGridClient({
+       ros : ros,
+       rootObject : viewer.scene
+     });
+
+      gridClient.on('change', function() {
+
+        // scale the viewer to fit the map
+        viewer.scaleToDimensions(gridClient.currentGrid.width, 
+          gridClient.currentGrid.height);
+
+        viewer.shift(gridClient.currentGrid.x, gridClient.currentGrid.y);
+
+
+        // get a handle to the stage
+        var stage;
+        if (viewer.scene instanceof createjs.Stage) {
+          stage = viewer.scene;
+        } else {
+          stage = viewer.scene.getStage();
+        }
+
+        // marker for the robot
+        var robotMarker = new ROS2D.NavigationArrow({
+          size : 8,
+          strokeSize : 1,
+          fillColor : createjs.Graphics.getRGB(255, 128, 0, 0.66),
+          pulse : false
+        });
+
+        // wait for a pose to come in first
+        robotMarker.visible = false;
+       
+        viewer.scene.addChild(robotMarker);
+
+        var initScaleSet = false;
+
+        // setup a listener for the robot pose
+        var poseListener = new ROSLIB.Topic({
+          ros : ros,
+          name : '/robot_pose',
+          messageType : 'geometry_msgs/Pose',
+          throttle_rate : 10
+        });
+
+        poseListener.subscribe(function(pose) {
+          // update the robots position on the map
+          robotMarker.x = pose.position.x;
+          robotMarker.y = -pose.position.y;
+          
+          if (!initScaleSet) {
+            robotMarker.scaleX = 1.0 / stage.scaleX;
+            robotMarker.scaleY = 1.0 / stage.scaleY;
+            initScaleSet = true;
+          }
+
+          // change the angle
+          robotMarker.rotation = stage.rosQuaternionToGlobalTheta(pose.orientation);
+
+          robotMarker.visible = true;
+
+        });
+       });
+
+
+      //assume patroller is not paused during start-up, need a way initialise this correctly though
+      var patrollerPaused = false;
+
+      function pausePatrol() {
+        console.log("Calling service....");
+        patrollerPauseService.callService(request, function(result) {
+          $("#pause-btn").button("toggle");
+          patrollerPaused=!patrollerPaused;
+          if(patrollerPaused) {
+            document.getElementById("pause-btn").innerHTML="<strong>Paused</strong>";              
+          }
+          else {
+            document.getElementById("pause-btn").innerHTML="Pause";              
+          }
+          console.log("Called pause");
+        });
+      }
+
+
+  writeBatteryLevelFromTemplate(ros, "#battery", '<p class="lead text-right">My battery level is {{level}}&#37;</p>');
+
+
+  function onTimer() {
+      writeLatestEpisodeSummary(ros, "#summary");
+    }
+
+    setInterval(function(){onTimer()}, 500);
+
+
+
+      </script>
+
+    </body>
+    </html>

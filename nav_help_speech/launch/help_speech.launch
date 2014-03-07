@@ -1,0 +1,11 @@
+<launch>
+
+
+
+     <include file="$(find ros_mary_tts)/launch/ros_mary.launch"/>
+     
+     
+     <node name="nav_help_speech" pkg="nav_help_speech" type="nav_help_speech.py" output="screen"/>
+
+
+</launch>
