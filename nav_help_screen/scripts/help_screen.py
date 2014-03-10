@@ -42,20 +42,22 @@ class NavHelpScreen(object):
 
         
     def help_callback(self,req):
+        service_prefix='/monitored_navigation'
+        on_completion=req.interaction_service
         if not self.previous_interaction == req.interaction_status:
             if req.interaction_status==AskHelpRequest.ASKING_HELP:
-                on_completion = 'help_offered'
-                service_prefix = '/monitored_navigation'
                 if req.failed_component==AskHelpRequest.NAVIGATION:
                     nav_help_screen.client.nav_fail(self.displayNo, service_prefix, on_completion)
                 elif req.failed_component==AskHelpRequest.BUMPER:
                     nav_help_screen.client.bumper_stuck(self.displayNo, service_prefix, on_completion)
             elif  req.interaction_status==AskHelpRequest.BEING_HELPED:
-                on_completion = 'help_finished'
-                service_prefix = '/monitored_navigation'
                 nav_help_screen.client.being_helped(self.displayNo, service_prefix, on_completion)               
             elif req.interaction_status==AskHelpRequest.HELP_FINISHED:
                 nav_help_screen.client.display_main_page(self.displayNo)
+            elif  req.interaction_status==AskHelpRequest.HELP_FAILED:
+                if req.failed_component==AskHelpRequest.BUMPER:
+                    nav_help_screen.client.bumper_stuck(self.displayNo, service_prefix, on_completion)
+                
             self.previous_interaction=req.interaction_status
         return "success!"
     
