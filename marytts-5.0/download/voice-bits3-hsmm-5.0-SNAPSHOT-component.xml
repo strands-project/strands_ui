@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<marytts-install xmlns="http://mary.dfki.de/installer">
+    <voice gender="male" locale="de" name="bits3-hsmm" type="hsmm" version="5.0-SNAPSHOT">
+        <description>A male German Hidden semi-Markov model voice, built from voice recordings provided by the BITS project at the Bavarian Archive of Speech Signals.</description>
+        <license href="http://mary.dfki.de/download/by-nd-3.0.html"/>
+        <package filename="voice-bits3-hsmm-5.0-SNAPSHOT.zip"
+            md5sum="ee597325a6f0eb6edd7f8db7fc44a1b4" size="1558924">
+            <location folder="true" href="http://mary.dfki.de/download/5.0-SNAPSHOT/"/>
+            <location folder="false" href="https://docs.google.com/uc?id=0BzQslox9iFCzS3N1MnJlQTc1Y0k"/>
+            <location folder="true" href="http://dl.dropbox.com/u/77978669/"/>
+        </package>
+        <depends language="de" version="5.0-SNAPSHOT"/>
+    </voice>
+</marytts-install>
