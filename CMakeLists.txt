@@ -31,6 +31,7 @@ add_service_files(
   FILES
   ros_mary.srv
   SetVoice.srv
+  SetLocale.srv
 )
 
 add_action_files(
