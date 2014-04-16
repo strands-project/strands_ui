@@ -33,11 +33,13 @@ class RosMary(object):
 
         # What voices are available?
         self._voices = os.listdir(os.path.join(roslib.packages.get_pkg_dir("ros_mary_tts"),
-                                               "marytts-5.0/lib/voices"))
+                                               "marytts-5.0/lib/"))
         print "Ready to speak."
         print "Voices: "
         for i in self._voices:
             print " - ",i
+	print "Selected locale:", self.mary_client.locale
+	print "Selected voice:", self.mary_client.voice
 
     def speak(self,req):
         """ Speak service handler """
@@ -275,7 +277,6 @@ if __name__ == "__main__":
     rospy.init_node('mary_tts')
 
     client = maryclient()
-    rosmary = RosMary(client)
     #speak_server(client)
     #client.set_locale ("en_US")
     client.set_locale ("de")
@@ -311,6 +312,8 @@ if __name__ == "__main__":
 
     # turkish, male
     # client.set_voice ("dfki-ot-hsmm")
+
+    rosmary = RosMary(client)
 
     while not rospy.is_shutdown():
         try:
