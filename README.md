@@ -24,6 +24,7 @@ Available languages and voices:
 * ru
  * None
 * de
+ * bits1-hsmm (female)
  * bits3-hsmm (male)
  * dfki-pavoque-neutral-hsmm (male)
 * sv
