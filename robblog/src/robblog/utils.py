@@ -2,6 +2,9 @@ import os
 import subprocess 
 import roslib
 import shutil
+from ros_datacentre.message_store import MessageStoreProxy
+from robblog.msg import RobblogEntry
+
 
 def which(program):
     """ Get the path for an executable: http://stackoverflow.com/questions/377017/test-if-executable-exists-in-python/377028#377028 """
@@ -58,3 +61,40 @@ def serve(path, host, port):
 
     return subprocess.Popen([jekyll, 'serve', '--watch', '--host', host, '--port', port], cwd=path)
 
+
+
+
+
+class EntryConverter(object):
+    """ Converts RobblogEntry objects from message store to markdown posts."""
+    def __init__(self, blog_path, collection='message_store', database='message_store'):
+        super(EntryConverter, self).__init__()
+        # Create some blog entries
+        self.post_path = blog_path + '/robblog/_posts/'
+        self.msg_store = MessageStoreProxy(collection=collection, database=database)
+
+    
+    def convert(self, convert_all=False):
+        """ Converts entries without meta['blogged'] == True into markdown posts' """
+        entries = self.msg_store.query(RobblogEntry._type)
+        blogged_key = 'blogged'
+        if convert_all:
+            unprocessed = entries
+        else:
+            unprocessed = [(message, meta) for (message, meta) in entries if blogged_key not in meta or meta[blogged_key] == False]
+
+        for entry, meta in unprocessed:
+            file_title = entry.title.replace(' ', '-')
+            date = meta['inserted_at']
+            file_date = date.strftime("%Y-%m-%d")
+            file_name = file_date + '-' + file_title + '.md'
+            with open(self.post_path + file_name, 'w+') as f:
+                # write file
+                f.write('---\nlayout: post\ntitle: %s\n---\n' % entry.title)
+                f.write(entry.body)
+                f.write('\n')
+                f.close()
+                # 
+                meta[blogged_key] = True
+                i = str(meta['_id'])
+                self.msg_store.update_id(i, message=entry, meta=meta)
