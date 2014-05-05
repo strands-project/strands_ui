@@ -91,7 +91,7 @@ This ID is used to automatically create a jpeg image to include in the blog post
 
 # Example
 
-The following example (also available [in full here](https://github.com/strands-project/strands_ui/blob/hydro-devel/robblog/scripts/robblog_example.py)) adds a few entries to the datacentre then serves them. 
+The following example (also available [in full here](https://github.com/strands-project/strands_ui/blob/hydro-devel/robblog/scripts/robblog_example.py)) adds a few entries to the datacentre then serves them. Once you've run this go to [http://localhost:4040](http://localhost:4040) and you should see the blog entries.
 
 ```python
 #!/usr/bin/env python
