@@ -14,9 +14,10 @@ from datetime import *
 if __name__ == '__main__':
     rospy.init_node("robblog_example")
 
+    blog_collection = 'example_blog'
 
     # Create some blog entries
-    msg_store = MessageStoreProxy(collection='robblog')
+    msg_store = MessageStoreProxy(collection=blog_collection)
 
     create_entries = True
 
@@ -54,7 +55,7 @@ if __name__ == '__main__':
         proc = robblog.utils.serve(blog_path, 'localhost', '4040')
 
         try: 
-            converter = robblog.utils.EntryConverter(blog_path=blog_path, collection='example_blog')
+            converter = robblog.utils.EntryConverter(blog_path=blog_path, collection=blog_collection)
             
 
             while not rospy.is_shutdown():
