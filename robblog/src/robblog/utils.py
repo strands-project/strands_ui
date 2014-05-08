@@ -9,6 +9,15 @@ import re
 import cv
 from sensor_msgs.msg import Image
 from cv_bridge import CvBridge, CvBridgeError
+from datetime import *
+
+def create_timed_entry(title, body, time=None):
+    if time is None:
+        time = rospy.get_rostime()
+
+    dt = datetime.fromtimestamp(time.to_sec())
+    time_string = dt.strftime('%H:%M')
+    return RobblogEntry(title='%s - %s' % (time_string, title), body=body)
 
 
 def which(program):
@@ -44,6 +53,9 @@ def init_blog(path):
 
         path = path + '/robblog'
  
+        if not os.path.isdir(path):
+            raise Exception('jekyll creation problm. rm -rf %s and try again' % path)
+
         # now put in default files
         data_path = roslib.packages.get_pkg_dir('robblog') + '/data'
         shutil.copy(data_path + '/_config.yml', path)
