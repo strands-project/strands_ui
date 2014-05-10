@@ -1,4 +1,5 @@
 #! /usr/bin/env python
+# -*- coding: utf-8 -*-
 
 import rospy
 
@@ -37,17 +38,17 @@ class NavHelpSpeech(object):
     def help_callback(self,req):
         if req.interaction_status==AskHelpRequest.ASKING_HELP:
             if req.failed_component==AskHelpRequest.NAVIGATION:
-                self.speak_goal.text='I am having problems moving. Please push me to a clear area.'
+                self.speak_goal.text='Ich habe mich ein wenig verirrt. Kannst du mich bitte in eine freie Umgebung schieben?'
             elif req.failed_component==AskHelpRequest.BUMPER:
-                 self.speak_goal.text='My bumper is being pressed. Please release it so I can move on!'                                                 
+                 self.speak_goal.text='Ich bin in ein Hindernis gefahren. Kannst du mich bitte wegschieben?'                                                 
             self.speaker.send_goal(self.speak_goal)
             self.speaker.wait_for_result()       
         elif  req.interaction_status==AskHelpRequest.HELP_FAILED:
-            self.speak_goal.text='Something is still wrong. Are you sure I am in a clear area?'
+            self.speak_goal.text='Bin noch immer ein wenig verirrt. Bist du sicher, dass ich in einer freien Zone stehe?'
             self.speaker.send_goal(self.speak_goal)
             self.speaker.wait_for_result()
         elif req.interaction_status==AskHelpRequest.HELP_FINISHED and self.previous_interaction==AskHelpRequest.BEING_HELPED:
-            self.speak_goal.text='Thank you! I will be on my way.'
+            self.speak_goal.text='Dankeschön. Ich mach mich wieder auf den Weg.'
             self.speaker.send_goal(self.speak_goal)
             self.speaker.wait_for_result()
         self.previous_interaction=req.interaction_status
