@@ -23,9 +23,9 @@ class NavHelpScreen(object):
         server_port = rospy.get_param("~port", 8090)
     
         self.displayNo = rospy.get_param("~display", 0)
-        os.system('xdg-open http://' + server_host + ':' + str(server_port))
-        rospy.sleep(5)
-        nav_help_screen.client.init_nav_help_gui()
+        #os.system('xdg-open http://' + server_host + ':' + str(server_port))
+        #rospy.sleep(5)
+        #nav_help_screen.client.init_nav_help_gui()
         nav_help_screen.client.display_main_page(self.displayNo)
         
         self.previous_interaction=AskHelpRequest.HELP_FINISHED
