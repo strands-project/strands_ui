@@ -20,7 +20,7 @@ def display_main_page(display_no):
 def bumper_stuck(display_no, service_prefix, on_completion):
 	label = 'Hilf mir'
 	#html = 'Help! My bumper is stuck against something. If you can help me, please press the button below.'
-        html = 'Hilfe! Ich bin in ein Hindernis gefahren. Wenn du mir helfen magst, bitte dr&uuml;ck den unteren Knopf.'
+        html = 'Hilfe! Ich bin in ein Hindernis gefahren. Wenn du mir helfen magst, bitte dr&uuml;cke den unteren Knopf.'
 	#html += '<hr/>'	
 	#html += '<ol>'
 	#html += '<li>Push me away from any obstructions into a clear space</li>'
@@ -37,7 +37,7 @@ def bumper_stuck(display_no, service_prefix, on_completion):
 def nav_fail(display_no, service_prefix, on_completion):
 	label = 'Hilf mir'
 	#html = 'Help! I appear to have trouble moving past an obstruction. If you can help me, please press the button below.' 
-	html = 'Hilfe! Ich habe Probleme mich an den Hindernissen vorbeizubewegen. Wenn du mir helfen magst, bitte dr&uumlck den unteren Knopf.'
+	html = 'Hilfe! Ich habe Probleme mich an den Hindernissen vorbeizubewegen. Wenn du mir helfen magst, bitte dr&uuml;cke den unteren Knopf.'
 	#html += '<hr/>'	
 	#html += '<ol>'
 	#html += '<li>Pushing me away from any obstructions into a clear space</li>'
@@ -58,7 +58,7 @@ def being_helped(display_no, service_prefix, on_completion):
         #html += '<li>Push me away from any obstructions into a clear space</li>'
         #html += '<li>Press the '+label+' button below</li>'
         html += '<li>Schieb mich weg von den Hindernissen in die Mitte des Ganges.</li>'
-	html += '<li>Dr&uecke den '+label+' Knopf unten</li>'	
+	html += '<li>Dr&uuml;cke den '+label+' Knopf unten</li>'	
 	html += '</ol>'
         buttons = [(label, on_completion)]
         content = strands_webserver.page_utils.generate_alert_button_page(html, buttons, service_prefix)        

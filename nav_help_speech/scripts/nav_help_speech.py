@@ -38,13 +38,13 @@ class NavHelpSpeech(object):
     def help_callback(self,req):
         if req.interaction_status==AskHelpRequest.ASKING_HELP:
             if req.failed_component==AskHelpRequest.NAVIGATION:
-                self.speak_goal.text='Ich habe mich ein wenig verirrt. Kannst du mich bitte in eine freie Umgebung schieben?'
+                self.speak_goal.text='Ich habe mich ein wenig verfahren. Kannst du mich bitte in eine freie Umgebung schieben?'
             elif req.failed_component==AskHelpRequest.BUMPER:
                  self.speak_goal.text='Ich bin in ein Hindernis gefahren. Kannst du mich bitte wegschieben?'                                                 
             self.speaker.send_goal(self.speak_goal)
             self.speaker.wait_for_result()       
         elif  req.interaction_status==AskHelpRequest.HELP_FAILED:
-            self.speak_goal.text='Bin noch immer ein wenig verirrt. Bist du sicher, dass ich in einer freien Zone stehe?'
+            self.speak_goal.text='Bin noch immer ein wenig verloren. Bist du sicher, dass ich in einer freien Zone stehe?'
             self.speaker.send_goal(self.speak_goal)
             self.speaker.wait_for_result()
         elif req.interaction_status==AskHelpRequest.HELP_FINISHED and self.previous_interaction==AskHelpRequest.BEING_HELPED:
