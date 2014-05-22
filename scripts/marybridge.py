@@ -205,7 +205,12 @@ class maryclient:
         # helper variables
         rospy.loginfo("action triggered: say %s", goal.text);
         speakQueue.put(goal.text)
-        replyQueue.get(True, 10);
+        try:
+            replyQueue.get(True, 10);
+        except Empty, e:
+            rospy.logwarn("mary speach action failed; maybe took too long (more than 10 seconds), maybe pulse is broke.")
+            self._as.set_succeeded(False)
+            return
         rospy.loginfo("finished speaking...");
         self._as.set_succeeded(True);
 
