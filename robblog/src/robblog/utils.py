@@ -16,7 +16,7 @@ def create_timed_entry(title, body, time=None):
         time = rospy.get_rostime()
 
     dt = datetime.fromtimestamp(time.to_sec())
-    time_string = dt.strftime('%H:%M')
+    time_string = dt.strftime('%H:%M:%S')
     return RobblogEntry(title='%s - %s' % (time_string, title), body=body)
 
 
