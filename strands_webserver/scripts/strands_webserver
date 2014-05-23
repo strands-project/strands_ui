@@ -22,6 +22,7 @@ import roslib
 import rospy
 from  threading import Timer
 from urlparse import urlparse
+from threading import Thread
 
 from strands_webserver.srv import *
 from std_msgs.msg import String
@@ -208,6 +209,15 @@ class RosControlInterface(object):
     display_page_srv_cb.type=SetDisplay
     
 
+    def start_serving(self):
+        self.serving_thread = Thread(target=self._web_server.serve_forever)    
+        self.serving_thread.start()
+
+    def stop_serving(self):
+        rospy.loginfo('waiting for shutdown')
+        self._web_server.socket.close()
+        self.serving_thread.join()
+
 if __name__ == '__main__':
     rospy.init_node("strands_webserver")
 
@@ -220,4 +230,8 @@ if __name__ == '__main__':
     sa = dm._web_server.socket.getsockname()
     rospy.loginfo("Serving HTTP on http://%s/%d", sa[0],  sa[1])
     # print "Serving HTTP on ", sa[0], " port ", sa[1], " ... "
-    dm._web_server.serve_forever()
+    dm.start_serving()
+    rospy.loginfo('spinning')
+    rospy.spin()
+    rospy.loginfo('done')
+    dm.stop_serving()
