@@ -6,9 +6,9 @@ This is a display server for HRI information display.
 
 It is a webserver that runs on localhost. When a request comes in for the main
 page, ie http://localhost/, a page is served that uses roslibjs to register the display. The display is assigned a number 1..10. 
-rosjs/rosbridge. The page subscribes to /strands_webserver/display_%d/page (std_msgs/String) using rosbridge. When a URL is received on this topic, it gets displayed inside an IFrame.
+rosjs/rosbridge. The page subscribes to rospy.get_name/display_%d/page (std_msgs/String) using rosbridge. When a URL is received on this topic, it gets displayed inside an IFrame.
 
-A service is provided for triggering a different page to be shown: /strands_webserver/display_page. This just checks the display is registered and sends publishes data on the topic.
+A service is provided for triggering a different page to be shown: rospy.get_name/display_page. This just checks the display is registered and sends publishes data on the topic.
 
 Page can be either HTML or URL. The page can make use of rosbridge to publish/subscribe to topics and call services.
 
@@ -18,6 +18,8 @@ In addition to the server, there are some "standard" template pages that can be 
 
 import sys
 import os
+import web
+
 import roslib
 import rospy
 from  threading import Timer
@@ -29,6 +31,10 @@ from std_msgs.msg import String
 
 from  BaseHTTPServer import HTTPServer
 from SimpleHTTPServer import SimpleHTTPRequestHandler
+
+
+template_dir = roslib.packages.get_pkg_dir('strands_webserver') + '/data'
+render = web.template.render(template_dir)
 
 
 class DisplayWebHandler(SimpleHTTPRequestHandler):
@@ -52,9 +58,9 @@ class DisplayWebHandler(SimpleHTTPRequestHandler):
             self.send_header('Content-type','text/html')
             self.end_headers()
             # Send the page
-            with open(os.path.join(roslib.packages.get_pkg_dir("strands_webserver"),
-                                   "data/main.html"),"r") as f:
-                data = f.read()
+            name = rospy.get_name()
+            data = render.main(name)
+
             # Populate dynamic fields
             # todo: this currently produces an odd result for me, so returning to hard coded url in main.html
             # hostname = self.server.server_name
@@ -144,7 +150,7 @@ class RosControlInterface(object):
         # set up services
         for s in dir(self):
             if s.endswith("_srv_cb"):
-                rospy.Service("/strands_webserver/"+s[:-7],
+                rospy.Service(rospy.get_name() + "/"+s[:-7],
                               getattr(self,s).type, getattr(self,s))
                 
 
@@ -160,7 +166,7 @@ class RosControlInterface(object):
         new_no=self._displays_available.pop()
         rospy.loginfo("Registering display, id=%d", new_no)
         self._displays.append( (new_no,
-                                rospy.Publisher("/strands_webserver/display_%d/page"%new_no, String ) )
+                                rospy.Publisher(rospy.get_name() + "/display_%d/page"%new_no, String ) )
                                )
         return self._displays[-1][0]
     register_display_srv_cb.type=RegisterDisplay

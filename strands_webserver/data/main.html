@@ -1,3 +1,5 @@
+$def with (name)
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -92,7 +94,7 @@
                 console.log("Trying to setup");
                 page_topic = new ROSLIB.Topic({
                     ros : ros,
-                    name : '/strands_webserver/display_' + window.display_number + '/page',
+                    name : '$:name/display_' + window.display_number + '/page',
                     messageType : 'std_msgs/String'
                 });
                 page_topic.subscribe(function(message) {
@@ -122,7 +124,7 @@
             // Register the display with the manager
             var registerDisplayClient = new ROSLIB.Service({
                 ros : ros,
-                name : '/strands_webserver/register_display',
+                name : '$:name/register_display',
                 serviceType : 'strands_webserver/RegisterDisplay'
             });
 
@@ -140,7 +142,7 @@
                 shutdown();
                 var unregisterDisplayClient = new ROSLIB.Service({
                     ros : ros,
-                    name : '/strands_webserver/unregister_display',
+                    name : '$:name/unregister_display',
                     serviceType : 'strands_webserver/UnregisterDisplay'
                 });
 
