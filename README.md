@@ -85,6 +85,24 @@ strands_webserver.client_utils.display_content(display_no, '<p>Hello world</p>')
 ```
 Note that any `script` nodes will not be evaluated in this injected html. 
 
+### Using the Webloader action server
+The webloader action server offers 4 ways of manipultating webpages shown by the webserver (all of this of course only works if you exclusivly use the webloader server to display pages):
+* Loading relative or contant generated pages
+* Reloading the current page
+* Going back to the previous page
+* Showing a temporary page for a specific number of seconds
+
+Usage still requires your main programm to set
+```
+	http_root = os.path.join(roslib.packages.get_pkg_dir("my_package"), "directory")
+```
+
+Currently all these pages are sent to all displays. Possible future extensions could therefore include a history for each display.
+
+Every of the above mentioned actions has their own action file. Reloading and going back are just empty actions. Loading a page reuires to specify `goal.relative=BOOL` to toggle between relative and content generated pages and `goal.page=STRING` is either the name of the relative page or the content for the generated page. For the temporary page you also have to specify `goal.timeout=INT` after which the previous page will be shown again.
+
+This action server was developed to manage the user interface for the NHM deployment where people could trigger to tweet an image. This was displayed on a temporary page and afterwards the display was reset to the previous page. This had the advantage of showing arbitrary pages without care about what should be displayed afterwards.
+
 ## Auto-generated button pages
 
 The `strands_webserver` package also provides functionality for automatically generating pages with buttons which can call services. Such a call might look like this
