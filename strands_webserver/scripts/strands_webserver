@@ -147,6 +147,8 @@ class RosControlInterface(object):
         self._displays_available=set(range(1,10))
         self._displays=[]
 
+        self._last_req=None
+
         # set up services
         for s in dir(self):
             if s.endswith("_srv_cb"):
@@ -168,6 +170,12 @@ class RosControlInterface(object):
         self._displays.append( (new_no,
                                 rospy.Publisher(rospy.get_name() + "/display_%d/page"%new_no, String ) )
                                )
+        if not self._last_req is None:
+            def republish(pub, content):
+                rospy.loginfo("republish last request %s", content)
+                pub.publish(content)
+            t = Timer(3.0,republish,[self._displays[-1][1], self._last_req.content])
+            t.start()
         return self._displays[-1][0]
     register_display_srv_cb.type=RegisterDisplay
 
@@ -194,11 +202,18 @@ class RosControlInterface(object):
     def set_http_root_srv_cb(self,req):
         return self._web_server.set_root(req.path)
     set_http_root_srv_cb.type=SetRoot
-                                           
+
+
+    def republish_last_req(self):
+		rospy.loginfo("republish")
+		if self._last_req is None:
+			return
+		display_page_srv_cb(self,self._last_req)
 
     """ Display provided content in selected display. This is done by publishing to the subscriber that was created in that page """                                           
     def display_page_srv_cb(self,req):
         rospy.loginfo(str(self._displays))
+        self._last_req = req
         # publishing to a specific display
         if req.display_number > 0: 
             display=[a for a in self._displays if a[0]==req.display_number]
