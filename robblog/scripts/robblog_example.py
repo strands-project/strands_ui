@@ -2,7 +2,7 @@
 
 import rospy
 import roslib
-from ros_datacentre.message_store import MessageStoreProxy
+from mongodb_store.message_store import MessageStoreProxy
 from robblog.msg import RobblogEntry
 import robblog.utils
 import cv

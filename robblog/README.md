@@ -1,6 +1,6 @@
 # Robblog -- A robot blogging tool
 
-Robblog is a tool which converts entries from the [ros_datacentre](https://github.com/strands-project/ros_datacentre) into blog posts for [Jekyll](http://jekyllrb.com). It runs as a ros node and provides its own web server, binding to a host and port of your choice.
+Robblog is a tool which converts entries from the [mongodb_store](https://github.com/strands-project/mongodb_store) into blog posts for [Jekyll](http://jekyllrb.com). It runs as a ros node and provides its own web server, binding to a host and port of your choice.
 
 ## Installation
 
@@ -59,7 +59,7 @@ if __name__ == '__main__':
 ```
 ### Adding entries
 
-To add entries to robblog, clients should add instances of the `robblog/RobblogEntry` message type to ros_datacentre (usually via the message store proxy). The message type is simply:
+To add entries to robblog, clients should add instances of the `robblog/RobblogEntry` message type to mongodb_store (usually via the message store proxy). The message type is simply:
 
 ```
 string title
@@ -99,7 +99,7 @@ The following example (also available [in full here](https://github.com/strands-
 
 import rospy
 import roslib
-from ros_datacentre.message_store import MessageStoreProxy
+from mongodb_store.message_store import MessageStoreProxy
 from robblog.msg import RobblogEntry
 import robblog.utils
 import cv

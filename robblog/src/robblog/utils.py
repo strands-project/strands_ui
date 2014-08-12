@@ -3,7 +3,7 @@ import os
 import subprocess 
 import roslib
 import shutil
-from ros_datacentre.message_store import MessageStoreProxy
+from mongodb_store.message_store import MessageStoreProxy
 from robblog.msg import RobblogEntry
 import re
 import cv
