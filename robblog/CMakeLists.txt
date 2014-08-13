@@ -5,7 +5,7 @@ project(robblog)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
-  ros_datacentre
+  mongodb_store
   rospy
   message_generation
 )
@@ -81,7 +81,7 @@ generate_messages(
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES robblog
-#  CATKIN_DEPENDS ros_datacentre rospy
+#  CATKIN_DEPENDS mongodb_store rospy
 #  DEPENDS system_lib
 )
 
