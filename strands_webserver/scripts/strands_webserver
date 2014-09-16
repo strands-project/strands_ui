@@ -81,7 +81,7 @@ class DisplayWebHandler(SimpleHTTPRequestHandler):
                 print "doing bootstrap javascript"              
                 self.send_header('Content-type','text/javascript')
             self.end_headers()
-            with open(os.path.join(roslib.packages.get_pkg_dir("ros_twitter_bootstrap"),self.path[1:]),"r") as f:
+            with open(os.path.join(roslib.packages.get_pkg_dir("twitter_bootstrap"),self.path[1:]),"r") as f:
                 data = f.read()
             self.wfile.write(data)
             return

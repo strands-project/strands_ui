@@ -3,5 +3,5 @@
    uri: 'https://github.com/strands-project/strands_ui.git'
 
 - git: 
-   local-name: ros_twitter_bootstrap
-   uri: 'https://github.com/strands-project/ros_twitter_bootstrap.git'
+   local-name: twitter_bootstrap
+   uri: 'https://github.com/strands-project/twitter_bootstrap.git'

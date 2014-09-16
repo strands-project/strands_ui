@@ -7,7 +7,7 @@ User interfaces for the robots, displayed using a web browser.
 You can add the STRANDS UI source to your catkin workspace (if it's not there already) using `wstool`:
 ```bash
 wstool merge https://raw.github.com/hawesie/strands_ui/master/strands_ui_rosinstall.yaml
-wstool update strands_ui ros_twitter_bootstrap
+wstool update strands_ui twitter_bootstrap
 ```
 
 `rosdep` should give you most requirements as usual (e.g. `rosdep install --from-paths src --ignore-src --rosdistro groovy -y -r`), but we don't yet have a rosdep for [web.py](http://webpy.org) which is required by `strands_webserver`. This can be installed using, e.g., 

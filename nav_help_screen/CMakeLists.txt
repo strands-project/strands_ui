@@ -5,7 +5,7 @@ project(nav_help_screen)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
-  ros_twitter_bootstrap
+  twitter_bootstrap
   strands_webtools
   strands_navigation_msgs
 )
@@ -82,7 +82,7 @@ catkin_python_setup()
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES marathon_touch_gui
-#  CATKIN_DEPENDS ros_twitter_bootstrap strands_webtools
+#  CATKIN_DEPENDS twitter_bootstrap strands_webtools
 #  DEPENDS system_lib
 )
 
