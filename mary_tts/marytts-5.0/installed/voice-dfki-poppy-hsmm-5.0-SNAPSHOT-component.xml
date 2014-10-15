@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<marytts-install xmlns="http://mary.dfki.de/installer">
+    <voice gender="female" locale="en-GB" name="dfki-poppy-hsmm"
+        type="hsmm" version="5.0-SNAPSHOT">
+        <description>A female en_GB Hidden semi-Markov model voice</description>
+        <license href="http://mary.dfki.de/download/by-nd-3.0.html"/>
+        <package filename="voice-dfki-poppy-hsmm-5.0-SNAPSHOT.zip"
+            md5sum="9ddebfd5f84797ad39590a4e93bfedf1" size="4387473">
+            <location folder="true" href="http://mary.dfki.de/download/5.0-SNAPSHOT/"/>
+            <location folder="false" href="https://docs.google.com/uc?id=0BzQslox9iFCzWnoyUU5iWFVJSEk"/>
+            <location folder="true" href="http://dl.dropbox.com/u/77978669/"/>
+        </package>
+        <files>lib/, lib/voice-dfki-poppy-hsmm-5.0-SNAPSHOT.jar, lib/voices/, lib/voices/dfki-poppy-hsmm/, lib/voices/dfki-poppy-hsmm/mix_excitation_filters.txt, lib/voices/dfki-poppy-hsmm/vocalization_f0_feature_definition.txt, lib/voices/dfki-poppy-hsmm/vocalization_feature_definition.txt, lib/voices/dfki-poppy-hsmm/vocalization_features.mry, lib/voices/dfki-poppy-hsmm/vocalization_intonation.mry, lib/voices/dfki-poppy-hsmm/vocalization_mlsa_features.mry, lib/voices/dfki-poppy-hsmm/vocalization_units.mry</files>
+        <depends language="en-GB" version="5.0-SNAPSHOT"/>
+    </voice>
+</marytts-install>
