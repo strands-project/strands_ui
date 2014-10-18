@@ -5,7 +5,7 @@ project(nav_help_speech)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
-  ros_mary_tts
+  mary_tts
   rospy
   actionlib
 )
@@ -82,7 +82,7 @@ find_package(catkin REQUIRED COMPONENTS
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES nav_help_speech
-#  CATKIN_DEPENDS ros_mary_tts rospy
+#  CATKIN_DEPENDS mary_tts rospy
 #  DEPENDS system_lib
 )
 
