@@ -1,6 +1,6 @@
 A simple interface for the [MARY TTS system](http://mary.dfki.de/). Offers a service `/ros_mary` and an actionlib interface `/speak` that accepts a simple text argument and plays the audio using PulseAudio.
 
-* launch it: `roslaunch ros_mary_tts ros_mary.launch`
+* launch it: `roslaunch mary_tts ros_mary.launch`
 * make the robot speak: `rosservice call /ros_mary 'Welcome to the school of computer science. Please follow me!'`
 * in order to use the actionlib cleint you can run `rosrun actionlib axclient.py /speak`
 * switching voices:
@@ -30,4 +30,4 @@ Available languages and voices:
 * sv
  * None
 
-Installing new voices: Use `strands_hri/ros_mary_tts/marytts-5.0/bin/marytts-component-installer.sh`
+Installing new voices: Use `strands_hri/mary_tts/marytts-5.0/bin/marytts-component-installer.sh`
