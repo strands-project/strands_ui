@@ -92,6 +92,7 @@ catkin_package(
 install(PROGRAMS
   scripts/marybridge.py
   scripts/speak_webserver.py
+  scripts/marytts-server.sh
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
