@@ -12,12 +12,12 @@ from Queue import *
 
 import logging
 
-from ros_mary_tts.srv import *
+from mary_tts.srv import *
 import rospy
 import roslib
 
 import actionlib
-import ros_mary_tts.msg
+import mary_tts.msg
 import os
 
 
@@ -33,7 +33,7 @@ class RosMary(object):
         locale_srv = rospy.Service('ros_mary/set_locale', SetLocale, self.set_locale)
 
         # What voices are available?
-        filelist = os.listdir(os.path.join(roslib.packages.get_pkg_dir("ros_mary_tts"),
+        filelist = os.listdir(os.path.join(roslib.packages.get_pkg_dir("mary_tts"),
                                                "marytts-5.0/lib/"))
         print "Ready to speak."
         print "Locales:"
@@ -98,7 +98,7 @@ class maryclient:
         self.locale = "en_US"
         self.voice = "cmu-bdl-hsmm"
         self._action_name = "speak"
-        self._as = actionlib.SimpleActionServer(self._action_name, ros_mary_tts.msg.maryttsAction, execute_cb=self.execute_cb)
+        self._as = actionlib.SimpleActionServer(self._action_name, mary_tts.msg.maryttsAction, execute_cb=self.execute_cb)
         self._as.start()
 
     def set_host(self, a_host):

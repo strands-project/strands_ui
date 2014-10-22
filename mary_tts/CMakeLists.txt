@@ -13,7 +13,7 @@ find_package(catkin REQUIRED COMPONENTS rospy std_msgs message_generation action
 ## Uncomment this if the package has a setup.py. This macro ensures
 ## modules and global scripts declared therein get installed
 ## See http://ros.org/doc/groovy/api/catkin/html/user_guide/setup_dot_py.html
-# catkin_python_setup()
+#catkin_python_setup()
 
 #######################################
 ## Declare ROS messages and services ##
@@ -91,6 +91,8 @@ catkin_package(
 ## in contrast to setup.py, you can choose the destination
 install(PROGRAMS
   scripts/marybridge.py
+  scripts/speak_webserver.py
+  scripts/marytts-server.sh
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
@@ -101,6 +103,17 @@ install(DIRECTORY launch/
 install(DIRECTORY marytts-5.0/
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/marytts-5.0
 )
+
+
+install(DIRECTORY static/
+  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/static
+) 
+
+
+install(DIRECTORY templates/
+  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/templates
+) 
+
 
 
 #############

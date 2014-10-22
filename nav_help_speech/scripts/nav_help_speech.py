@@ -10,8 +10,8 @@ from strands_navigation_msgs.srv import Register
 
 
 import actionlib
-from ros_mary_tts.msg import maryttsAction
-from ros_mary_tts.msg import maryttsGoal
+from mary_tts.msg import maryttsAction
+from mary_tts.msg import maryttsGoal
 
     
 class NavHelpSpeech(object):
