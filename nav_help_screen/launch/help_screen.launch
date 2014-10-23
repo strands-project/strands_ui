@@ -1,12 +1,14 @@
 <launch>
+    <arg name="start_with_webserver" default="false" />
+    <group if="$(arg start_with_webserver)">	
+	    <include file="$(find rosbridge_server)/launch/rosbridge_websocket.launch" />
 	
-	<include file="$(find rosbridge_server)/launch/rosbridge_websocket.launch" />
-	
-	<node pkg="tf2_web_republisher" type="tf2_web_republisher" name="tf2_web_republisher" />
+	    <node pkg="tf2_web_republisher" type="tf2_web_republisher" name="tf2_web_republisher" />
 
-	<node pkg="strands_webserver" type="strands_webserver" name="strands_webserver" output="screen">
-		<param name="host_ip" value="$(optenv HOST_IP 127.0.0.1)" />
-	</node>
+	    <node pkg="strands_webserver" type="strands_webserver" name="strands_webserver" output="screen">
+		    <param name="host_ip" value="$(optenv HOST_IP 127.0.0.1)" />
+	    </node>
+    </group>
 	
 	<node name="nav_help_screen" pkg="nav_help_screen" type="help_screen.py" output="screen">
                 <param name="host_ip" value="$(optenv HOST_IP 127.0.0.1)" />

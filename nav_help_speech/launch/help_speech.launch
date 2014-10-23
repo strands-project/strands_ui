@@ -1,11 +1,11 @@
 <launch>
 
+    <arg name="start_with_mary_tts" default="false" />
 
-
-     <include file="$(find mary_tts)/launch/ros_mary.launch"/>
+    <include file="$(find mary_tts)/launch/ros_mary.launch" if="$(arg start_with_mary_tts)"/>
      
      
-     <node name="nav_help_speech" pkg="nav_help_speech" type="nav_help_speech.py" output="screen"/>
+    <node name="nav_help_speech" pkg="nav_help_speech" type="nav_help_speech.py" output="screen"/>
 
 
 </launch>
