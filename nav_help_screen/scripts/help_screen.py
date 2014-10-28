@@ -19,10 +19,13 @@ class NavHelpScreen(object):
 
     def __init__(self):
 
-        
+        server_host = rospy.get_param("~host_ip", "127.0.0.1")
+        server_port = rospy.get_param("~port", 8090)
     
         self.displayNo = rospy.get_param("~display", 0)
-
+        #os.system('xdg-open http://' + server_host + ':' + str(server_port))
+        #rospy.sleep(5)
+        #nav_help_screen.client.init_nav_help_gui()
         nav_help_screen.client.display_main_page(self.displayNo)
         
         self.previous_interaction=AskHelpRequest.HELP_FINISHED
@@ -65,19 +68,15 @@ class NavHelpScreen(object):
         
     def main(self):
         rospy.on_shutdown(self.shutdown_callback)
-    
+        
+        
+        
         # Wait for control-c
         rospy.spin()
 
 
 if __name__ == '__main__':
     
-    rospy.init_node('human_help_screen')
-    if nav_help_screen.client.check_webserver():
-        screen_help =  NavHelpScreen()
-        screen_help.main()
-    else:
-        rospy.logerr("strands_webserver not available. Shutting down...")
-        
-        
-        
+    rospy.init_node('human_help_screen') 
+    screen_help =  NavHelpScreen()
+    screen_help.main()
