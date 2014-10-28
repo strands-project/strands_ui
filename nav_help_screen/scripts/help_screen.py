@@ -17,15 +17,15 @@ import nav_help_screen.client
     
 class NavHelpScreen(object):
 
-    def __init__(self):
-
-        server_host = rospy.get_param("~host_ip", "127.0.0.1")
-        server_port = rospy.get_param("~port", 8090)
+    def __init__(self, webserver_srv_prefix='/strands_webserver'):
+        
+    
+        rospy.loginfo("Waiting for webserver services...")
+        rospy.wait_for_service(webserver_srv_prefix + '/display_page')
+        rospy.wait_for_service(webserver_srv_prefix + '/get_hostname')
+        rospy.loginfo("Done")
     
         self.displayNo = rospy.get_param("~display", 0)
-        #os.system('xdg-open http://' + server_host + ':' + str(server_port))
-        #rospy.sleep(5)
-        #nav_help_screen.client.init_nav_help_gui()
         nav_help_screen.client.display_main_page(self.displayNo)
         
         self.previous_interaction=AskHelpRequest.HELP_FINISHED
@@ -33,8 +33,10 @@ class NavHelpScreen(object):
         
         self.service_name='/monitored_navigation/human_help/screen'
         
-        self.register=rospy.ServiceProxy('/monitored_navigation/human_help/register', Register)
-        self.unregister=rospy.ServiceProxy('/monitored_navigation/human_help/unregister', Register)
+        rospy.loginfo("Waiting for registration services...") 
+        rospy.wait_for_service('/monitored_navigation/human_help/register')
+        rospy.wait_for_service('/monitored_navigation/human_help/unregister')
+        rospy.loginfo("Done")
         self.help_service=rospy.Service(self.service_name, AskHelp, self.help_callback)
         
         self.register('screen',self.service_name)
