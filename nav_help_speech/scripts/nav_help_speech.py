@@ -18,22 +18,30 @@ class NavHelpSpeech(object):
 
     def __init__(self):
 
-        
         self.speaker=actionlib.SimpleActionClient('/speak', maryttsAction)
-        self.speak_goal= maryttsGoal()       
+        self.speak_goal= maryttsGoal()
+        rospy.loginfo("Waiting for marytts action...") 
         self.speaker.wait_for_server()
+        rospy.loginfo("Done") 
         
         self.service_name='/monitored_navigation/human_help/speech'
         
+        rospy.loginfo("Waiting for registration services...") 
+        rospy.wait_for_service('/monitored_navigation/human_help/register')
+        rospy.wait_for_service('/monitored_navigation/human_help/unregister')
+        rospy.loginfo("Done")
+        
         self.register=rospy.ServiceProxy('/monitored_navigation/human_help/register', Register)
         self.unregister=rospy.ServiceProxy('/monitored_navigation/human_help/unregister', Register)
+        
         self.help_service=rospy.Service(self.service_name, AskHelp, self.help_callback)
         
         self.register('speech',self.service_name)
         
         self.previous_interaction=AskHelpRequest.HELP_FINISHED
 
-        
+    
+    
     def help_callback(self,req):
         if req.interaction_status==AskHelpRequest.ASKING_HELP:
             if req.failed_component==AskHelpRequest.NAVIGATION:
