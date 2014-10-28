@@ -67,7 +67,8 @@ class NavHelpSpeech(object):
     
         
     def main(self):
-        rospy.on_shutdown(self.shutdown_callback)                
+        rospy.on_shutdown(self.shutdown_callback)      
+        rospy.loginfo("Node " + rospy.get_name() + " is now spinning.")
         # Wait for control-c
         rospy.spin()
 

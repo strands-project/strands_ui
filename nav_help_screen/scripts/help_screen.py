@@ -37,6 +37,10 @@ class NavHelpScreen(object):
         rospy.wait_for_service('/monitored_navigation/human_help/register')
         rospy.wait_for_service('/monitored_navigation/human_help/unregister')
         rospy.loginfo("Done")
+        
+        self.register=rospy.ServiceProxy('/monitored_navigation/human_help/register', Register)
+        self.unregister=rospy.ServiceProxy('/monitored_navigation/human_help/unregister', Register)
+        
         self.help_service=rospy.Service(self.service_name, AskHelp, self.help_callback)
         
         self.register('screen',self.service_name)
@@ -72,7 +76,7 @@ class NavHelpScreen(object):
         rospy.on_shutdown(self.shutdown_callback)
         
         
-        
+        rospy.loginfo("Node " + rospy.get_name() + " is now spinning.")
         # Wait for control-c
         rospy.spin()
 
