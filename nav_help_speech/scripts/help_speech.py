@@ -2,16 +2,10 @@
 
 import rospy
 
-
-from strands_navigation_msgs.srv import AskHelp
-from strands_navigation_msgs.srv import AskHelpRequest
-
-from strands_navigation_msgs.srv import Register
-
+from human_help_manager.srv import AskHelp, AskHelpRequest, Register
 
 import actionlib
-from mary_tts.msg import maryttsAction
-from mary_tts.msg import maryttsGoal
+from mary_tts.msg import maryttsAction, maryttsGoal
 
     
 class NavHelpSpeech(object):

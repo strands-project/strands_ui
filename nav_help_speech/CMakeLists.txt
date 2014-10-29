@@ -8,6 +8,7 @@ find_package(catkin REQUIRED COMPONENTS
   mary_tts
   rospy
   actionlib
+  human_help_manager
 )
 
 ## System dependencies are found with CMake's conventions

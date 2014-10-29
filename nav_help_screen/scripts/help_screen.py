@@ -1,20 +1,12 @@
 #! /usr/bin/env python
 
-import os
-
 import rospy
 
-
-from strands_navigation_msgs.srv import AskHelp
-from strands_navigation_msgs.srv import AskHelpRequest
-
-from strands_navigation_msgs.srv import Register
-
+from human_help_manager.srv import AskHelp, AskHelpRequest, Register
 
 import nav_help_screen.client
 
-
-    
+ 
 class NavHelpScreen(object):
 
     def __init__(self, webserver_srv_prefix='/strands_webserver'):

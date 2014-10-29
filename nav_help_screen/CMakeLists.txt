@@ -8,7 +8,7 @@ find_package(catkin REQUIRED COMPONENTS
   rospy
   twitter_bootstrap
   strands_webtools
-  strands_navigation_msgs
+  human_help_manager
 )
 
 ## System dependencies are found with CMake's conventions
