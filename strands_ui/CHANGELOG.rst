@@ -2,8 +2,8 @@
 Changelog for package strands_ui
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.0.2 (2014-10-31)
+------------------
 * Removed nav_help_s* packages from metapackage run_dependencies. They are now in the recovery behaviour package.
 * Creating a "metapackage" containing a strands_ui.launch file
   * The strands_ui package is not a metapackage in the pure sense of the word but has the same functionality + installs a launch file for mary and the webserver. Since metapackages are not allowed to install things it's a regualar package.

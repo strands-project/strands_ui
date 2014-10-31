@@ -2,8 +2,8 @@
 Changelog for package strands_webserver
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.0.2 (2014-10-31)
+------------------
 * changed twitter_bootstrap package name
 * added support for page reload
 * Removed stray character.

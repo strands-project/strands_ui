@@ -2,8 +2,8 @@
 Changelog for package mary_tts
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.0.2 (2014-10-31)
+------------------
 * Updating dependencies.
   Preparing for release.
 * moving human_help_manager service definition to human_help_manager pa…
