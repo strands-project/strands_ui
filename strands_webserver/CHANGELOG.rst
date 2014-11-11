@@ -14,6 +14,15 @@ Changelog for package strands_webserver
 * Added correct information to package.xml.
 * Contributors: Jenkins, Nick Hawes
 
+Forthcoming
+-----------
+* 0.0.4
+* updated changelogs
+* 0.0.3
+* updated changelogs
+* Added correct information to package.xml.
+* Contributors: Jenkins, Nick Hawes
+
 0.0.2 (2014-10-31)
 ------------------
 * changed twitter_bootstrap package name

@@ -11,6 +11,14 @@ Changelog for package strands_ui
 * updated changelogs
 * Contributors: Jenkins
 
+Forthcoming
+-----------
+* 0.0.4
+* updated changelogs
+* 0.0.3
+* updated changelogs
+* Contributors: Jenkins
+
 0.0.2 (2014-10-31)
 ------------------
 * Removed nav_help_s* packages from metapackage run_dependencies. They are now in the recovery behaviour package.
