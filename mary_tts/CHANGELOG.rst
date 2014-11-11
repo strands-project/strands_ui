@@ -5,6 +5,12 @@ Changelog for package mary_tts
 0.0.3 (2014-11-11)
 ------------------
 
+Forthcoming
+-----------
+* 0.0.3
+* updated changelogs
+* Contributors: Jenkins
+
 0.0.2 (2014-10-31)
 ------------------
 * Updating dependencies.
