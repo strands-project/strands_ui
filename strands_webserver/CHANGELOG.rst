@@ -7,8 +7,8 @@ Changelog for package strands_webserver
 * Added correct information to package.xml.
 * Contributors: Nick Hawes
 
-Forthcoming
------------
+0.0.4 (2014-11-11)
+------------------
 * 0.0.3
 * updated changelogs
 * Added correct information to package.xml.
