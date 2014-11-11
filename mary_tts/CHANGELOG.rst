@@ -2,6 +2,9 @@
 Changelog for package mary_tts
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+
 0.0.2 (2014-10-31)
 ------------------
 * Updating dependencies.

@@ -2,6 +2,9 @@
 Changelog for package strands_ui
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+
 0.0.2 (2014-10-31)
 ------------------
 * Removed nav_help_s* packages from metapackage run_dependencies. They are now in the recovery behaviour package.
