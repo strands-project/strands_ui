@@ -14,8 +14,8 @@ Changelog for package strands_webserver
 * Added correct information to package.xml.
 * Contributors: Jenkins, Nick Hawes
 
-Forthcoming
------------
+0.0.6 (2014-11-12)
+------------------
 * added install targets to fix `#48 <https://github.com/strands-project/strands_ui/issues/48>`_
 * Contributors: Marc Hanheide
 
