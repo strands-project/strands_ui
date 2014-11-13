@@ -11,6 +11,20 @@ Changelog for package mary_tts
 * updated changelogs
 * Contributors: Jenkins
 
+Forthcoming
+-----------
+* Merge branch 'hydro-devel' of http://github.com/strands-project/strands_ui into hydro-devel
+* Fixing `#52 <https://github.com/strands-project/strands_ui/issues/52>`_:
+  * Enabling selection of `en_GB` locale
+  * Setting `en_GB` as default locale because the default language is part of that
+  Fixing `#50 <https://github.com/strands-project/strands_ui/issues/50>`_:
+  * removed autostart from action server
+  Additional bugfix:
+  * If an empty string is pushied a warning will be diplayed and the ervice or action server report failure. This prevents mary from crashing when trying to say nothing.
+* Adding correct permissions to marytts-5.0 install target
+  Fixing `#53 <https://github.com/strands-project/strands_ui/issues/53>`_
+* Contributors: Christian Dondrup
+
 0.0.6 (2014-11-12)
 ------------------
 
