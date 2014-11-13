@@ -11,8 +11,8 @@ Changelog for package mary_tts
 * updated changelogs
 * Contributors: Jenkins
 
-Forthcoming
------------
+0.0.7 (2014-11-13)
+------------------
 * Merge branch 'hydro-devel' of http://github.com/strands-project/strands_ui into hydro-devel
 * Fixing `#52 <https://github.com/strands-project/strands_ui/issues/52>`_:
   * Enabling selection of `en_GB` locale
