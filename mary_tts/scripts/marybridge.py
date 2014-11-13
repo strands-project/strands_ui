@@ -41,9 +41,16 @@ class RosMary(object):
         for i in filelist:
             if "lang" in i:
                 lang = i[13:i.find("-5.0")]
-                lang = lang + "_US" if lang == "en" else lang
-                print " - ",lang
-                self._locales.append(lang)
+                if lang == 'en': # English a special case with two locales in one
+                    lang = lang + "_GB"
+                    print " - ", lang
+                    self._locales.append(lang)
+                    lang = lang + "_US"
+                    print " - ", lang
+                    self._locales.append(lang)
+                else:
+                    print " - ",lang
+                    self._locales.append(lang)
         print "Voices: "
         self._voices = []
         for i in filelist:
@@ -56,6 +63,9 @@ class RosMary(object):
 
     def speak(self,req):
         """ Speak service handler """
+        if req.text == '':
+            rospy.logwarn("mary_tts was asked to produce an empty string.")
+            return False
         speakQueue.put(req.text)
         return True
 
@@ -98,7 +108,7 @@ class maryclient:
         self.locale = "en_US"
         self.voice = "cmu-bdl-hsmm"
         self._action_name = "speak"
-        self._as = actionlib.SimpleActionServer(self._action_name, mary_tts.msg.maryttsAction, execute_cb=self.execute_cb)
+        self._as = actionlib.SimpleActionServer(self._action_name, mary_tts.msg.maryttsAction, execute_cb=self.execute_cb, auto_start=False)
         self._as.start()
 
     def set_host(self, a_host):
@@ -204,6 +214,10 @@ class maryclient:
     def execute_cb(self, goal):
         # helper variables
         rospy.loginfo("action triggered: say %s", goal.text);
+        if goal.text == '':
+            rospy.logwarn("mary_tts was asked to produce an empty string.")
+            self._as.set_aborted()
+            return
         speakQueue.put(goal.text)
         try:
             replyQueue.get(True, 10);
@@ -212,7 +226,7 @@ class maryclient:
             self._as.set_succeeded(False)
             return
         rospy.loginfo("finished speaking...");
-        self._as.set_succeeded(True);
+        self._as.set_succeeded();
 
 
 class pulseplayer:
@@ -304,7 +318,7 @@ if __name__ == "__main__":
 
     client = maryclient()
     #speak_server(client)
-    #client.set_locale ("en_US")
+    client.set_locale ("en_GB")
     #client.set_locale ("de")
     #client.set_voice ("cmu-slt-hsmm")
     # client.set_voice ("dfki-obadiah-hsmm")
