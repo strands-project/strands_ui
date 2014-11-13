@@ -42,10 +42,10 @@ class RosMary(object):
             if "lang" in i:
                 lang = i[13:i.find("-5.0")]
                 if lang == 'en': # English a special case with two locales in one
-                    lang = lang + "_GB"
+                    lang = "en_GB"
                     print " - ", lang
                     self._locales.append(lang)
-                    lang = lang + "_US"
+                    lang = "en_US"
                     print " - ", lang
                     self._locales.append(lang)
                 else:
