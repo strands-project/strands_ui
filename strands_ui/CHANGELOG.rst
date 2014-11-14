@@ -11,6 +11,11 @@ Changelog for package strands_ui
 * updated changelogs
 * Contributors: Jenkins
 
+Forthcoming
+-----------
+* adding machine tags to launch file
+* Contributors: Jaime Pulido Fentanes
+
 0.0.8 (2014-11-13)
 ------------------
 
