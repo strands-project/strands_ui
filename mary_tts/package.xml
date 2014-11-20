@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package>
   <name>mary_tts</name>
-  <version>0.0.9</version>
+  <version>0.0.10</version>
   <description>The mary-tts package</description>
 
   <!-- One maintainer tag required, multiple allowed, one person per tag --> 
