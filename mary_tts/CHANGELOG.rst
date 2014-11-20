@@ -11,6 +11,11 @@ Changelog for package mary_tts
 * updated changelogs
 * Contributors: Jenkins
 
+Forthcoming
+-----------
+* [mary_tts] Added troubleshooting info
+* Contributors: Christian Dondrup
+
 0.0.9 (2014-11-14)
 ------------------
 
