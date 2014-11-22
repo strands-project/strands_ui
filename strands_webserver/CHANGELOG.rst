@@ -14,6 +14,11 @@ Changelog for package strands_webserver
 * Added correct information to package.xml.
 * Contributors: Jenkins, Nick Hawes
 
+Forthcoming
+-----------
+* Added a script to create a simple index.html page.
+* Contributors: Nick Hawes
+
 0.0.10 (2014-11-20)
 -------------------
 
