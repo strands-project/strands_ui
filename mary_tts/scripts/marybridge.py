@@ -58,8 +58,13 @@ class RosMary(object):
                 voice = i[6:i.find("-5.0")]
                 print " - ",voice
                 self._voices.append(voice)
+        voice = rospy.get_param("~voice")
         print "Selected locale:", self.mary_client.locale
-        print "Selected voice:", self.mary_client.voice
+        if voice not in self._voices:
+            rospy.logwarn("Selected voice '%s'not available, using default!"%voice)
+        else:
+            self.mary_client.voice = voice
+            print "Selected voice:", self.mary_client.voice
 
     def speak(self,req):
         """ Speak service handler """

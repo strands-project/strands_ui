@@ -1,4 +1,6 @@
 <launch>
 	<node name="maryserver" pkg="mary_tts" type="marytts-server.sh" cwd="node"/>
-	<node name="ros_mary_bridge" pkg="mary_tts" type="marybridge.py" output="screen" respawn="true"/>
+	<node name="ros_mary_bridge" pkg="mary_tts" type="marybridge.py" output="screen" respawn="true">
+	      <param name="voice" value="$(optenv TTS_VOICE dfki-prudence-hsmm)" type="string"/>
+	</node>
 </launch>
