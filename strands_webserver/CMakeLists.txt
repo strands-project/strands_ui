@@ -41,6 +41,7 @@ add_service_files(
   SetRoot.srv
   SetDisplay.srv
   GetServerAddress.srv
+  CallButton.srv
 )
 
 ## Generate actions in the 'action' folder
