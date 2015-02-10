@@ -6,7 +6,6 @@ import StringIO
 import wave
 
 import ctypes
-import wave
 import sys
 from Queue import *
 
@@ -19,6 +18,8 @@ import roslib
 import actionlib
 import mary_tts.msg
 import os
+
+import time, pygame.mixer as mixer
 
 
 speakQueue = Queue()
@@ -234,137 +235,37 @@ class maryclient:
         self._as.set_succeeded();
 
 
-class pulseplayer:
-        def __init__(self, name):
-                self.name = name
-
-        def play(self, a_sound):
-
-            buf = StringIO.StringIO(a_sound)
-            #
-            # pulseaudio / playback stuff
-            #
-
-            pa = ctypes.cdll.LoadLibrary('libpulse-simple.so.0')
-
-            PA_STREAM_PLAYBACK = 1
-            PA_SAMPLE_S16LE = 3
-            BUFFSIZE = 1024
-
-            class struct_pa_sample_spec(ctypes.Structure):
-                __slots__ = [
-                    'format',
-                    'rate',
-                    'channels',
-                ]
-
-            struct_pa_sample_spec._fields_ = [
-                ('format', ctypes.c_int),
-                ('rate', ctypes.c_uint32),
-                ('channels', ctypes.c_uint8),
-            ]
-            pa_sample_spec = struct_pa_sample_spec  # /usr/include/pulse/sample.h:174
-
-            wf = wave.open(buf, 'rb')
-            ss = struct_pa_sample_spec()
-            ss.rate = wf.getframerate()
-            ss.channels = wf.getnchannels()
-            ss.format = PA_SAMPLE_S16LE
-            error = ctypes.c_int(0)
-
-
-            s = pa.pa_simple_new(
-                None,  # Default server.
-                'marybridge',  # Application's name.
-                PA_STREAM_PLAYBACK,  # Stream for playback.
-                None,  # Default device.
-                'playback',  # Stream's description.
-                ctypes.byref(ss),  # Sample format.
-                None,  # Default channel map.
-                None,  # Default buffering attributes.
-                ctypes.byref(error)  # Ignore error code.
-            )
-            if not s:
-                raise Exception('Could not create pulse audio stream: {0}!'.format(
-                    pa.strerror(ctypes.byref(error))))
-
-            while True:
-                # latency = pa.pa_simple_get_latency(s, error)
-                # if latency == -1:
-                #    raise Exception('Getting latency failed!')
-
-                # print('{0} usec'.format(latency))
-
-                # Reading frames and writing to the stream.
-                buf = wf.readframes(BUFFSIZE)
-                if buf == '':
-                    break
-
-                if pa.pa_simple_write(s, buf, len(buf), error):
-                    raise Exception('Could not play file!')
-
-            wf.close()
-
-            # Waiting for all sent data to finish playing.
-            if pa.pa_simple_drain(s, error):
-                raise Exception('Could not simple drain!')
-
-            # Freeing resources and closing connection.
-            pa.pa_simple_free(s)
-
-
-
-player = pulseplayer("Mary")
-
-
+class PyGamePlayer:
+    
+        
+            
+    def play(self, f):
+        print type(f)
+        buf = StringIO.StringIO(f)
+        mixer.init(frequency=16000)
+        s = mixer.Sound(buf)
+        print s.get_length(), s.get_volume()
+        s.play()
+        
 
 if __name__ == "__main__":
     rospy.init_node('mary_tts')
 
     client = maryclient()
-    #speak_server(client)
+
     client.set_locale ("en_GB")
-    #client.set_locale ("de")
-    #client.set_voice ("cmu-slt-hsmm")
-    # client.set_voice ("dfki-obadiah-hsmm")
-
-    # english, male
-    # client.set_voice ("dfki-spike")
-    # client.set_voice ("dfki-obadiah")
-    # client.set_voice ("dfki-obadiah-hsmm")
-    # client.set_voice ("cmu-bdl-hsmm")
-    # client.set_voice ("cmu-rms-hsmm")
-
-    # english, female
-    # client.set_voice ("dfki-poppy")
-    # client.set_voice ("dfki-poppy-hsmm")
-    # client.set_voice ("dfki-prudence")
     client.set_voice ("dfki-prudence-hsmm")
-    # client.set_voice ("cmu-slt-hsmm")
-
-    # german, male
-    # client.set_voice ("dfki-pavoque-neutral")
-    #client.set_voice ("dfki-pavoque-neutral-hsmm")
-    # client.set_voice ("dfki-pavoque-styles")
-    # client.set_voice ("bits3")
-    # client.set_voice ("bits3-hsmm")
-
-    # german, female
-    # client.set_voice ("bits1-hsmm")
-
-    # telugu, female
-    # client.set_voice ("cmu-nk-hsmm")
-
-    # turkish, male
-    # client.set_voice ("dfki-ot-hsmm")
 
     rosmary = RosMary(client)
+    
+    player = PyGamePlayer()
 
     while not rospy.is_shutdown():
         try:
             req = speakQueue.get(True, 1)
             rospy.loginfo("say " + req)
             the_sound = client.generate(req)
+
             player.play(the_sound)
             rospy.loginfo("played")
             replyQueue.put(True)
