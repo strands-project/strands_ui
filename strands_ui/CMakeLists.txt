@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 2.8.3)
 project(strands_ui)
 
 find_package(catkin REQUIRED COMPONENTS
-  rospy
+	roscpp rospy std_msgs message_generation
 )
 
 
@@ -23,7 +23,9 @@ generate_messages(
 )
 
 
-catkin_package()
+catkin_package(
+	CATKIN_DEPENDS message_runtime
+)
 
 
 

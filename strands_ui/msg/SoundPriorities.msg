@@ -1,2 +1,2 @@
-string[] id
-float32[] priority
+string id
+float32 priority
