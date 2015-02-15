@@ -150,7 +150,8 @@ class PyGamePlayer:
 
     def play_sound(self, s, blocking=True):
         """
-        Play a Pygame Sound object
+        Play a Pygame Sound object.
+        You can create one using pygame.mixer.Sound().
 
         :param s: the sound to play
         :param blocking: wait for the sound to finish playing before returning
