@@ -12,6 +12,8 @@ from pprint import pprint
 
 
 ANNOUNCE_TOPIC = '/pygame_player_negotiation'
+START_EVENT = USEREVENT + 1
+END_EVENT = USEREVENT + 2
 
 
 class PygameEvDispatcher(threading.Thread):
@@ -27,12 +29,13 @@ class PygameEvDispatcher(threading.Thread):
                 rospy.sleep(0.1)
                 continue
             else:
-                self.callback(e)
+                if e.type == END_EVENT:
+                    self.callback(e)
 
 
 class PyGamePlayer:
 
-    def __init__(self, min_vol, max_vol, priority,
+    def __init__(self, min_vol, max_vol, priority, stop_callback=None,
                  frequency=22050, size=-16, channels=2, id=1):
         init()
         mixer.init(frequency, size, channels)
@@ -49,14 +52,16 @@ class PyGamePlayer:
         self.dispatcher.start()
         self.cv = threading.Condition()
         self.playing = False
+        self.stop_callback = stop_callback
 
 
     def finished_playing_cb(self, e):
         self.cv.acquire()
         self.playing = False
         self.announce_priority(0)
+        self.cv.notify_all()
+        self.stop_callback()
         self.cv.release()
-
 
     def announced(self, data):
         self.priority_map[data.id] = data.priority
@@ -66,14 +71,14 @@ class PyGamePlayer:
 
         if max_key == rospy.get_name():
             self.channel.set_volume(self.max_vol)
-            pygame.mixer.music.set_volume(self.max_vol)
+            mixer.music.set_volume(self.max_vol)
         else:
             if max_value > self.priority:
                 self.channel.set_volume(self.min_vol)
-                pygame.mixer.music.set_volume(self.min_vol)
+                mixer.music.set_volume(self.min_vol)
             else:
                 self.channel.set_volume(self.max_vol)
-                pygame.mixer.music.set_volume(self.max_vol)
+                mixer.music.set_volume(self.max_vol)
 
     def announce_priority(self, prio):
         s = SoundPriorities()
@@ -82,35 +87,45 @@ class PyGamePlayer:
         pprint(s)
         self.announcer_pub.publish(s)
 
-    def play_sound(self, s):
-        self.announce_priority(self.priority)
+    def play_sound(self, s, blocking=True):
+        self.announce_start()
         self.channel.play(s)
-
+        self.channel.set_endevent(END_EVENT)
+        if blocking:
+            self.wait_for_end()
 
     def play_music(self, fname, blocking=True):
-        self.announce_priority(self.priority)
         mixer.music.load(fname)
-        self.playing = True
+        self.announce_start()
         mixer.music.play()
-        mixer.music.set_endevent(USEREVENT)
+        mixer.music.set_endevent(END_EVENT)
         if blocking:
-            # Consume one item
-            self.cv.acquire()
-            while self.playing:
-                self.cv.wait()
-            self.cv.release()
+            self.wait_for_end()
+
+    def announce_start(self):
+        self.announce_priority(self.priority)
+        self.cv.acquire()
+        self.playing = True
+        self.cv.release()
+        event.post(event.Event(START_EVENT))
+
+    def wait_for_end(self):
+        self.cv.acquire()
+        while self.playing:
+            self.cv.wait()
+        self.cv.release()
+
+def cb():
+    print "end callback called"
 
 
 
 if __name__ == "__main__":
     rospy.init_node('testplayer')
-    player = PyGamePlayer(0.2, 1.0, 0.8, frequency=44100)
+    player = PyGamePlayer(0.2, 1.0, 0.8, frequency=44100, stop_callback=cb)
 #    buf = StringIO("sfdfgdfg")
 #    s = mixer.Sound(buf)
 #    player.play_sound(s)
-    while not rospy.is_shutdown():
-        player.play_music('/Volumes/users/Library/Application Support/GarageBand/Instrument Library/Sampler/Sampler Files/Grand Piano/095_B5KM56_S.wav')
-        print "played"
-        rospy.sleep(10)
-
-    #rospy.spin()
+    player.play_music('/Volumes/users/Library/Application Support/GarageBand/Instrument Library/Sampler/Sampler Files/Grand Piano/095_B5KM56_S.wav')
+    print "played"
+    rospy.spin()
