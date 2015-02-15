@@ -10,7 +10,8 @@
 
   <url type="website">https://github.com/strands-project/strands_ui</url> 
 
-  <author email="cdondrup@lincoln.ac.uk">Christian Dondrup</author> 
+  <author email="cdondrup@lincoln.ac.uk">Christian Dondrup</author>
+  <author email="marc@hanheide.net">Marc Hanheide</author> 
 
   <buildtool_depend>catkin</buildtool_depend>
   <build_depend>rospy</build_depend>
