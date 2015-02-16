@@ -3,10 +3,7 @@
 import httplib, urllib
 
 import StringIO
-import wave
 
-import ctypes
-import sys
 from Queue import *
 
 import logging
@@ -19,7 +16,9 @@ import actionlib
 import mary_tts.msg
 import os
 
-import time, pygame.mixer as mixer
+from pygame_managed_player.pygame_player import PyGamePlayer
+
+import pygame.mixer as mixer
 
 
 speakQueue = Queue()
@@ -29,9 +28,9 @@ replyQueue=Queue()
 class RosMary(object):
     def __init__(self, mary_client):
         self.mary_client=mary_client
-        s = rospy.Service('ros_mary', ros_mary, self.speak)
-        voice_srv = rospy.Service('ros_mary/set_voice', SetVoice, self.set_voice)
-        locale_srv = rospy.Service('ros_mary/set_locale', SetLocale, self.set_locale)
+        rospy.Service('ros_mary', ros_mary, self.speak)
+        rospy.Service('ros_mary/set_voice', SetVoice, self.set_voice)
+        rospy.Service('ros_mary/set_locale', SetLocale, self.set_locale)
 
         # What voices are available?
         filelist = os.listdir(os.path.join(roslib.packages.get_pkg_dir("mary_tts"),
@@ -227,26 +226,13 @@ class maryclient:
         speakQueue.put(goal.text)
         try:
             replyQueue.get(True, 10);
-        except Empty, e:
+        except Empty:
             rospy.logwarn("mary speach action failed; maybe took too long (more than 10 seconds), maybe pulse is broke.")
             self._as.set_succeeded(False)
             return
         rospy.loginfo("finished speaking...");
         self._as.set_succeeded();
 
-
-class PyGamePlayer:
-    
-        
-            
-    def play(self, f):
-        print type(f)
-        buf = StringIO.StringIO(f)
-        mixer.init(frequency=16000)
-        s = mixer.Sound(buf)
-        print s.get_length(), s.get_volume()
-        s.play()
-        
 
 if __name__ == "__main__":
     rospy.init_node('mary_tts')
@@ -258,15 +244,15 @@ if __name__ == "__main__":
 
     rosmary = RosMary(client)
     
-    player = PyGamePlayer()
+    player = PyGamePlayer(min_vol=1.0, max_vol=1.0, priority=1.0,
+                          frequency=16000)
 
     while not rospy.is_shutdown():
         try:
             req = speakQueue.get(True, 1)
             rospy.loginfo("say " + req)
-            the_sound = client.generate(req)
-
-            player.play(the_sound)
+            the_sound = mixer.Sound(StringIO.StringIO(client.generate(req)))
+            player.play_sound(the_sound, blocking=True)
             rospy.loginfo("played")
             replyQueue.put(True)
         except Empty:
