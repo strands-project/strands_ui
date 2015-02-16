@@ -7,6 +7,7 @@ find_package(catkin REQUIRED COMPONENTS
     actionlib_msgs
     mary_tts
     rospy
+    pygame_managed_player
 )
 
 catkin_python_setup()
