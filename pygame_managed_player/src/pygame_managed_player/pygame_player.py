@@ -65,8 +65,8 @@ class PyGamePlayer:
 
         """
 
+        mixer.pre_init(frequency, size, channels)
         init()
-        mixer.init(frequency, size, channels)
         self.priority_map = {}
         self.min_vol = min_vol
         self.max_vol = max_vol
