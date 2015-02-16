@@ -3,7 +3,7 @@ import pygame.event as event
 from pygame import init
 from pygame import NOEVENT, USEREVENT
 import rospy
-from strands_ui.msg import SoundPriorities
+from pygame_managed_player.msg import SoundPriorities
 import threading
 from pprint import pformat
 
