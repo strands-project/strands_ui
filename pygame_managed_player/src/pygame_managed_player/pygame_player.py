@@ -89,7 +89,8 @@ class PyGamePlayer:
         self.__announce_priority(0)
         self.cv.notify_all()
         self.cv.release()
-        self.stop_callback()
+        if self.stop_callback is not None:
+            self.stop_callback()
 
     def __set_volume(self):
         max_key, max_value = max(self.priority_map.iteritems(),
