@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import pygame.mixer as mixer
 import pygame.event as event
 from pygame import init
