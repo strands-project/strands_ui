@@ -1,0 +1,36 @@
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Changelog for package pygame_managed_player
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Forthcoming
+-----------
+* added python header
+* removed launch file as it doesn't belong here.
+* all the meta-data for the new package and its deps
+* moved into new package
+* moved files to new package
+* Contributors: Marc Hanheide
+
+0.0.11 (2014-11-22)
+-------------------
+
+0.0.10 (2014-11-20)
+-------------------
+
+0.0.9 (2014-11-14)
+------------------
+
+0.0.8 (2014-11-13 16:47)
+------------------------
+
+0.0.7 (2014-11-13 15:58)
+------------------------
+
+0.0.6 (2014-11-12)
+------------------
+
+0.0.5 (2014-11-11)
+------------------
+
+0.0.2 (2014-10-31)
+------------------
