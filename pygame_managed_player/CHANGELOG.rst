@@ -2,8 +2,8 @@
 Changelog for package pygame_managed_player
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.0.12 (2015-02-16)
+-------------------
 * added python header
 * removed launch file as it doesn't belong here.
 * all the meta-data for the new package and its deps
