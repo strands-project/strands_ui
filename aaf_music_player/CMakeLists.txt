@@ -5,7 +5,6 @@ find_package(catkin REQUIRED COMPONENTS
     genmsg
     actionlib
     actionlib_msgs
-    mary_tts
     rospy
     pygame_managed_player
 )
@@ -19,7 +18,6 @@ add_service_files(
 
 generate_messages(
     DEPENDENCIES
-    std_msgs
 )
 
 catkin_package()
