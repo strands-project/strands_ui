@@ -2,8 +2,8 @@
 Changelog for package music_player
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.0.13 (2015-02-17)
+-------------------
 * correct version number
 * Fixing install targets and renaming artifacts.
 * Forgot to rename the folder in the src directory. Now this is also called music_player. Thank you @marc-hanheide
