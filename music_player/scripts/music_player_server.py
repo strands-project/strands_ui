@@ -12,7 +12,7 @@ from os.path import isfile, join, splitext
 import pygame
 import roslib
 
-class AAFMusicPlayerServer(object):
+class MusicPlayerServer(object):
     def __init__(self):
         rospy.init_node('music_player_server')
         folder = rospy.get_param('~folder', '')
@@ -85,5 +85,5 @@ class AAFMusicPlayerServer(object):
         
 
 if __name__ == '__main__':
-    server = AAFMusicPlayerServer()
+    server = MusicPlayerServer()
 

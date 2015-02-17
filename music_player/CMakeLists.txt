@@ -9,8 +9,6 @@ find_package(catkin REQUIRED COMPONENTS
     pygame_managed_player
 )
 
-catkin_python_setup()
-
 add_service_files(
     FILES
     MusicPlayerService.srv
@@ -25,9 +23,8 @@ catkin_package()
 #############
 ## Install ##
 #############
-#install(PROGRAMS
-#    scripts/toggle_walking_group_recovery_server.py
-#    src/walking_group_recovery/walking_group_recovery_state.py
-#    src/walking_group_recovery/walking_group_nav_states.py
-#    DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
-#)
+
+install(PROGRAMS
+  scripts/music_player_server.py
+  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+)
