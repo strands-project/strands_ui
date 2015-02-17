@@ -1,0 +1,4 @@
+int32 display_number
+string content
+---
+bool success
