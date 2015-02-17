@@ -3,7 +3,7 @@
 import rospy
 from actionlib_msgs.msg import *
 import actionlib
-from aaf_music_player.srv import *
+from music_player.srv import *
 from pygame_managed_player.pygame_player import PyGamePlayer
 
 from os import listdir
@@ -14,7 +14,7 @@ import roslib
 
 class AAFMusicPlayerServer(object):
     def __init__(self):
-        rospy.init_node('aaf_music_player_server')
+        rospy.init_node('music_player_server')
         folder = rospy.get_param('~folder', '')
         if len(folder) == 0:
             rospy.logwarn('No media folder provided!')
@@ -30,7 +30,7 @@ class AAFMusicPlayerServer(object):
         self.player = PyGamePlayer(0.2, 1.0, 0.5, frequency=44100, stop_callback=self.stopped_cb)
         
         self.paused = True
-        self.service = rospy.Service('aaf_music_player_service', MusicPlayerService, self.pressed_button)
+        self.service = rospy.Service('music_player_service', MusicPlayerService, self.pressed_button)
         while not rospy.is_shutdown():
             #if not self.paused and not pygame.mixer.music.get_busy():
             #    self.song_index = self.song_index + 1

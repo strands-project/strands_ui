@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <package>
-  <name>aaf_music_player</name>
+  <name>music_player</name>
   <version>0.1.2</version>
   <description>The media player for AAF, working with general mp3 folders</description>
 
