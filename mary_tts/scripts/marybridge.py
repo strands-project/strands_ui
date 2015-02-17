@@ -1,12 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-import httplib, urllib
+import httplib
+import urllib
 
 import StringIO
-import wave
 
-import ctypes
-import sys
 from Queue import *
 
 import logging
@@ -19,30 +17,32 @@ import actionlib
 import mary_tts.msg
 import os
 
-import time, pygame.mixer as mixer
+from pygame_managed_player.pygame_player import PyGamePlayer
+
+import pygame.mixer as mixer
 
 
 speakQueue = Queue()
-replyQueue=Queue()
+replyQueue = Queue()
 
 
 class RosMary(object):
     def __init__(self, mary_client):
-        self.mary_client=mary_client
-        s = rospy.Service('ros_mary', ros_mary, self.speak)
-        voice_srv = rospy.Service('ros_mary/set_voice', SetVoice, self.set_voice)
-        locale_srv = rospy.Service('ros_mary/set_locale', SetLocale, self.set_locale)
+        self.mary_client = mary_client
+        rospy.Service('ros_mary', ros_mary, self.speak)
+        rospy.Service('ros_mary/set_voice', SetVoice, self.set_voice)
+        rospy.Service('ros_mary/set_locale', SetLocale, self.set_locale)
 
         # What voices are available?
         filelist = os.listdir(os.path.join(roslib.packages.get_pkg_dir("mary_tts"),
-                                               "marytts-5.0/lib/"))
+                                           "marytts-5.0/lib/"))
         print "Ready to speak."
         print "Locales:"
         self._locales = []
         for i in filelist:
             if "lang" in i:
                 lang = i[13:i.find("-5.0")]
-                if lang == 'en': # English a special case with two locales in one
+                if lang == 'en':  # English special case with two locales in one
                     lang = "en_GB"
                     print " - ", lang
                     self._locales.append(lang)
@@ -50,24 +50,24 @@ class RosMary(object):
                     print " - ", lang
                     self._locales.append(lang)
                 else:
-                    print " - ",lang
+                    print " - ", lang
                     self._locales.append(lang)
         print "Voices: "
         self._voices = []
         for i in filelist:
             if "voice" in i and not "voices" in i:
                 voice = i[6:i.find("-5.0")]
-                print " - ",voice
+                print " - ", voice
                 self._voices.append(voice)
         voice = rospy.get_param("~voice")
         print "Selected locale:", self.mary_client.locale
         if voice not in self._voices:
-            rospy.logwarn("Selected voice '%s' not available, using default!"%voice)
+            rospy.logwarn("Selected voice '%s' not available, using default!" % voice)
         else:
             self.mary_client.voice = voice
             print "Selected voice:", self.mary_client.voice
 
-    def speak(self,req):
+    def speak(self, req):
         """ Speak service handler """
         if req.text == '':
             rospy.logwarn("mary_tts was asked to produce an empty string.")
@@ -75,7 +75,7 @@ class RosMary(object):
         speakQueue.put(req.text)
         return True
 
-    def set_voice(self,req):
+    def set_voice(self, req):
         """ Voice setting service handle """
         if not req.voice_name in self._voices:
             rospy.logwarn("Trying to set voice to unknown:  %s", req.voice_name)
@@ -84,7 +84,7 @@ class RosMary(object):
         rospy.loginfo("Set voice to %s", self.mary_client.get_voice())
         return True
 
-    def set_locale(self,req):
+    def set_locale(self, req):
         """ Locale setting service handle """
         if not req.locale_name in self._locales:
             rospy.logwarn("Trying to set locale to unknown:  %s", req.locale_name)
@@ -94,14 +94,12 @@ class RosMary(object):
         return True
 
 
-
 #
 # A simple MARY TTS client in Python, using pulseaudio for playback
 #
 # based on Code from Hugh Sasse (maryclient-http.py)
 #
 # 2013 by G. Bartsch. License: LGPLv3
-
 class maryclient:
 
     def __init__(self):
@@ -114,7 +112,10 @@ class maryclient:
         self.locale = "en_US"
         self.voice = "cmu-bdl-hsmm"
         self._action_name = "speak"
-        self._as = actionlib.SimpleActionServer(self._action_name, mary_tts.msg.maryttsAction, execute_cb=self.execute_cb, auto_start=False)
+        self._as = actionlib.SimpleActionServer(self._action_name,
+                                                mary_tts.msg.maryttsAction,
+                                                execute_cb=self.execute_cb,
+                                                auto_start=False)
         self._as.start()
 
     def set_host(self, a_host):
@@ -123,7 +124,7 @@ class maryclient:
 
     def get_host(self):
         """Get the host for the TTS server."""
-        return  self.host
+        return self.host
 
     def set_port(self, a_port):
         """Set the port for the TTS server."""
@@ -207,70 +208,53 @@ class maryclient:
         # conn.set_debuglevel(5)
 
         conn.request("POST", "/process", params, headers)
-        logging.warning('Watch out!' + params)  # will print a message to the console
-
+        logging.warning('Watch out!' + params)
 
         response = conn.getresponse()
         if response.status != 200:
             print response.getheaders()
             raise RuntimeError("{0}: {1}".format(response.status,
-                response.reason))
+                               response.reason))
         return response.read()
 
     def execute_cb(self, goal):
         # helper variables
-        rospy.loginfo("action triggered: say %s", goal.text);
+        rospy.loginfo("action triggered: say %s", goal.text)
         if goal.text == '':
             rospy.logwarn("mary_tts was asked to produce an empty string.")
             self._as.set_aborted()
             return
         speakQueue.put(goal.text)
         try:
-            replyQueue.get(True, 10);
-        except Empty, e:
+            replyQueue.get(True, 10)
+        except Empty:
             rospy.logwarn("mary speach action failed; maybe took too long (more than 10 seconds), maybe pulse is broke.")
             self._as.set_succeeded(False)
             return
-        rospy.loginfo("finished speaking...");
-        self._as.set_succeeded();
+        rospy.loginfo("finished speaking...")
+        self._as.set_succeeded()
 
-
-class PyGamePlayer:
-    
-        
-            
-    def play(self, f):
-        print type(f)
-        buf = StringIO.StringIO(f)
-        mixer.init(frequency=16000)
-        s = mixer.Sound(buf)
-        print s.get_length(), s.get_volume()
-        s.play()
-        
 
 if __name__ == "__main__":
     rospy.init_node('mary_tts')
 
     client = maryclient()
 
-    client.set_locale ("en_GB")
-    client.set_voice ("dfki-prudence-hsmm")
+    client.set_locale("en_GB")
+    client.set_voice("dfki-prudence-hsmm")
 
     rosmary = RosMary(client)
-    
-    player = PyGamePlayer()
+
+    player = PyGamePlayer(min_vol=1.0, max_vol=1.0, priority=1.0,
+                          frequency=16000)
 
     while not rospy.is_shutdown():
         try:
             req = speakQueue.get(True, 1)
             rospy.loginfo("say " + req)
-            the_sound = client.generate(req)
-
-            player.play(the_sound)
+            the_sound = mixer.Sound(StringIO.StringIO(client.generate(req)))
+            player.play_sound(the_sound, blocking=True)
             rospy.loginfo("played")
             replyQueue.put(True)
         except Empty:
             rospy.logdebug('nothing sent')
-
-
-
