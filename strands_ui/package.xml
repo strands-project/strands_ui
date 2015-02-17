@@ -18,6 +18,7 @@
   <run_depend>strands_webserver</run_depend>
   <run_depend>tf2_web_republisher</run_depend>
   <run_depend>pygame_managed_player</run_depend>
+  <run_depend>music_player</run_depend>
 
   <export>
     <!--<metapackage/> -->
