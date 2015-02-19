@@ -1,0 +1,6 @@
+<launch>
+  
+  
+  <test test-name="pygame_managed_player_test" pkg="pygame_managed_player" type="pygame_player_test.py" />
+
+</launch>

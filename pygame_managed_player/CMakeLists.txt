@@ -28,3 +28,9 @@ catkin_package(
 )
 
 
+if (CATKIN_ENABLE_TESTING)
+  find_package(catkin REQUIRED COMPONENTS rostest)
+
+  add_rostest(tests/pygame_player.test)
+
+endif()
