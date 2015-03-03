@@ -1,0 +1,60 @@
+$def with (s, available, used)
+$var title: $s['set_type'] Sets
+<div class="row">
+<div class="col-md-12">
+	<div class="row text-center">
+		<h3>Editing $s['set_type'] Set '$s["name"]'</h3><br/>
+	</div>	
+
+	<div class="row text-center">
+		<h4>Items already in this set</h4><br/>
+		<hr>
+	</div>	
+	<table class="table table-condensed">
+	  <tr>
+	    <td></td>
+		<td><b>Name</b></td>
+		<td><b>Content Type</b></td>
+		<td></td>
+	  </tr>
+	  <tbody class="table-hover">
+		$for i in used:
+	        <tr>
+			  <td class="text-center"><img src="/get_media_thumb/$i[2]"></td>
+			  <td>$i[0]</td>
+			  <td>$i[1]</td>
+			  <td>
+				<a href="/edit_set/$s['_id']/remove/$i[2]" class="btn" role="button">Remove from set</a>
+			  </td>
+			</tr>
+	  </tbody>
+	</table>
+	<br/><hr><br/><hr>
+	<div class="row text-center">
+		<h4>Items available to add to this set</h4><br/>
+		<hr>
+	</div>	
+    <table class="table table-condensed">
+	  <tr>
+	    <td></td>
+		<td><b>Name</b></td>
+		<td><b>Content Type</b></td>
+		<td></td>
+	  </tr>
+	  <tbody class="table-hover">
+		$for i in available:
+	        <tr>
+			  <td class="text-center"><img src="/get_media_thumb/$i[2]"></td>
+			  <td>$i[0]</td>
+			  <td>$i[1]</td>
+			  <td>
+				<a href="/edit_set/$s['_id']/add/$i[2]" class="btn" role="button">Add to set</a>
+			  </td>
+			</tr>
+	  </tbody>
+	</table>
+</div>
+</div>
+
+
+
