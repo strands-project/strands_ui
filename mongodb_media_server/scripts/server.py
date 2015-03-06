@@ -18,7 +18,7 @@ file_set_types = {'Video': ['video/mp4'],
 
 
 ### Templates
-TEMPLATE_DIR = roslib.packages.get_pkg_dir('media_server') + '/www'
+TEMPLATE_DIR = roslib.packages.get_pkg_dir('mongodb_media_server') + '/www'
 render = web.template.render(TEMPLATE_DIR, base='base',
                              globals={'set_types': file_set_types})
 os.chdir(TEMPLATE_DIR)
@@ -57,7 +57,7 @@ class MediaServer(web.application):
     
     def signal_handler(self, signum, frame):
         self.stop()
-        print "media_server stopped"
+        print "mongodb_media_server stopped"
 
 class MasterPage(object):
     def GET(self):
@@ -235,8 +235,7 @@ class GetFileThumbnail(object):
         return file_.read()
     
 if __name__ == "__main__":
-    print "Init ROS node."
-    rospy.init_node("media_server")
-    print "Web server starting.."
+    rospy.init_node("mongodb_media_server")
+    rospy.loginfo("mongodb_media_server web server starting..")
     app =  MediaServer()
     app.run()

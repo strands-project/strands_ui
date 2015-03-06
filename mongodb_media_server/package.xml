@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <package>
-  <name>media_server</name>
+  <name>mongodb_media_server</name>
   <version>0.0.13</version>
-  <description>The media_server package provides a web based interface for 
+  <description>The mongodb_media_server package provides a web based interface for 
   storing and retrieving media files in a mongodb database.</description>
 
   <maintainer email="cburbridge@gmail.com">Chris Burbridge</maintainer>

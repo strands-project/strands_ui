@@ -4,7 +4,7 @@ videos) to robot applications. The content is uploaded and managed through a
 web interface, and is stored in the mongodb database using GridFS.
 
 # Running
-`rosrun media_server server.py`
+`rosrun mongodb_media_server server.py`
 
 # Editing the available content
 
@@ -25,7 +25,7 @@ via the Python api. For example, to retrieve the items in a photo album called
 'AAF-Deploy-InfoTerm':
 
 ```
-from media_server import MediaClient
+from mongodb_media_server import MediaClient
 
 mc = MediaClient('localhost', 62345) # or rospy.get_param('db_host') etc
 file_set = mc.get_set("Photo/AAF-Deploy-InfoTerm")
@@ -42,7 +42,7 @@ application .
 Alternatively, the file can also be read in python rather than through the 
 web server interface.
 
-Please see `src/media_server/media_client.py` for the API.
+Please see `src/mongodb_media_server/media_client.py` for the API.
 
 # To Do
 A more complete API for both the web interface (to provide file sets to webpages 
