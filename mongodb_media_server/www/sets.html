@@ -1,0 +1,38 @@
+$def with (sets_list, set_type)
+$var title: $set_type Sets
+<div class="row">
+<div class="col-md-12">
+	<div class="row text-center">
+		<h3>$set_type Sets</h3><br/>
+	</div>	
+
+	<table class="table table-condensed">
+	  <tr>
+		<td><b>Name</b></td>
+		<td><b>Number of items in set</b></td>
+		<td></td>
+	  </tr>
+	  <tbody class="table-hover">
+		$for s in sets_list:
+	        <tr>
+			  <td>$s[0]</td>
+			  <td>$s[1]</td>
+			  <td>
+				<a href="/edit_set/$s[2]" class="btn" role="button">Edit</a>
+				<a href="/delete_set/$s[2]" class="btn" role="button">Delete</a>
+			  </td>
+			</tr>
+	  </tbody>
+	</table>
+	<form method="POST" enctype="multipart/form-data" action="/create_set/$set_type">
+	  <input type="text" name="set_name"></input>
+	  <input class="btn" value="Create" type="submit"/>
+	</form>
+
+
+
+</div>
+</div>
+
+
+
