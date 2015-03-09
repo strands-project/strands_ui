@@ -2,8 +2,8 @@
 Changelog for package mongodb_media_server
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.0.14 (2015-03-09)
+-------------------
 * Rename media_server to mongodb_media_server.
 * Contributors: Chris Burbridge
 
