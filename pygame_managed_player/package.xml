@@ -18,10 +18,13 @@ It uses some negotiation between different instances of this class using a share
   <build_depend>rospy</build_depend>
   <build_depend>std_srvs</build_depend>
   <build_depend>std_msgs</build_depend>
+  <build_depend>rostest</build_depend>
 
   <run_depend>rospy</run_depend>
   <run_depend>message_runtime</run_depend>
   <run_depend>python-pygame</run_depend>
+
+  <test_depend>rostest</test_depend>
 
   <export>
     <!--<metapackage/> -->
