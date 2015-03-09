@@ -24,8 +24,6 @@ It uses some negotiation between different instances of this class using a share
   <run_depend>message_runtime</run_depend>
   <run_depend>python-pygame</run_depend>
 
-  <test_depend>rostest</test_depend>
-
   <export>
     <!--<metapackage/> -->
   </export>
