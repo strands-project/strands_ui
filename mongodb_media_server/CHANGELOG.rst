@@ -2,6 +2,11 @@
 Changelog for package mongodb_media_server
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* added mongodb_store as build_depend as it is needed for cmake step
+* Contributors: Marc Hanheide
+
 0.0.14 (2015-03-09)
 -------------------
 * Rename media_server to mongodb_media_server.

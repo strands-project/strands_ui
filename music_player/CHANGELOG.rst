@@ -2,6 +2,9 @@
 Changelog for package music_player
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+
 0.0.13 (2015-02-17)
 -------------------
 * correct version number
