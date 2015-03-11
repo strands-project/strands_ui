@@ -7,6 +7,7 @@ find_package(catkin REQUIRED COMPONENTS
     actionlib_msgs
     rospy
     pygame_managed_player
+    mongodb_media_server
 )
 
 add_service_files(
