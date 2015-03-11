@@ -1,21 +1,22 @@
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Changelog for package pygame_managed_player
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Changelog for package mongodb_media_server
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 0.0.15 (2015-03-09)
 -------------------
-* removed redundant dep
-* added rostest as dependencies
+* added mongodb_store as build_depend as it is needed for cmake step
 * Contributors: Marc Hanheide
+
+0.0.14 (2015-03-09)
+-------------------
+* Rename media_server to mongodb_media_server.
+* Contributors: Chris Burbridge
+
+0.0.13 (2015-02-17)
+-------------------
 
 0.0.12 (2015-02-16)
 -------------------
-* added python header
-* removed launch file as it doesn't belong here.
-* all the meta-data for the new package and its deps
-* moved into new package
-* moved files to new package
-* Contributors: Marc Hanheide
 
 0.0.11 (2014-11-22)
 -------------------
