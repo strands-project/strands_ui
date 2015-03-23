@@ -1,0 +1,9 @@
+<launch>
+    <arg name="music_set" default="aaf_jingles"/>
+
+    <node pkg="sound_player_server" type="sound_player.py" name="sound_player_server" output="screen">
+        <!-- The set in mongodb_media_server to use for the waypoint sounds -->
+        <param name="audio_priority" type="double" value="0.5"/>
+        <param name="music_set" type="string" value="$(arg music_set)"/>
+    </node>
+</launch>

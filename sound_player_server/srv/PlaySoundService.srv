@@ -1,0 +1,4 @@
+string filename
+---
+bool file_found
+float32 audio_priority
