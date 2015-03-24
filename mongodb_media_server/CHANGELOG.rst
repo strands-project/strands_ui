@@ -2,6 +2,11 @@
 Changelog for package mongodb_media_server
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Add expression matching for file set types.
+* Contributors: Chris Burbridge
+
 0.0.15 (2015-03-09)
 -------------------
 * added mongodb_store as build_depend as it is needed for cmake step

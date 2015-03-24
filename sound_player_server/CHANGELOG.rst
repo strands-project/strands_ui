@@ -2,6 +2,9 @@
 Changelog for package sound_player_server
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+
 0.0.16 (2015-03-23)
 -------------------
 * Added the sound_player_server, check launch file for details
