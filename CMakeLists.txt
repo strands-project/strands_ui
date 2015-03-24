@@ -6,10 +6,6 @@ project(aaf_control_ui)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
   geometry_msgs
-  mongodb_media_server
-  python-webpy
-  strands_executive_msgs
-  strands_webtools
 )
 
 ## System dependencies are found with CMake's conventions
