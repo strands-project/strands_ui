@@ -2,8 +2,8 @@
 Changelog for package mongodb_media_server
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.0.17 (2015-03-24)
+-------------------
 * Add expression matching for file set types.
 * Contributors: Chris Burbridge
 

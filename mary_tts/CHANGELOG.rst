@@ -11,8 +11,8 @@ Changelog for package mary_tts
 * updated changelogs
 * Contributors: Jenkins
 
-Forthcoming
------------
+0.0.17 (2015-03-24)
+-------------------
 
 0.0.15 (2015-03-09)
 -------------------
