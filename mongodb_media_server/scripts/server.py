@@ -11,9 +11,10 @@ import os
 import Image
 import StringIO
 import signal
+import re
 
 file_set_types = {'Video': ['video/mp4'],
-                  'Music': ['audio/mpeg'],
+                  'Music': ['audio/.*'],
                   'Photo': ['image/jpeg', 'image/png'],}
 
 
@@ -121,8 +122,10 @@ class EditSet(object):
                 file_sets.save(s)
         # TODO: when migrated to newer gridfs library change to use that
         for f in mongo.media_server['fs.files'].find():
-            if f['contentType'] in file_set_types[s['set_type']]:
-                available.add( (f['filename'], f['contentType'], f['_id']) )
+            for set_type in file_set_types[s['set_type']]:
+                if re.match(set_type, f['contentType']) is not None:
+                    available.add( (f['filename'], f['contentType'], f['_id']) )
+                    break
         available =  available - used
         return render.edit_set(s, available, used)
     
