@@ -1,200 +1,125 @@
-<!DOCTYPE html>
-<html>
-    
-    <head>
-        <title>Henry Aufgaben</title>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-        <script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-        <link href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css"
-        rel="stylesheet" type="text/css">
-        <link rel="stylesheet" href="static/aaf.css">
-    </head>
-    
-    <body>
-        <div class="navbar navbar-default navbar-static-top">
-            <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-ex-collapse">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="#">Henry@AAF</a>
-                </div>
-                <div class="collapse navbar-collapse" id="navbar-ex-collapse">
-                    <ul class="nav navbar-nav navbar-right">
-                        <li>
-                            <a href="dashboard.html">Status</a>
-                        </li>
-                        <li class="active">
-                            <a href="tasks.html">Aufgaben</a>
-                        </li>
-                        <li>
-                            <a href="setup.html">Einrichtung</a>
-                        </li>
-                        <li>
-                            <a href="help.html">Hilfe</a>
-                        </li>
-                    </ul>
+$var title: Aufgaben
+
+<div class="section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Anstehende Aufgaben</h3>
+                    </div>
+                    <div class="panel-body">
+                        <table class="table table-condensed table-hover table-striped">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>First Name</th>
+                                    <th>Last Name</th>
+                                    <th>Username</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Mark</td>
+                                    <td>Otto</td>
+                                    <td>@mdo</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>Jacob</td>
+                                    <td>Thornton</td>
+                                    <td>@fat</td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>Larry</td>
+                                    <td>the Bird</td>
+                                    <td>@twitter</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="section">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="panel panel-primary">
-                            <div class="panel-heading">
-                                <h3 class="panel-title">Anstehende Aufgaben</h3>
-                            </div>
-                            <div class="panel-body">
-                                <table class="table table-condensed table-hover table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>First Name</th>
-                                            <th>Last Name</th>
-                                            <th>Username</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Mark</td>
-                                            <td>Otto</td>
-                                            <td>@mdo</td>
-                                        </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>Jacob</td>
-                                            <td>Thornton</td>
-                                            <td>@fat</td>
-                                        </tr>
-                                        <tr>
-                                            <td>3</td>
-                                            <td>Larry</td>
-                                            <td>the Bird</td>
-                                            <td>@twitter</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
+            <div class="col-md-6">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Spontane Aufgaben</h3>
                     </div>
-                    <div class="col-md-6">
-                        <div class="panel panel-primary">
-                            <div class="panel-heading">
-                                <h3 class="panel-title">Spontane Aufgaben</h3>
-                            </div>
-                            <div class="panel-body">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="btn-toolbar" role="toolbar">
-                                            <div class="btn-group btn-group-vertical">
-                                                <a type="button" class="btn btn-default">Bellbot Rezeption</a>
-                                                <a type="button" class="btn btn-default">Nordic Walking Gruppe</a>
-                                                <a type="button" class="btn btn-default">Wartung im Büro</a>
-                                                <a type="button" class="btn btn-default">1 Stunde Pause</a>
-                                            </div>
-                                            <div class="btn-group btn-group-vertical">
-                                                <a href="#" class="btn btn-default">Left</a>
-                                                <a class="btn btn-default" href="#">Middle</a>
-                                                <a href="#" class="btn btn-default">Right</a>
-                                                <a class="btn btn-default">Click me</a>
-                                            </div>
-                                        </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="btn-toolbar" role="toolbar">
+                                    <div class="btn-group btn-group-vertical">
+                                        <a type="button" class="btn btn-default">Bellbot Rezeption</a>
+                                        <a type="button" class="btn btn-default">Nordic Walking Gruppe</a>
+                                        <a type="button" class="btn btn-default">Wartung im Büro</a>
+                                        <a type="button" class="btn btn-default">1 Stunde Pause</a>
+                                    </div>
+                                    <div class="btn-group btn-group-vertical">
+                                        <a href="#" class="btn btn-default">Left</a>
+                                        <a class="btn btn-default" href="#">Middle</a>
+                                        <a href="#" class="btn btn-default">Right</a>
+                                        <a class="btn btn-default">Click me</a>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="panel panel-primary">
-                            <div class="panel-heading">
-                                <h3 class="panel-title">Abgeschlossene Aufgaben</h3>
-                            </div>
-                            <div class="panel-body">
-                                <table class="table table-condensed table-hover table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>First Name</th>
-                                            <th>Last Name</th>
-                                            <th>Username</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Mark</td>
-                                            <td>Otto</td>
-                                            <td>@mdo</td>
-                                        </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>Jacob</td>
-                                            <td>Thornton</td>
-                                            <td>@fat</td>
-                                        </tr>
-                                        <tr>
-                                            <td>3</td>
-                                            <td>Larry</td>
-                                            <td>the Bird</td>
-                                            <td>@twitter</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Abgeschlossene Aufgaben</h3>
                     </div>
-                    <div class="col-md-6">
-                        <div class="panel panel-primary">
-                            <div class="panel-heading">
-                                <h3 class="panel-title">Routine</h3>
-                            </div>
-                            <div class="panel-body">
-                                <p contenteditable="true">embed Google Calendar here...</p>
-                            </div>
-                        </div>
+                    <div class="panel-body">
+                        <table class="table table-condensed table-hover table-striped">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>First Name</th>
+                                    <th>Last Name</th>
+                                    <th>Username</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Mark</td>
+                                    <td>Otto</td>
+                                    <td>@mdo</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>Jacob</td>
+                                    <td>Thornton</td>
+                                    <td>@fat</td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>Larry</td>
+                                    <td>the Bird</td>
+                                    <td>@twitter</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Routine</h3>
+                    </div>
+                    <div class="panel-body">
+                        <p contenteditable="true">embed Google Calendar here...</p>
                     </div>
                 </div>
             </div>
         </div>
-        <footer class="section section-primary">
-            <div class="container">
-                <div class="row">
-                    <div class="col-sm-6">
-                        <h1>STRANDS project</h1>
-                        <p>Making robots live long and propser</p>
-                    </div>
-                    <div class="col-sm-6">
-                        <p class="text-info text-right">
-                            <br>
-                            <br>
-                        </p>
-                        <div class="row">
-                            <div class="col-md-12 hidden-lg hidden-md hidden-sm text-left">
-                                <a href="#"><i class="fa fa-3x fa-fw fa-instagram text-inverse"></i></a>
-                                <a href="#"><i class="fa fa-3x fa-fw fa-twitter text-inverse"></i></a>
-                                <a href="#"><i class="fa fa-3x fa-fw fa-facebook text-inverse"></i></a>
-                                <a href="#"><i class="fa fa-3x fa-fw fa-github text-inverse"></i></a>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12 hidden-xs text-right">
-                                <a href="#"><i class="fa fa-3x fa-fw fa-twitter text-inverse"></i></a>
-                                <a href="#"><i class="fa fa-3x fa-fw fa-github text-inverse"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </footer>
-    </body>
-
-</html>
+    </div>
+</div>
