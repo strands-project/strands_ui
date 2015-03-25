@@ -64,7 +64,7 @@
     port: '8181',
     width : 320,
     height : 240,
-    topic : '/head_xtion/rgb/image_mono'
+    topic : '/head_xtion/rgb/image_color'
     });
  
   }
