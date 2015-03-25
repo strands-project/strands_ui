@@ -65,6 +65,8 @@ class Webtools(object):
         try:
             p = join(WEBTOOLS_DIR, f)
             rospy.logdebug("trying to serve %s from %s", f, p)
+            if f.endswith('.js'):
+                web.header('Content-Type', 'text/javascript')
             return open(p, 'r').read()
         except:
             web.application.notfound(app)  # file not found

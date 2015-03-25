@@ -1,5 +1,14 @@
 $var title: Status
+$var jsfiles: webtools/roslibjs/include/EventEmitter2/eventemitter2.js webtools/ros2djs/include/EaselJS/easeljs.js webtools/roslibjs/build/roslib.js webtools/ros2djs/build/ros2d.js webtools/nav2djs/build/nav2d.js webtools/mjpegcanvasjs/build/mjpegcanvas.min.js static/dashboard.js
 
+
+
+
+<script>
+window.onload = function() {
+ init();
+}
+</script>
 <div class="section">
     <div class="container">
         <div class="row">
@@ -9,7 +18,7 @@ $var title: Status
                         <h3 class="panel-title">Übersichtskarte</h3>
                     </div>
                     <div class="panel-body">
-                        <p>Panel content</p>
+                        <div id="nav"></div>
                     </div>
                 </div>
             </div>
@@ -64,7 +73,18 @@ $var title: Status
                         <h3 class="panel-title">Roboter Status</h3>
                     </div>
                     <div class="panel-body">
-                        <p>Batterie, Laden?, aktueller Wegpunkt, Letzte Worte,...</p>
+                        <table class="table table-condensed table-striped">
+                            <tbody>
+                                <tr>
+                                    <td class="col-md-3">Zuletzt gesagt:</td>
+                                    <td class="col-md-9"><div id="saytext">famous last words that can be quite long so let's see how that works</div></td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-3">Batterie-Stand:</td>
+                                    <td class="col-md-9"><div id="batterytext">xx%</div></td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
@@ -74,7 +94,9 @@ $var title: Status
                         <h3 class="panel-title">Kamera</h3>
                     </div>
                     <div class="panel-body">
-                        <p>Der zensierte stream der Interaktionskamera</p>
+                        <div class="embed-responsive embed-responsive-4by3">
+                            <div id="mjpeg"></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -91,6 +113,9 @@ $var title: Status
                     </div>
                     <div class="panel-body">
                         <p>Hier wird der aktuelle Inhalt von Henry's Bildschirm widergegeben</p>
+                        <div class="embed-responsive embed-responsive-4by3">
+                            <iframe class="embed-responsive-item" src="http://henry:9090/"></iframe>
+                        </div>
                     </div>
                 </div>
             </div>
