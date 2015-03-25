@@ -29,14 +29,25 @@
         if (message.currently_executing) {
           text = message.execution_queue[0].action + " an " + message.execution_queue[0].start_node_id;
         }
-
-
-
-
         document.getElementById("tasktext").innerHTML = text;
     });
 
   }
+
+  function init_node(ros) {
+    var nodeTopic = new ROSLIB.Topic({
+        ros         : ros,
+        name        : '/current_node',
+        messageType : 'std_msgs/String'
+    });
+    
+    nodeTopic.subscribe(function(message) {
+        // Formats the pose for outputting.
+        document.getElementById("currentnodetext").innerHTML = message.data;
+    });
+
+  }
+
 
 
   function init_battery(ros) {
@@ -51,6 +62,25 @@
         // Formats the pose for outputting.
         var battery = message.lifePercent;
         document.getElementById("batterytext").innerHTML = battery + "%";
+        //document.getElementById("batterytext").update(battery + "%");
+    });
+
+  }
+
+  function init_rosout(ros) {
+    var rosoutListener = new ROSLIB.Topic({
+      ros : ros,
+      name : '/rosout',
+      messageType : 'rosgraph_msgs/Log',
+    });    
+    
+    rosoutListener.subscribe(function(message) {
+        // Formats the pose for outputting.
+
+        var rosout = message.lifePercent;
+        if (message.level > 4) {
+          document.getElementById("rosouttext").innerHTML = "[" + message.header.stamp.secs + "] " + message.msg;
+        }
         //document.getElementById("batterytext").update(battery + "%");
     });
 
@@ -84,6 +114,8 @@
     init_say(ros);
     init_battery(ros);
     init_tasks(ros);
+    init_node(ros);
+    init_rosout(ros);
 
 
     // Create the main viewer.
