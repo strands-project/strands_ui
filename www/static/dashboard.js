@@ -10,10 +10,34 @@
         // Formats the pose for outputting.
         var say = message.data;
 
-        document.getElementById("saytext").value=say;
+        document.getElementById("saytext").innerHTML=say;
     });
 
   }
+
+  function init_tasks(ros) {
+    var taskTopic = new ROSLIB.Topic({
+        ros         : ros,
+        name        : '/current_schedule',
+        messageType : 'strands_executive_msgs/ExecutionStatus'
+    });
+    
+    taskTopic.subscribe(function(message) {
+        // Formats the pose for outputting.
+        var text = "not currently in any task"
+
+        if (message.currently_executing) {
+          text = message.execution_queue[0].action + " an " + message.execution_queue[0].start_node_id;
+        }
+
+
+
+
+        document.getElementById("tasktext").innerHTML = text;
+    });
+
+  }
+
 
   function init_battery(ros) {
     var batteryListener = new ROSLIB.Topic({
@@ -26,8 +50,8 @@
     batteryListener.subscribe(function(message) {
         // Formats the pose for outputting.
         var battery = message.lifePercent;
-
-        document.getElementById("batterytext").value=battery + "%";
+        document.getElementById("batterytext").innerHTML = battery + "%";
+        //document.getElementById("batterytext").update(battery + "%");
     });
 
   }
@@ -37,9 +61,10 @@
     var viewer = new MJPEGCANVAS.Viewer({
     divID : 'mjpeg',
     host : hostname,
+    port: '8181',
     width : 320,
     height : 240,
-    topic : '/image'
+    topic : '/head_xtion/rgb/image_mono'
     });
  
   }
@@ -56,15 +81,16 @@
       url : 'ws://'+hostname+':9090'
     });
     
-    init_say(ros)
-    init_battery(ros)
-    
+    init_say(ros);
+    init_battery(ros);
+    init_tasks(ros);
+
 
     // Create the main viewer.
     var viewer = new ROS2D.Viewer({
       divID : 'nav',
-      width : 600,
-      height : 400
+      width : 400,
+      height : 800
     });
 
     // Subscribes to the robot's OccupancyGrid, which is ROS representation of
@@ -77,7 +103,7 @@
     // scale the viewer to fit the map
     viewer.scaleToDimensions(gridClient.currentGrid.width, 
       gridClient.currentGrid.height);
-    viewer.shift(gridClient.currentGrid.x, gridClient.currentGrid.y-21);
+    viewer.shift(gridClient.currentGrid.x, gridClient.currentGrid.y-10);
     // get a handle to the stage
     var stage;
     if (viewer.scene instanceof createjs.Stage) {
