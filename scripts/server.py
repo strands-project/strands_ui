@@ -74,6 +74,8 @@ class Webtools(object):
 
 if __name__ == "__main__":
     rospy.init_node("aaf_control_server")
+    port = rospy.get_param('~port', 8127)
+
     rospy.loginfo("aaf_control_server started.")
     app = ControlServer()
-    app.run()
+    app.run(port=port)
