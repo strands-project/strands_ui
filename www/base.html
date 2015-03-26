@@ -15,7 +15,7 @@ $def with (page)
         $if page.jsfiles:
             $for f in page.jsfiles.split():
                 <script src="$f" type="text/javascript"></script>
-                
+
 
         <!--
         <script src="webtools/js/display.js"></script>
@@ -50,6 +50,7 @@ $def with (page)
                         $ active='class="active"'
                     <li $:active><a href="$href">$link_title</a></li>
 
+
                 <div class="collapse navbar-collapse" id="navbar-ex-collapse">
                     <ul class="nav navbar-nav navbar-right">
                         $:li("/","Status")
@@ -57,6 +58,7 @@ $def with (page)
                         $:li("/setup","Einrichtung")
                         $:li("/help","Hilfe")
                     </ul>
+                    
                 </div>
 
             </div>
@@ -79,7 +81,7 @@ $def with (page)
                 <div class="row">
                     <div class="col-sm-6">
                         <h1>STRANDS project</h1>
-                        <p>Making robots live long and propser</p>
+                        <p>Making robots live long and prosper</p>
                     </div>
                     <div class="col-sm-6">
                         <p class="text-info text-right">

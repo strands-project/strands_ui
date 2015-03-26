@@ -1,3 +1,9 @@
+  function emergency_stop() {
+    alert("notfall")
+  }
+
+
+
 
   function init_say(ros) {
     var sayTopic = new ROSLIB.Topic({

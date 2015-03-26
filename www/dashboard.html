@@ -23,6 +23,13 @@ document.onready = function() {
                 </div>
             </div>
             <div class="col-md-4">
+                <div class="row">
+                    <button data-toggle="modal" data-target="#emergency_dlg" class="btn btn-default col-md-12 btn-lg btn-danger">Notstopp</button>
+                    <br/>
+                    <br/>
+                    <br/>
+                </div>
+                <div class="row">
                 <div class="panel panel-primary">
                     <div class="panel-heading">
                         <h3 class="panel-title">Anstehende Aufgaben</h3>
@@ -47,6 +54,7 @@ document.onready = function() {
                             </tbody>
                         </table>
                     </div>
+                </div>
                 </div>
             </div>
         </div>
@@ -116,7 +124,7 @@ document.onready = function() {
                         <h3 class="panel-title">Roboter Bildschirm</h3>
                     </div>
                     <div class="panel-body">
-                        <p>Hier wird der aktuelle Inhalt von Henry's Bildschirm widergegeben</p>
+                        <p>Hier wird der aktuelle Inhalt von Henry's Bildschirm wieder gegeben</p>
                         <div class="embed-responsive embed-responsive-4by3">
                             <iframe class="embed-responsive-item" src="http://henry:9090/"></iframe>
                         </div>
@@ -126,3 +134,21 @@ document.onready = function() {
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="emergency_dlg">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Notfall-Progamm aktivieren?</h4>
+      </div>
+      <div class="modal-body">
+        <p>Soll das Notfall-Programm aktiviert werden? Der Roboter wird zur naechsten Sicherheitszone fahren und sich dort abschalten. Sollte er dort im Weg sein, kann er einfach weg geschoben werden. Bitte informieren Sie nach der Aktivierung das Roboter-Admin Team, damit zu einem späteren Zeitpunkt der Betrieb wieder aufgenommen werden kann.</p>
+      </div>
+      <div class="modal-footer">
+        <button onclick="emergency_stop();" type="button" class="btn btn-danger btn-default" data-dismiss="modal">Notfall auslösen</button>
+        <button type="button" class="btn" data-dismiss="modal">Zurück zum Normalbetrieb</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
