@@ -1,11 +1,18 @@
+  var hostname = location.hostname;
+    var ros = new ROSLIB.Ros({
+      url : 'ws://'+hostname+':9090'
+    });
+  
   function emergency_stop() {
-    alert("notfall")
+    console.log("notfall");
+    var service = new ROSLIB.Service({ros : ros, name : '/emergency', serviceType : 'std_srvs/Empty'}); 
+    var request = new ROSLIB.ServiceRequest();  
+    service.callService(request, function(result) {
+      console.log('Called emergency service');
+    });
   }
 
-
-
-
-  function init_say(ros) {
+  function init_say() {
     var sayTopic = new ROSLIB.Topic({
         ros         : ros,
         name        : '/mary_tts/speak',
@@ -21,7 +28,7 @@
 
   }
 
-  function init_tasks(ros) {
+  function init_tasks() {
     var taskTopic = new ROSLIB.Topic({
         ros         : ros,
         name        : '/current_schedule',
@@ -40,7 +47,7 @@
 
   }
 
-  function init_node(ros) {
+  function init_node() {
     var nodeTopic = new ROSLIB.Topic({
         ros         : ros,
         name        : '/current_node',
@@ -56,7 +63,7 @@
 
 
 
-  function init_battery(ros) {
+  function init_battery() {
     var batteryListener = new ROSLIB.Topic({
       ros : ros,
       name : '/battery_state',
@@ -73,7 +80,7 @@
 
   }
 
-  function init_rosout(ros) {
+  function init_rosout() {
     var rosoutListener = new ROSLIB.Topic({
       ros : ros,
       name : '/rosout',
@@ -105,25 +112,7 @@
  
   }
 
-
-
-  function init() {
-    var hostname = location.hostname;
-    // Connecting to ROS.
-
-    init_mjpeg(hostname)
-
-    var ros = new ROSLIB.Ros({
-      url : 'ws://'+hostname+':9090'
-    });
-    
-    init_say(ros);
-    init_battery(ros);
-    init_tasks(ros);
-    init_node(ros);
-    init_rosout(ros);
-
-
+  function init_map(hostname) {
     // Create the main viewer.
     var viewer = new ROS2D.Viewer({
       divID : 'nav',
@@ -138,10 +127,12 @@
       rootObject : viewer.scene
     });
     gridClient.on('change', function() {
-    // scale the viewer to fit the map
-    viewer.scaleToDimensions(gridClient.currentGrid.width, 
-      gridClient.currentGrid.height);
-    viewer.shift(gridClient.currentGrid.x, gridClient.currentGrid.y-10);
+      // scale the viewer to fit the map
+      viewer.scaleToDimensions(gridClient.currentGrid.width, 
+        gridClient.currentGrid.height);
+      viewer.shift(gridClient.currentGrid.x, gridClient.currentGrid.y-10);
+    });
+
     // get a handle to the stage
     var stage;
     if (viewer.scene instanceof createjs.Stage) {
@@ -182,5 +173,16 @@
       robotMarker.rotation = stage.rosQuaternionToGlobalTheta(pose.orientation);
       robotMarker.visible = true;
     });
-   });
+  }
+
+
+
+  function init() {
+    init_mjpeg(hostname)
+    init_say();
+    init_battery();
+    init_tasks();
+    init_node();
+    init_rosout();
+    init_map();
   }
