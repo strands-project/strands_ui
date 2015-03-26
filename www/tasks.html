@@ -14,29 +14,17 @@ $var jsfiles: webtools/roslibjs/include/EventEmitter2/eventemitter2.js webtools/
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>First Name</th>
-                                    <th>Last Name</th>
-                                    <th>Username</th>
+                                    <th>Aufgabe</th>
+                                    <th>Ort</th>
+                                    <th>Erwarteter Beginn</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Mark</td>
-                                    <td>Otto</td>
-                                    <td>@mdo</td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>Jacob</td>
-                                    <td>Thornton</td>
-                                    <td>@fat</td>
-                                </tr>
-                                <tr>
+                                <tr data-toggle="modal" data-target="#deletetask" data-whatever="3">
                                     <td>3</td>
-                                    <td>Larry</td>
-                                    <td>the Bird</td>
-                                    <td>@twitter</td>
+                                    <td>wait</td>
+                                    <td>Rezeption</td>
+                                    <td>12:34</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -49,6 +37,7 @@ $var jsfiles: webtools/roslibjs/include/EventEmitter2/eventemitter2.js webtools/
                         <h3 class="panel-title">Spontane Aufgaben</h3>
                     </div>
                     <div class="panel-body">
+                        Spontane Aufgaben werden schnellstmöglichst vom Roboter ausgeführt.
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="btn-toolbar" role="toolbar">
@@ -72,6 +61,7 @@ $var jsfiles: webtools/roslibjs/include/EventEmitter2/eventemitter2.js webtools/
             </div>
         </div>
         <div class="row">
+<!--
             <div class="col-md-6">
                 <div class="panel panel-primary">
                     <div class="panel-heading">
@@ -111,7 +101,8 @@ $var jsfiles: webtools/roslibjs/include/EventEmitter2/eventemitter2.js webtools/
                     </div>
                 </div>
             </div>
-            <div class="col-md-6">
+-->
+            <div class="col-md-12">
                 <div class="panel panel-primary">
                     <div class="panel-heading">
                         <h3 class="panel-title">Routine</h3>
@@ -127,3 +118,23 @@ $var jsfiles: webtools/roslibjs/include/EventEmitter2/eventemitter2.js webtools/
         </div>
     </div>
 </div>
+
+
+<div class="modal fade" id="deletetask">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Aufgabe Löschen?</h4>
+      </div>
+      <div class="modal-body">
+        <p>Soll die gewählte Aufgabe aus dem Plan entfernt werden?</p>
+      </div>
+      <div class="modal-footer">
+        <button onclick="delete_task(id);" type="button" class="btn btn-confirm btn-default" data-dismiss="modal">Ja</button>
+        <button type="button" class="btn" data-dismiss="modal">Nein</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
