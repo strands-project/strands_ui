@@ -8,7 +8,7 @@
 
   <license>MIT</license>
 
-  <url type="website">https://github.com/strands-project/strands_ui</url> 
+  <url type="website">https://github.com/strands-project/strands_ui</url>
 
   <author email="cdondrup@lincoln.ac.uk">Christian Dondrup</author>
 
@@ -19,6 +19,7 @@
   <run_depend>tf2_web_republisher</run_depend>
   <run_depend>pygame_managed_player</run_depend>
   <run_depend>music_player</run_depend>
+  <run_depend>mongodb_video_player</run_depend>
 
   <export>
     <!--<metapackage/> -->
