@@ -40,6 +40,7 @@ class MediaServer(web.application):
             sets_expression, 'ViewSets',
             '/put_media', 'UploadFile',
             '/get_media/([a-zA-Z0-9]+)', 'DownloadFile',
+            '/get_media_by_name/(.+)', 'DownloadFileByName',
             '/get_media_thumb/([a-zA-Z0-9]+)', 'GetFileThumbnail',
             '/delete_media/([a-zA-Z0-9]+)', 'DeleteFile',
             '/create_set/([a-zA-Z0-9]+)', 'CreateSet',
@@ -186,6 +187,17 @@ class DownloadFile(object):
     def GET(self, file_id):
         try:
             file_ = filesystem.get(ObjectId(str(file_id)))
+        except Exception, e:
+            print e
+            raise web.notfound()
+        
+        web.header("Content-Type", file_.content_type)
+        return file_.read()
+ 
+class DownloadFileByName(object):  
+    def GET(self, file_name):
+        try:
+            file_ = filesystem.get_last_version(file_name)
         except Exception, e:
             print e
             raise web.notfound()
