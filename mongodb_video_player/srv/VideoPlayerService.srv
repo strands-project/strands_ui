@@ -1,0 +1,7 @@
+uint8 PLAY=0
+uint8 PAUSE=1
+uint8 NEXT=2
+uint8 PREVIOUS=3
+uint8 player_action
+---
+string video_name
