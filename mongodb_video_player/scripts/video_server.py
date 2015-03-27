@@ -76,11 +76,13 @@ class VideoServer(object):
             rospy.logwarn("Capture stream could not be opened")
             return
 
+        fps = rospy.Rate(video.get(cv2.cv.CV_CAP_PROP_FPS))
+
         ret, frame = video.read()
         while self.play and ret and not rospy.is_shutdown():
             img = self.bridge.cv2_to_imgmsg(frame, "bgr8")
             self.video_pub.publish(img)
-            self.rate.sleep()
+            fps.sleep()
             ret, frame = video.read()
 
     def pressed_button(self, req):
