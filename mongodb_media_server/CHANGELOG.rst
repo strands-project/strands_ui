@@ -2,6 +2,14 @@
 Changelog for package mongodb_media_server
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Merge pull request `#76 <https://github.com/strands-project/strands_ui/issues/76>`_ from cburbridge/hydro-devel
+  [media_server] Add get by filename.
+* Update readme.
+* Add get by filename.
+* Contributors: Chris Burbridge, Marc Hanheide
+
 0.0.17 (2015-03-24)
 -------------------
 * Add expression matching for file set types.
