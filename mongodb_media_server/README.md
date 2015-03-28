@@ -8,7 +8,7 @@ web interface, and is stored in the mongodb database using GridFS.
 
 # Editing the available content
 
-Got to `http://localhost:8027`
+Goto to `http://localhost:8027`
 
 The 'File Manager' tab allows you to upload files of any type. The 'BLAH Sets' 
 tabs allow you to edit the data groupings. For example, the 'Photo Sets' can
@@ -20,7 +20,13 @@ Every file is accessible through:
 
 `http://localhost:8027/get_media/MEDIAKEY`
 
-where MEDIAKEY is the id of the file. The IDs of the files are retrievable
+where MEDIAKEY is the id of the file, or
+
+`http://localhost:8027/get_media_by_name/name`
+
+where name is the filename of the media file.
+
+The IDs of the files are retrievable
 via the Python api. For example, to retrieve the items in a photo album called
 'AAF-Deploy-InfoTerm':
 
