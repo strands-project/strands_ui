@@ -2,8 +2,8 @@
 Changelog for package mongodb_media_server
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.0.18 (2015-03-28)
+-------------------
 * Merge pull request `#76 <https://github.com/strands-project/strands_ui/issues/76>`_ from cburbridge/hydro-devel
   [media_server] Add get by filename.
 * Update readme.
