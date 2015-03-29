@@ -20,10 +20,10 @@ class MusicPlayerServer(object):
         self.music_set = rospy.get_param('~music_set', 'music_player')
         self.audio_folder = join(expanduser('~'), '.ros', 'music_player')
 
-        self.audio_priority = 0.5
+        self.audio_priority = rospy.get_param('~priority', 0.5)
         self.song_index = 0
         #pygame.mixer.init()
-        self.player = PyGamePlayer(0.2, 1.0, 0.5, frequency=44100, stop_callback=self.stopped_cb)
+        self.player = PyGamePlayer(0.2, 1.0, self.audio_priority, frequency=44100, stop_callback=self.stopped_cb)
 
         hostname = rospy.get_param('mongodb_host')
         port = rospy.get_param('mongodb_port')
