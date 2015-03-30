@@ -1,9 +1,14 @@
 <launch>
     <arg name="music_set" default="aaf_jingles"/>
+    <arg name="audio_priority" default="0.5"/>
+    <arg name="min_volume" default="0.2"/>
+    <arg name="max_volume" default="1.0"/>
 
     <node pkg="sound_player_server" type="sound_player.py" name="sound_player_server" output="screen">
         <!-- The set in mongodb_media_server to use for the waypoint sounds -->
-        <param name="audio_priority" type="double" value="0.5"/>
         <param name="music_set" type="string" value="$(arg music_set)"/>
+        <param name="min_volume" type="double" value="$(arg min_volume)"/>
+        <param name="audio_priority" type="double" value="$(arg audio_priority)"/>
+        <param name="max_volume" type="double" value="$(arg max_volume)"/>
     </node>
 </launch>
