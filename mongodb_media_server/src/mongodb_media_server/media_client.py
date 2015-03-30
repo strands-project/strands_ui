@@ -24,12 +24,24 @@ class MediaClient(object):
             sets.append( (s['name'], len(s['items']), s["_id"]) )
         return sets
     
-    def get_set(self, set_id, set_type_name=""):
+    def get_set(self, set_id=None, set_type_name=""):
         """
         Returns a list of the items in a given set. Set selection either by
         set_id if set_type_name is not filled, otherwise by set_type_name.
         set_type_name should be "(Photo|Video|Music)/NAME".
         """
+        if set_id is None: # get set by type and name
+            split =  set_type_name.split("/")
+            if len(split) != 2:
+                raise Exception("Set_type_name malformed.")
+            typ =  split[0]
+            name =  split[1]
+            sets =  self.get_sets(set_type=typ)
+            try:
+                set_id =  sets[map(lambda x: x[0], sets).index(name)][2]
+            except ValueError,  e:
+                raise Exception("Set '%s' of type '%s' not found." % (name,
+                                                                      typ))
         s =  self._file_sets.find_one({'_id': ObjectId(set_id),})
         if s is None:
             raise Exception("Set id does not exist.")
