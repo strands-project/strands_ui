@@ -2,6 +2,11 @@
 Changelog for package sound_player_server
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* [sound_player_server] Enabling configuration of priority and volume
+* Contributors: Christian Dondrup
+
 0.0.18 (2015-03-28)
 -------------------
 
