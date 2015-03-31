@@ -73,7 +73,8 @@ class PyGamePlayer:
         self.priority = priority
         self.channel = mixer.Channel(id)
         self.announcer_pub = rospy.Publisher(topic,
-                                             SoundPriorities, queue_size=100)
+                                             SoundPriorities,
+                                             latch=True, queue_size=100)
         self.announcer_sub = rospy.Subscriber(topic, SoundPriorities,
                                               self.__priority_update)
         self.dispatcher = _PygameEvDispatcher(self.__finished_playing_cb)
@@ -83,12 +84,7 @@ class PyGamePlayer:
         self.dispatcher.start()
 
     def __finished_playing_cb(self, e):
-        self.cv.acquire()
-        self.playing = e.type
-        rospy.logdebug('stop event=%d', e.type-USEREVENT)
-        self.__announce_priority(0)
-        self.cv.notify_all()
-        self.cv.release()
+        self.__announce_stop(e.type)
         if self.stop_callback is not None:
             self.stop_callback()
 
@@ -127,6 +123,13 @@ class PyGamePlayer:
         event.post(event.Event(e))
         rospy.logdebug('start event=%d', e-USEREVENT)
 
+    def __announce_stop(self, e):
+        self.__announce_priority(0)
+        self.cv.acquire()
+        self.playing = e
+        self.cv.release()
+        rospy.logdebug('stop event=%d', e-USEREVENT)
+
     def __wait_for_end(self):
         self.cv.acquire()
         while not self.playing == END_EVENT:
@@ -141,14 +144,28 @@ class PyGamePlayer:
             mixer.music.pause()
         if self.playing == START_SOUND:
             self.channel.pause()
+        self.__announce_priority(0.0)
+
+    def stop(self):
+        """
+        pause currently playing music or sound
+        """
+        if self.playing == START_MUSIC:
+            mixer.music.stop()
+        if self.playing == START_SOUND:
+            self.channel.stop()
+        event.post(event.Event(END_EVENT))
 
     def unpause(self):
         """
         unpause currently playing music or sound
         """
+
         if self.playing == START_MUSIC:
+            self.__announce_priority(self.priority)
             mixer.music.unpause()
         if self.playing == START_SOUND:
+            self.__announce_priority(self.priority)
             self.channel.unpause()
 
     def play_sound(self, s, blocking=True):
@@ -188,8 +205,9 @@ def cb():
 
 if __name__ == "__main__":
     import sys
-    rospy.init_node('testplayer')
-    player = PyGamePlayer(0.2, 1.0, float(sys.argv[2]), frequency=44100, stop_callback=cb)
+    rospy.init_node('testplayer', anonymous=True)
+    player = PyGamePlayer(0.2, 1.0, float(sys.argv[2]),
+                          frequency=44100, stop_callback=cb)
 #    buf = StringIO("sfdfgdfg")
 #    s = mixer.Sound(buf)
 #    player.play_sound(s)
@@ -198,7 +216,9 @@ if __name__ == "__main__":
     print "played"
     rospy.sleep(0.5)
     player.pause()
-    rospy.sleep(5)
+    rospy.sleep(1)
     player.unpause()
+    rospy.sleep(1)
+    player.stop()
 
     rospy.spin()
