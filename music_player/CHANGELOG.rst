@@ -2,8 +2,8 @@
 Changelog for package music_player
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.0.19 (2015-03-31)
+-------------------
 * Adding parameter for audio priority to music_player
 * Contributors: Christian Dondrup
 

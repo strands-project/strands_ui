@@ -2,8 +2,8 @@
 Changelog for package pygame_managed_player
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.0.19 (2015-03-31)
+-------------------
 * fixes `#81 <https://github.com/strands-project/strands_ui/issues/81>`_: add priorities announcements on pause and new stop() method
 * Contributors: Marc Hanheide
 

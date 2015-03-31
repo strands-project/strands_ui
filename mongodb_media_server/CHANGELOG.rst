@@ -2,8 +2,8 @@
 Changelog for package mongodb_media_server
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.0.19 (2015-03-31)
+-------------------
 * Change web interface page title.
 * Fix file set selection by name.
 * Contributors: Chris Burbridge
