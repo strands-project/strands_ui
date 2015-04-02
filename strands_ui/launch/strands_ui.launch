@@ -12,5 +12,6 @@
     <node pkg="strands_webserver" type="strands_webserver" name="strands_webserver" output="screen">
         <param name="host_ip" value="$(optenv HOST_IP 127.0.0.1)" />
     </node>
+    <node pkg="mongodb_media_server" type="server.py" name="mongodb_media_server" />
 
 </launch>
