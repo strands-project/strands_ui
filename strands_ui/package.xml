@@ -20,6 +20,7 @@
   <run_depend>pygame_managed_player</run_depend>
   <run_depend>music_player</run_depend>
   <run_depend>mongodb_media_server</run_depend>
+  <run_depend>sound_player_server</run_depend>
 
   <export>
     <!--<metapackage/> -->
