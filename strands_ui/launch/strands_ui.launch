@@ -1,10 +1,15 @@
 <launch>
     <arg name="machine" default="localhost" />
     <arg name="user" default="" />
+    <arg name="mary_machine" default="localhost" />
+    <arg name="mary_machine_user" default="" />
 
     <machine name="$(arg machine)" address="$(arg machine)" env-loader="$(optenv ROS_ENV_LOADER )" user="$(arg user)" default="true"/>
 
-    <include file="$(find mary_tts)/launch/ros_mary.launch"/>
+    <include file="$(find mary_tts)/launch/ros_mary.launch">
+        <arg name="machine" value="$(arg mary_machine)"/>
+        <arg name="user" value="$(arg mary_machine_user)"/>
+    </include>
     <include file="$(find rosbridge_server)/launch/rosbridge_websocket.launch" />
 
     <node pkg="tf2_web_republisher" type="tf2_web_republisher" name="tf2_web_republisher" />

@@ -1,6 +1,12 @@
 <launch>
-	<node name="maryserver" pkg="mary_tts" type="marytts-server.sh" cwd="node"/>
+
+        <arg name="machine" default="localhost" />
+        <arg name="user" default="" />
+
+        <machine name="$(arg machine)" address="$(arg machine)" env-loader="$(optenv ROS_ENV_LOADER )" user="$(arg user)" default="false"/>
+	<node name="maryserver" pkg="mary_tts" type="marytts-server.sh" cwd="node" machine="$(arg machine)"/>
 	<node name="ros_mary_bridge" pkg="mary_tts" type="marybridge.py" output="screen" respawn="true">
 	      <param name="voice" value="$(optenv TTS_VOICE dfki-prudence-hsmm)" type="string"/>
+	      <param name="host" value="$(arg machine)" type="string"/>
 	</node>
 </launch>
