@@ -32,6 +32,8 @@ class RosMary(object):
         rospy.Service('ros_mary', ros_mary, self.speak)
         rospy.Service('ros_mary/set_voice', SetVoice, self.set_voice)
         rospy.Service('ros_mary/set_locale', SetLocale, self.set_locale)
+        host = rospy.get_param("~host")
+        self.mary_client.set_host(host)
 
         # What voices are available?
         filelist = os.listdir(os.path.join(roslib.packages.get_pkg_dir("mary_tts"),
