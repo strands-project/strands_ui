@@ -2,8 +2,8 @@
 Changelog for package sound_player_server
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.0.20 (2015-04-10)
+-------------------
 * Adding launch dir to install targets
 * Contributors: Christian Dondrup
 
