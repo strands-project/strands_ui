@@ -2,6 +2,11 @@
 Changelog for package sound_player_server
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Adding launch dir to install targets
+* Contributors: Christian Dondrup
+
 0.0.19 (2015-03-31)
 -------------------
 * [sound_player_server] Enabling configuration of priority and volume

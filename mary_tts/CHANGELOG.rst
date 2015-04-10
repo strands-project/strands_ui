@@ -11,6 +11,13 @@ Changelog for package mary_tts
 * updated changelogs
 * Contributors: Jenkins
 
+Forthcoming
+-----------
+* Update marybridge.py
+  Setting default for mary host to `localhost`
+* Adding support to start mary on different machine
+* Contributors: Christian Dondrup
+
 0.0.19 (2015-03-31)
 -------------------
 
