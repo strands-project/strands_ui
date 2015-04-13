@@ -5,7 +5,7 @@
   
   function emergency_stop() {
     console.log("notfall");
-    var service = new ROSLIB.Service({ros : ros, name : '/emergency', serviceType : 'std_srvs/Empty'}); 
+    var service = new ROSLIB.Service({ros : ros, name : '/go_to_safety_point', serviceType : 'std_srvs/Empty'}); 
     var request = new ROSLIB.ServiceRequest();  
     service.callService(request, function(result) {
       console.log('Called emergency service');

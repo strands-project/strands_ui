@@ -1,6 +1,11 @@
 $var title: Aufgaben
-$var jsfiles: webtools/roslibjs/include/EventEmitter2/eventemitter2.js webtools/ros2djs/include/EaselJS/easeljs.js webtools/roslibjs/build/roslib.js
+$var jsfiles: webtools/roslibjs/include/EventEmitter2/eventemitter2.js webtools/ros2djs/include/EaselJS/easeljs.js webtools/roslibjs/build/roslib.js static/tasks.js
 
+<script>
+document.onready = function() {
+ init();
+}
+</script>
 <div class="section">
     <div class="container">
         <div class="row">
@@ -19,12 +24,13 @@ $var jsfiles: webtools/roslibjs/include/EventEmitter2/eventemitter2.js webtools/
                                     <th>Erwarteter Beginn</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr data-toggle="modal" data-target="#deletetask" data-whatever="3">
+                            <tbody id="tasktext">
+<!--                                <tr data-toggle="modal" data-target="#deletetask" data-whatever="3">
                                     <td>3</td>
                                     <td>wait</td>
                                     <td>Rezeption</td>
                                     <td>12:34</td>
+-->
                                 </tr>
                             </tbody>
                         </table>
