@@ -7,6 +7,10 @@ import web
 import signal
 from os import chdir
 from os.path import join
+from aaf_control_ui.srv import DemandTask
+from aaf_control_ui.srv import DemandTaskResponse
+from strands_executive_msgs.srv import DemandTask as SchedulerDemandTask
+from strands_executive_msgs.srv import DemandTaskRequest as SchedulerDemandTaskRequest
 
 ### Templates
 TEMPLATE_DIR = roslib.packages.get_pkg_dir('aaf_control_ui') + '/www'
@@ -26,6 +30,7 @@ class ControlServer(web.application):
             '/webtools/(.*)', 'Webtools'
         )
         web.application.__init__(self, urls, globals())
+        rospy.Service(rospy.get_name()+'/demand_task', DemandTask, self.demand_task)
         signal.signal(signal.SIGINT, self.signal_handler)
 
     def run(self, port=8027, *middleware):
@@ -36,6 +41,18 @@ class ControlServer(web.application):
         self.stop()
         print "aaf_control_server stopped."
 
+    def demand_task(self, req):
+        r = SchedulerDemandTaskRequest()
+        r.task.action = req.action
+        r.task.start_node_id = req.waypoint
+        r.task.end_node_id = req.waypoint
+        rospy.loginfo('demanding task %s now' % r.task.action)
+        dt = rospy.ServiceProxy('/task_executor/demand_task', SchedulerDemandTask)
+        dt.wait_for_service()
+        dt.call(r)
+        return DemandTaskResponse()
+        
+        
 
 class DashboardPage(object):
     def GET(self):

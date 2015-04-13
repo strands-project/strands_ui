@@ -3,12 +3,14 @@
       url : 'ws://'+hostname+'/rosws'
     });
   
-  function emergency_stop() {
-    console.log("notfall");
-    var service = new ROSLIB.Service({ros : ros, name : '/go_to_safety_point', serviceType : 'std_srvs/Empty'}); 
-    var request = new ROSLIB.ServiceRequest();  
+  function demand_task(action, waypoint) {
+    console.log("demand_task");
+    var service = new ROSLIB.Service({ros : ros, name : '/aaf_control_ui_server/demand_task', serviceType : 'aaf_control_ui/DemandTask'}); 
+    var request = new ROSLIB.ServiceRequest();
+    request.action = action;
+    request.waypoint = waypoint;  
     service.callService(request, function(result) {
-      console.log('Called emergency service');
+      console.log('Called demand_task service');
     });
   }
 
@@ -29,7 +31,7 @@
             var date = new Date(task.execution_time.secs*1000).toLocaleString('de-AT', { timeZone: 'Europe/Vienna' });
             html += "<tr data-toggle=\"modal\" data-target=\"#deletetask\" data-whatever=\" * task.task_id + \">";
             html += "<td>" + task.task_id + "</td>";
-            html += "<td>" + task.task_id + "</td>";
+            html += "<td>" + task.action + "</td>";
             html += "<td>" + task.start_node_id + "</td>";
             html += "<td>" + date + "</td>";
             html += "</tr>";

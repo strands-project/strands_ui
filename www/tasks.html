@@ -48,16 +48,10 @@ document.onready = function() {
                             <div class="col-md-12">
                                 <div class="btn-toolbar" role="toolbar">
                                     <div class="btn-group btn-group-vertical">
-                                        <a type="button" class="btn btn-default">Bellbot Rezeption</a>
-                                        <a type="button" class="btn btn-default">Nordic Walking Gruppe</a>
-                                        <a type="button" class="btn btn-default">Wartung im Büro</a>
-                                        <a type="button" class="btn btn-default">1 Stunde Pause</a>
-                                    </div>
-                                    <div class="btn-group btn-group-vertical">
-                                        <a href="#" class="btn btn-default">Left</a>
-                                        <a class="btn btn-default" href="#">Middle</a>
-                                        <a href="#" class="btn btn-default">Right</a>
-                                        <a class="btn btn-default">Click me</a>
+                                        <a type="button" class="btn btn-default" onclick="demand_task('bellbot', 'Rezeption');">Bellbot</a>
+                                        <a type="button" class="btn btn-default" onclick="demand_task('walking_group_slow', 'WayPoint3');">Nordic Walking Gruppe (langsam)</a>
+                                        <a type="button" class="btn btn-default" onclick="demand_task('walking_group_fast', 'WayPoint45');">Nordic Walking Gruppe (schnell)</a>
+                                        <a type="button" class="btn btn-default" onclick="demand_task('wait_node', 'WayPoint33');">Wartung</a>
                                     </div>
                                 </div>
                             </div>
