@@ -2,8 +2,8 @@
 Changelog for package sound_player_server
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.0.21 (2015-04-15)
+-------------------
 * Namespaced sound_player_server service
 * Contributors: Nils Bore
 
