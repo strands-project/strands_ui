@@ -11,6 +11,9 @@ Changelog for package strands_ui
 * updated changelogs
 * Contributors: Jenkins
 
+Forthcoming
+-----------
+
 0.0.20 (2015-04-10)
 -------------------
 * Adding support to start mary on different machine
