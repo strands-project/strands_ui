@@ -61,7 +61,7 @@ class SoundPlayerServer(object):
             outfile.write(filestr)
             outfile.close()
 
-        self.service = rospy.Service('sound_player_service', PlaySoundService, self.pressed_button)
+        self.service = rospy.Service('~sound_player_service', PlaySoundService, self.pressed_button)
 
         while not rospy.is_shutdown():
             rospy.sleep(1)
