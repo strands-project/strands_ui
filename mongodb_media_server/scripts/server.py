@@ -193,9 +193,12 @@ class DownloadFile(object):
         except Exception, e:
             print e
             raise web.notfound()
-        
+        content=file_.read()
         web.header("Content-Type", file_.content_type)
-        return file_.read()
+        web.header("Content-Length", len(content))
+        if file_.content_type.startswith("video"):
+            web.header("Accept-Ranges","bytes")
+        return content
  
 class DownloadFileByName(object):  
     def GET(self, file_name):
@@ -205,8 +208,12 @@ class DownloadFileByName(object):
             print e
             raise web.notfound()
         
+        content=file_.read()
         web.header("Content-Type", file_.content_type)
-        return file_.read()
+        web.header("Content-Length", len(content))
+        if file_.content_type.startswith("video"):
+            web.header("Accept-Ranges","bytes")
+        return content
     
 class DeleteFile(object):
     def GET(self, file_id):
