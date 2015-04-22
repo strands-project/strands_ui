@@ -127,6 +127,7 @@ class PyGamePlayer:
         self.__announce_priority(0)
         self.cv.acquire()
         self.playing = e
+        self.cv.notify_all()
         self.cv.release()
         rospy.logdebug('stop event=%d', e-USEREVENT)
 
