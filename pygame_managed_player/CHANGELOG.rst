@@ -2,8 +2,8 @@
 Changelog for package pygame_managed_player
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.0.22 (2015-04-22)
+-------------------
 * add the `notify_all()` on stop event to fix `#89 <https://github.com/strands-project/strands_ui/issues/89>`_
 * Contributors: Marc Hanheide
 
