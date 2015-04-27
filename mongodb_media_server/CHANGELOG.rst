@@ -2,6 +2,11 @@
 Changelog for package mongodb_media_server
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Add content headers for video.
+* Contributors: Chris Burbridge
+
 0.0.22 (2015-04-22)
 -------------------
 
