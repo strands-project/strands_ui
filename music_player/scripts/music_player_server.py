@@ -60,6 +60,7 @@ class MusicPlayerServer(object):
         self.file_names = [join(self.audio_folder, f[0]) for f in file_set]
 
         self.paused = True
+        self.playing = False
         self.service = rospy.Service('music_player_service', MusicPlayerService, self.pressed_button)
         while not rospy.is_shutdown():
             #if not self.paused and not pygame.mixer.music.get_busy():
@@ -77,6 +78,7 @@ class MusicPlayerServer(object):
             self.song_index = 0
         self.player.play_music(self.file_names[self.song_index], blocking=False)
         self.paused = False
+        self.playing = True
 
     def pressed_button(self, req):
         if req.player_action == MusicPlayerServiceRequest.PLAY:
@@ -84,10 +86,18 @@ class MusicPlayerServer(object):
             #pygame.mixer.music.play()
             self.player.play_music(self.file_names[self.song_index], blocking=False)
             self.paused = False
+            self.playing = True
         elif req.player_action == MusicPlayerServiceRequest.PAUSE:
             self.paused = True
             #pygame.mixer.music.stop()
             self.player.pause()
+        elif req.player_action == MusicPlayerServiceRequest.RESUME:
+            if self.playing and self.paused:
+                self.player.unpause()
+            elif not self.playing:
+                self.player.play_music(self.file_names[self.song_index], blocking=False)
+            self.playing = True
+            self.paused = False
         elif req.player_action == MusicPlayerServiceRequest.PREVIOUS:
             #pygame.mixer.music.stop()
             self.song_index = self.song_index - 1
@@ -109,7 +119,7 @@ class MusicPlayerServer(object):
             self.player.play_music(self.file_names[self.song_index], blocking=False)
             self.paused = False
         else:
-            rospy.logwarn('Service argument has to be 0-3: PLAY, PAUSE, NEXT, PREVIOUS')
+            rospy.logwarn('Service argument has to be 0-4: PLAY, PAUSE, NEXT, PREVIOUS, RESUME')
 
         return MusicPlayerServiceResponse(self.file_names[self.song_index], self.audio_priority)
 
