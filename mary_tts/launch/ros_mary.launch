@@ -7,6 +7,7 @@
 	<node name="maryserver" pkg="mary_tts" type="marytts-server.sh" cwd="node" machine="$(arg machine)"/>
 	<node name="ros_mary_bridge" pkg="mary_tts" type="marybridge.py" output="screen" respawn="true">
 	      <param name="voice" value="$(optenv TTS_VOICE dfki-prudence-hsmm)" type="string"/>
+              <param name="locale" value="$(optenv TTS_LOCALE en_GB)" type="string"/>
 	      <param name="host" value="$(arg machine)" type="string"/>
 	</node>
 </launch>

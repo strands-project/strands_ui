@@ -62,7 +62,12 @@ class RosMary(object):
                 print " - ", voice
                 self._voices.append(voice)
         voice = rospy.get_param("~voice")
-        print "Selected locale:", self.mary_client.locale
+        locale = rospy.get_param("~locale")
+        if locale not in self._locales:
+            rospy.logwarn("Selected voice '%s' not available, using default!" % locale)
+        else:
+            self.mary_client.locale = locale
+            print "Selected locale:", self.mary_client.locale
         if voice not in self._voices:
             rospy.logwarn("Selected voice '%s' not available, using default!" % voice)
         else:
