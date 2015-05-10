@@ -11,6 +11,11 @@ Changelog for package mary_tts
 * updated changelogs
 * Contributors: Jenkins
 
+Forthcoming
+-----------
+* Allowing to set the locale via parameter using environment variable
+* Contributors: Christian Dondrup
+
 0.0.24 (2015-05-05)
 -------------------
 
