@@ -1,6 +1,6 @@
   var hostname = location.hostname;
     var ros = new ROSLIB.Ros({
-      url : 'wss://'+hostname+'/rosws'
+      url : rosws_url
     });
   
   function emergency_stop() {
@@ -104,7 +104,7 @@
     var viewer = new MJPEGCANVAS.Viewer({
     divID : 'mjpeg',
     host : hostname,
-    port: '/video',
+    port: mjpeg_suffix,
     width : 320,
     height : 240,
     topic : '/head_xtion/rgb/image_color'

@@ -1,6 +1,6 @@
   var hostname = location.hostname;
     var ros = new ROSLIB.Ros({
-      url : 'ws://'+hostname+'/rosws'
+      url : rosws_url
     });
   
   function demand_task(action, waypoint) {

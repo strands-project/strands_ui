@@ -6723,3 +6723,16 @@ body {
   background-attachment: fixed;
 }
 /* PINGENDO COMMENT DO NOT REMOVE */
+
+
+
+.log-table {
+    font-size: 10px;
+    font-family: Courier;
+    width: 100%;
+    height: 600px !important;
+    overflow: scroll;
+    display:block;
+}
+
+

@@ -16,8 +16,16 @@ from strands_executive_msgs.srv import DemandTaskRequest as SchedulerDemandTaskR
 TEMPLATE_DIR = roslib.packages.get_pkg_dir('aaf_control_ui') + '/www'
 WEBTOOLS_DIR = roslib.packages.get_pkg_dir('strands_webtools')
 
-render = web.template.render(TEMPLATE_DIR, base='base')
+
+html_config = {
+    'rosws_suffix': ':9090',
+    'mjpeg_suffix': ':8181',
+    'rosws_protocol': 'ws'
+}
+
+render = web.template.render(TEMPLATE_DIR, base='base', globals=globals())
 chdir(TEMPLATE_DIR)
+
 
 
 class ControlServer(web.application):
@@ -26,7 +34,7 @@ class ControlServer(web.application):
             '/', 'DashboardPage',
             '/tasks', 'TasksPage',
             '/setup', 'SetupPage',
-            '/help', 'HelpPage',
+            '/admin', 'AdminPage',
             '/webtools/(.*)', 'Webtools'
         )
         web.application.__init__(self, urls, globals())
@@ -74,6 +82,11 @@ class HelpPage(object):
         return render.help()
 
 
+class AdminPage(object):
+    def GET(self):
+        return render.admin()
+
+
 class Webtools(object):
     """
     proxies all requests to strands_webtools
@@ -92,6 +105,9 @@ class Webtools(object):
 if __name__ == "__main__":
     rospy.init_node("aaf_control_server")
     port = rospy.get_param('~port', 8127)
+    html_config['rosws_suffix'] = rospy.get_param('~rosws_suffix', "/rosws")
+    html_config['mjpeg_suffix'] = rospy.get_param('~mjpeg_suffix', "/video")
+    html_config['rosws_protocol'] = rospy.get_param('~rosws_protocol', "wss")
 
     rospy.loginfo("aaf_control_server started.")
     app = ControlServer()
