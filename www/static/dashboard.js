@@ -1,6 +1,6 @@
   var hostname = location.hostname;
     var ros = new ROSLIB.Ros({
-      url : 'ws://'+hostname+'/rosws'
+      url : 'wss://'+hostname+'/rosws'
     });
   
   function emergency_stop() {
