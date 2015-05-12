@@ -9,8 +9,15 @@ from os import chdir
 from os.path import join
 from aaf_control_ui.srv import DemandTask
 from aaf_control_ui.srv import DemandTaskResponse
-from strands_executive_msgs.srv import DemandTask as SchedulerDemandTask
-from strands_executive_msgs.srv import DemandTaskRequest as SchedulerDemandTaskRequest
+
+from strands_executive_msgs.srv import CreateTask
+from strands_executive_msgs.msg import Task
+
+from strands_executive_msgs.srv import AddTasks
+from strands_executive_msgs.srv import AddTasksRequest
+
+#from strands_executive_msgs.srv import DemandTask as SchedulerDemandTask
+#from strands_executive_msgs.srv import DemandTaskRequest as SchedulerDemandTaskRequest
 
 ### Templates
 TEMPLATE_DIR = roslib.packages.get_pkg_dir('aaf_control_ui') + '/www'
@@ -40,6 +47,7 @@ class ControlServer(web.application):
         web.application.__init__(self, urls, globals())
         rospy.Service(rospy.get_name()+'/demand_task', DemandTask, self.demand_task)
         signal.signal(signal.SIGINT, self.signal_handler)
+        self.demand_priority = 100
 
     def run(self, port=8027, *middleware):
         func = self.wsgifunc(*middleware)
@@ -50,14 +58,47 @@ class ControlServer(web.application):
         print "aaf_control_server stopped."
 
     def demand_task(self, req):
-        r = SchedulerDemandTaskRequest()
-        r.task.action = req.action
-        r.task.start_node_id = req.waypoint
-        r.task.end_node_id = req.waypoint
-        rospy.loginfo('demanding task %s now' % r.task.action)
-        dt = rospy.ServiceProxy('/task_executor/demand_task', SchedulerDemandTask)
-        dt.wait_for_service()
-        dt.call(r)
+        factory_name = '/' + req.action + "_create"
+        start_after = rospy.Time.now()
+        rospy.loginfo(req)
+        end_before = start_after + rospy.Duration(secs=req.duration)
+        sa = "start_after: {secs: %d, nsecs: %d}" % \
+             (start_after.secs, start_after.nsecs)
+        eb = "end_before: {secs: %d, nsecs: %d}" % \
+                 (end_before.secs, end_before.nsecs)
+        sn = "start_node_id: '%s'" % req.waypoint
+        en = "end_node_id: '%s'" % req.waypoint
+        yaml = "{%s, %s, %s, %s}" % (sa, eb, sn, en) 
+        rospy.loginfo("calling with pre-populated yaml: %s" % yaml)
+
+        try:
+            factory = rospy.ServiceProxy(factory_name, CreateTask)
+            t = factory.call(yaml).task
+            rospy.loginfo("got the task back: %s" % str(t))
+        except Exception as e:
+            rospy.logwarn("Couldn't instantiate task from factory %s."
+                          "error: %s."
+                          "Using default constructor." %
+                          (factory_name, str(e)))
+            t = Task()
+            t.action = req.action
+        # use maximum duration of the one given here and the one returned from the constructor
+        t.max_duration.secs = max(t.max_duration.secs, req.duration)
+        # allow to end this 60 seconds after the duration 
+        # to give some slack for scheduling
+        t.end_before = t.end_before + rospy.Duration(secs=60)
+
+        t.priority = self.demand_priority
+        tasks = [t]
+        rospy.loginfo('add task %s to schedule now' % t)
+        dt = rospy.ServiceProxy('/task_executor/add_tasks', AddTasks)
+        try:
+            rospy.loginfo(dt(tasks))
+        except Exception as e:
+            rospy.logerr("Couldn't add task to scheduler. "
+                         "error: %s." % str(e))
+            t = Task()
+            t.action = req.action
         return DemandTaskResponse()
         
         
@@ -103,7 +144,7 @@ class Webtools(object):
 
 
 if __name__ == "__main__":
-    rospy.init_node("aaf_control_server")
+    rospy.init_node("aaf_control_ui_server")
     port = rospy.get_param('~port', 8127)
     html_config['rosws_suffix'] = rospy.get_param('~rosws_suffix', "/rosws")
     html_config['mjpeg_suffix'] = rospy.get_param('~mjpeg_suffix', "/video")

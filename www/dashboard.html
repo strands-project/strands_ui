@@ -12,7 +12,7 @@ document.onready = function() {
 <div class="section">
     <div class="container">
         <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-6">
                 <div class="panel panel-primary">
                     <div class="panel-heading">
                         <h3 class="panel-title">Übersichtskarte</h3>
@@ -22,39 +22,55 @@ document.onready = function() {
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <div class="row">
                     <button data-toggle="modal" data-target="#emergency_dlg" class="btn btn-default col-md-12 btn-lg btn-danger">Notstopp</button>
                     <br/>
                     <br/>
                     <br/>
                 </div>
+
+	            <div class="row">
+	                <div class="panel panel-primary">
+	                    <div class="panel-heading">
+	                        <h3 class="panel-title">Kamera</h3>
+	                    </div>
+	                    <div class="panel-body">
+	                        <div class="embed-responsive embed-responsive-4by3">
+	                            <div id="mjpeg"></div>
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>
+
+
                 <div class="row">
-                <div class="panel panel-primary">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Anstehende Aufgaben</h3>
-                    </div>
-                    <div class="panel-body">
-                        <table class="table table-condensed table-hover table-striped">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>First Name</th>
-                                    <th>Last Name</th>
-                                    <th>Username</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>3</td>
-                                    <td>Larry</td>
-                                    <td>the Bird</td>
-                                    <td>@twitter</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+	                <div class="panel panel-primary">
+	                    <div class="panel-heading">
+	                        <h3 class="panel-title">Anstehende Aufgaben</h3>
+	                    </div>
+	                    <div class="panel-body">
+	                        <table class="table table-condensed table-striped">
+	                            <thead>
+	                                <tr>
+	                                    <th>#</th>
+	                                    <th>Aufgabe</th>
+	                                    <th>Ort</th>
+	                                    <th>Erwarteter Beginn</th>
+	                                </tr>
+	                            </thead>
+	                            <tbody id="tasklist">
+	<!--                                <tr data-toggle="modal" data-target="#deletetask" data-whatever="3">
+	                                    <td>3</td>
+	                                    <td>wait</td>
+	                                    <td>Rezeption</td>
+	                                    <td>12:34</td>
+	-->
+	                                </tr>
+	                            </tbody>
+	                        </table>
+	                    </div>
+	                </div>
                 </div>
             </div>
         </div>
@@ -63,7 +79,7 @@ document.onready = function() {
 <div class="section">
     <div class="container">
         <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-12">
                 <div class="panel panel-primary">
                     <div class="panel-heading">
                         <h3 class="panel-title">Roboter Status</h3>
@@ -73,19 +89,15 @@ document.onready = function() {
                             <tbody>
                                 <tr>
                                     <td class="col-md-3">Aktuelle Aufgabe:</td>
-                                    <td class="col-md-9"><p id="tasktext">Whatever I'm doing right now</p></td>
+                                    <td class="col-md-9"><p id="tasktext">-</p></td>
                                 </tr>
                                 <tr>
                                     <td class="col-md-3">Zuletzt gesagt:</td>
-                                    <td class="col-md-9"><p id="saytext">famous last words that can be quite long so let's see how that works</p></td>
+                                    <td class="col-md-9"><p id="saytext">-</p></td>
                                 </tr>
                                 <tr>
                                     <td class="col-md-3">Batterie-Stand:</td>
                                     <td class="col-md-9"><p id="batterytext">xx%</p></td>
-                                </tr>
-                                <tr>
-                                    <td class="col-md-3">Kilometer-Stand:</td>
-                                    <td class="col-md-9"><p id="mileagetext">XXX</p></td>
                                 </tr>
                                 <tr>
                                     <td class="col-md-3">Aktueller Wegpunkt:</td>
@@ -97,18 +109,6 @@ document.onready = function() {
                                 </tr>
                             </tbody>
                         </table>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="panel panel-primary">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Kamera</h3>
-                    </div>
-                    <div class="panel-body">
-                        <div class="embed-responsive embed-responsive-4by3">
-                            <div id="mjpeg"></div>
-                        </div>
                     </div>
                 </div>
             </div>
