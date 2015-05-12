@@ -14,7 +14,7 @@
     rosoutListener.subscribe(function(message) {
         // Formats the pose for outputting.
 
-        if (message.level >=2 ) {
+        if (message.level > 2 ) {
           var table = document.getElementById("rosout")
           var row = table.insertRow(0);
 
