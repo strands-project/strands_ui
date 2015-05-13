@@ -59,7 +59,7 @@ class ControlServer(web.application):
 
     def demand_task(self, req):
         factory_name = '/' + req.action + "_create"
-        start_after = rospy.Time.now()
+        start_after = rospy.Time.now()+rospy.Duration(secs=30)
         rospy.loginfo(req)
         end_before = start_after + rospy.Duration(secs=req.duration)
         sa = "start_after: {secs: %d, nsecs: %d}" % \
@@ -76,17 +76,19 @@ class ControlServer(web.application):
             t = factory.call(yaml).task
             rospy.loginfo("got the task back: %s" % str(t))
         except Exception as e:
-            rospy.logwarn("Couldn't instantiate task from factory %s."
+            rospy.logerr("Couldn't instantiate task from factory %s."
                           "error: %s."
-                          "Using default constructor." %
+                          "This is an error." %
                           (factory_name, str(e)))
-            t = Task()
-            t.action = req.action
+            raise
         # use maximum duration of the one given here and the one returned from the constructor
         t.max_duration.secs = max(t.max_duration.secs, req.duration)
+        t.max_duration.nsecs = 0
+	t.start_node_id = req.waypoint
+	t.end_node_id = req.waypoint
         # allow to end this 60 seconds after the duration 
         # to give some slack for scheduling
-        t.end_before = t.end_before + rospy.Duration(secs=60)
+        #t.end_before = t.end_before + rospy.Duration(secs=60)
 
         t.priority = self.demand_priority
         tasks = [t]
