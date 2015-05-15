@@ -5,7 +5,7 @@
   
   function emergency_stop() {
     console.log("notfall");
-    var service = new ROSLIB.Service({ros : ros, name : '/safety_stop', serviceType : 'std_srvs/Empty'}); 
+    var service = new ROSLIB.Service({ros : ros, name : '/go_to_safety_point', serviceType : 'std_srvs/Empty'}); 
     var request = new ROSLIB.ServiceRequest();  
     service.callService(request, function(result) {
       console.log('Called emergency service');
@@ -20,13 +20,13 @@
   function init_say() {
     var sayTopic = new ROSLIB.Topic({
         ros         : ros,
-        name        : '/mary_tts/speak',
-        messageType : 'std_msgs/String'
+        name        : '/speak/goal',
+        messageType : 'mary_tts/maryttsActionGoal'
     });
     
     sayTopic.subscribe(function(message) {
         // Formats the pose for outputting.
-        var say = message.data;
+        var say = message.goal.text;
 
         document.getElementById("saytext").innerHTML=say;
     });
@@ -48,9 +48,29 @@
           text = message.execution_queue[0].action + " an " + message.execution_queue[0].start_node_id;
         }
         document.getElementById("tasktext").innerHTML = text;
+
+        html = ""
+        for (var t=0; t < message.execution_queue.length; t++) {
+            var task = message.execution_queue[t];
+            var date = new Date(task.execution_time.secs*1000).toLocaleString('de-AT', { timeZone: 'Europe/Vienna' });
+            html += "<tr data-toggle=\"modal\" data-target=\"#deletetask\" data-whatever=\" * task.task_id + \">";
+            html += "<td>" + task.task_id + "</td>";
+            html += "<td>" + task.action + "</td>";
+            html += "<td>" + task.start_node_id + "</td>";
+            html += "<td>" + date + "</td>";
+            html += "</tr>";
+           
+        }
+        document.getElementById("tasklist").innerHTML = html;
+
+
+
     });
 
   }
+
+
+
 
   function init_node() {
     var nodeTopic = new ROSLIB.Topic({
