@@ -5,10 +5,15 @@
   
   function emergency_stop() {
     console.log("notfall");
-    var service = new ROSLIB.Service({ros : ros, name : '/safety_stop', serviceType : 'std_srvs/Empty'}); 
+    var service = new ROSLIB.Service({ros : ros, name : '/emergency_stop', serviceType : 'std_srvs/Empty'}); 
     var request = new ROSLIB.ServiceRequest();  
     service.callService(request, function(result) {
       console.log('Called emergency service');
+    });
+    var service = new ROSLIB.Service({ros : ros, name : '/deployment_control/pause', serviceType : 'std_srvs/Empty'});
+    var request = new ROSLIB.ServiceRequest();
+    service.callService(request, function(result) {
+      console.log('Called pause service');
     });
   }
 
