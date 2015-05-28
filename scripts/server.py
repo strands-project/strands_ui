@@ -102,11 +102,20 @@ class ControlServer(web.application):
             t = Task()
             t.action = req.action
         return DemandTaskResponse()
-        
-        
+
+def set_ws_protocol():
+    forward =  web.ctx.env.get('HTTP_X_FORWARDED_HOST','')
+    if 'lcas.lincoln.ac.uk' in forward:
+        html_config['rosws_protocol'] = 'wss'
+    else:
+        html_config['rosws_protocol'] = 'ws'
+    print html_config['rosws_protocol']
+
+
 
 class DashboardPage(object):
     def GET(self):
+        set_ws_protocol()
         return render.dashboard()
 
 

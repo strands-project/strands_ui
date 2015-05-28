@@ -1,8 +1,21 @@
   var hostname = location.hostname;
-    var ros = new ROSLIB.Ros({
-      url : rosws_url
-    });
+  console.log(hostname);
+  var ros = new ROSLIB.Ros({
+    url : rosws_url
+  });
   
+  ros.on('connection', function() {
+    console.log('Connected to websocket server.');
+  });
+
+  ros.on('error', function(error) {
+    console.log('Error connecting to websocket server: ', error);
+  });
+
+  ros.on('close', function() {
+    console.log('Connection to websocket server closed.');
+  });
+
   function emergency_stop() {
     console.log("notfall");
     var service = new ROSLIB.Service({ros : ros, name : '/go_to_safety_point', serviceType : 'std_srvs/Empty'}); 
