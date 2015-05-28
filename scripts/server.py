@@ -121,21 +121,25 @@ class DashboardPage(object):
 
 class TasksPage(object):
     def GET(self):
+        set_ws_protocol()
         return render.tasks()
 
 
 class SetupPage(object):
     def GET(self):
+        set_ws_protocol()
         return render.setup()
 
 
 class HelpPage(object):
     def GET(self):
+        set_ws_protocol()
         return render.help()
 
 
 class AdminPage(object):
     def GET(self):
+        set_ws_protocol()
         return render.admin()
 
 
