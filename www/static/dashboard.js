@@ -216,7 +216,6 @@
 
 
   function init() {
-    init_mjpeg(hostname)
     init_say();
     init_battery();
     init_tasks();
