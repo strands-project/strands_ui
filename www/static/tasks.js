@@ -15,6 +15,16 @@
     });
   }
 
+  function clear_schedule() {
+    console.log("clear_schedule");
+    var service = new ROSLIB.Service({ros : ros, name : '/task_executor/clear_schedule', serviceType : 'std_srvs/Empty'}); 
+    var request = new ROSLIB.ServiceRequest();
+    service.callService(request, function(result) {
+      console.log('Called clear_schedule service: ' + result);
+    });
+  }
+
+
   function init_tasks() {
     var taskTopic = new ROSLIB.Topic({
         ros         : ros,
