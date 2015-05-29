@@ -33,12 +33,18 @@ document.onready = function() {
 	            <div class="row">
 	                <div class="panel panel-primary">
 	                    <div class="panel-heading">
-	                        <h3 class="panel-title">Kamera</h3>
+	                        <h3 class="panel-title">Kameras</h3>
 	                    </div>
 	                    <div class="panel-body">
+                                <div class="embed-responsive embed-responsive-4by3">
+				<H3>Interaktions-Kamera</H3>
+                                    <!--<div id="mjpeg"></div>-->
+                                <img width="100%" src="/video/stream?topic=/interaction_camera/throttled/image?width=320?height=240"/>
+                                </div><br/>
 	                        <div class="embed-responsive embed-responsive-4by3">
+                                <H3>Kopf-Kamera</H3>
 	                            <!--<div id="mjpeg"></div>-->
-                                <img src="/video/stream?topic=/head_camera/throttled/image?width=320?height=240"/>
+                                <img width="100%" src="/video/stream?topic=/head_camera/throttled/image?width=320?height=240"/>
 	                        </div>
 	                    </div>
 	                </div>
@@ -127,7 +133,7 @@ document.onready = function() {
                     </div>
                     <div class="panel-body">
                         <div class="embed-responsive embed-responsive-4by3">
-                            <img src="/stream"></div>
+                            <img width="100%" src="/stream"></div>
                         </div>
                     </div>
                 </div>
