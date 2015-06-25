@@ -1,0 +1,23 @@
+sec_map:        "Map"
+sec_tasks:      "Tasks"
+sec_camera:     "Camera"
+sec_state:      "Robot State"
+sec_screen:     "Robot Screen"
+sec_dem_task:   "On-demand Tasks"
+#
+but_emergency:  "Emergency Stop"
+but_task_clear: "Clear Task List"
+#
+text_demand:    "On-demand tasks will be scheduled as soon as possible"
+table_tasks:    "<th>#</th><th>Task</th><th>Place</th><th>Planned Start</th>"
+#
+label_task:     "Current task"
+label_said:     "Last said"
+label_batt:     "Battery level"
+label_wp:       "Current waypoint"
+label_roserr:   "Last error"
+#
+text_emergency: "Soll das Notfall-Programm aktiviert werden? Der Roboter wird zur naechsten Sicherheitszone fahren und sich dort abschalten. Sollte er dort im Weg sein, kann er einfach weg geschoben werden. Bitte informieren Sie nach der Aktivierung das Roboter-Admin Team, damit zu einem späteren Zeitpunkt der Betrieb wieder aufgenommen werden kann."
+title_emergency: "Notfall-Progamm aktivieren?"
+but_emergency_yes: "Notfall ausloesen"
+but_emergency_no: "Zurück zum Normalbetrieb"

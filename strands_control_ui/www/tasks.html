@@ -1,4 +1,4 @@
-$var title: Aufgaben
+$var title: Tasks
 $var jsfiles: webtools/roslibjs/include/EventEmitter2/eventemitter2.js webtools/ros2djs/include/EaselJS/easeljs.js webtools/roslibjs/build/roslib.js static/tasks.js
 
 <script>
@@ -12,17 +12,13 @@ document.onready = function() {
             <div class="col-md-6">
                 <div class="panel panel-primary">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Anstehende Aufgaben</h3>
+                        <h3 class="panel-title">$LC['sec_tasks']</h3>
                     </div>
                     <div class="panel-body">
                         <table class="table table-condensed table-hover table-striped">
                             <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Aufgabe</th>
-                                    <th>Ort</th>
-                                    <th>Erwarteter Beginn</th>
-                                </tr>
+                                    <tr>$:LC['table_tasks']
+                                    </tr>
                             </thead>
                             <tbody id="tasktext">
 <!--                                <tr data-toggle="modal" data-target="#deletetask" data-whatever="3">
@@ -37,7 +33,7 @@ document.onready = function() {
                     </div>
                 </div>
                 <div class="row">
-                    <button onclick="clear_schedule();" class="btn btn-default col-md-12 btn-lg btn-default">Aufgaben-Liste leeren</button>
+                    <button onclick="clear_schedule();" class="btn btn-default col-md-12 btn-lg btn-default">$LC['but_task_clear']</button>
                     <br/>
                     <br/>
                     <br/>
@@ -47,47 +43,20 @@ document.onready = function() {
             <div class="col-md-6">
                 <div class="panel panel-primary">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Spontane Aufgaben</h3>
+                        <h3 class="panel-title">$LC['sec_dem_task']</h3>
                     </div>
                     <div class="panel-body">
-                        Spontane Aufgaben werden schnellstmöglichst vom Roboter ausgeführt. 
+                        $LC['text_demand']
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="panel panel-default">
-									<div class="panel-heading">Bellbot</div>
-									<div class="panel-body">
-								    	<a type="button" class="btn btn-sm btn-default" onclick="demand_task('bellbot', 'Rezeption', 1800);">Start von Rezeption (0.5h)</a>
-								  	</div>
-								</div>
-
-                                <div class="panel panel-default">
-									<div class="panel-heading">Info-Terminal</div>
-									<div class="panel-body">
-								    	<a type="button" class="btn btn-sm btn-default" onclick="demand_task('info_task_server', 'WayPoint4', 1800);">Ambulanz (0.5h)</a>
-								    	<a type="button" class="btn btn-sm btn-default" onclick="demand_task('info_task_server', 'ChargingPoint', 3600);">Ladestation (1h)</a>
-                                                                        <a type="button" class="btn btn-sm btn-default" onclick="demand_task('info_task_server', 'ChargingPoint', 600);">Ladestation (10min)</a>
-								    	<a type="button" class="btn btn-sm btn-default" onclick="demand_task('info_task_server', 'WayPoint17', 1800);">Lobby (0.5h)</a>
-								  	</div>
-								</div>
-
-                                <div class="panel panel-default">
-									<div class="panel-heading">Nordic Walking Gruppe</div>
-									<div class="panel-body">
-								    	<a type="button" class="btn btn-sm btn-default" onclick="demand_task('walking_group_slow', 'WalkingGruppeStart', 3600);">langsame Gruppe (1h)</a>
-								    	<a type="button" class="btn btn-sm btn-default" onclick="demand_task('walking_group_fast', 'WalkingGruppeStart', 3600);">schnelle Gruppe (1h)</a>
-								  	</div>
-								</div>
-
-                                <div class="panel panel-default">
-									<div class="panel-heading">Wartung</div>
-									<div class="panel-body">
-								    	<a type="button" class="btn btn-sm btn-default" onclick="demand_task('info_task_server', 'ChargingPoint', 3600);">Wartung (1h, AAF)</a>
-								    	<div class="btn-group btn-group-horizontal">
-								    		<a type="button" class="btn btn-sm btn-default" onclick="demand_task('info_task_server', 'ChargingPoint', 3600);">1h Laden</a>
-								    		<a type="button" class="btn btn-sm btn-default" onclick="demand_task('info_task_server', 'ChargingPoint', 7200);">2h Laden</a>
-								    		<a type="button" class="btn btn-sm btn-default" onclick="demand_task('info_task_server', 'ChargingPoint', 14400);">4h Laden</a>
-								  	</div>
-								</div>
+                                    <div class="panel-body">
+                                        <div class="btn-group-vertical" role="group">
+                                            $for c in config['demand_tasks']:
+                                                <a type="button" class="btn btn-sm btn-default" onclick="demand_task('$c['task']', '$c['waypoint']', $c['duration']);">$c['label'] ($c['waypoint'])</a>
+                                        </div>
+                                    </div>
+                                </div>
 
                             </div>
                         </div>
@@ -95,48 +64,7 @@ document.onready = function() {
                 </div>
             </div>
         </div>
-        <div class="row">
-<!--
-            <div class="col-md-6">
-                <div class="panel panel-primary">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Abgeschlossene Aufgaben</h3>
-                    </div>
-                    <div class="panel-body">
-                        <table class="table table-condensed table-hover table-striped">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>First Name</th>
-                                    <th>Last Name</th>
-                                    <th>Username</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Mark</td>
-                                    <td>Otto</td>
-                                    <td>@mdo</td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>Jacob</td>
-                                    <td>Thornton</td>
-                                    <td>@fat</td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>Larry</td>
-                                    <td>the Bird</td>
-                                    <td>@twitter</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
--->
+<!--         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-primary">
                     <div class="panel-heading">
@@ -146,11 +74,11 @@ document.onready = function() {
                         <div class="embed-responsive embed-responsive-4by3">
                             <iframe src="https://www.google.com/calendar/embed?title=Henry&#39;s%20geplane%20Aufgaben&amp;showTitle=0&amp;showCalendars=0&amp;showTz=0&amp;mode=WEEK&amp;height=600&amp;wkst=2&amp;hl=de&amp;bgcolor=%23FFFFFF&amp;src=henry.strands%40hanheide.net&amp;color=%23B1365F&amp;ctz=Europe%2FBerlin" style=" border-width:0 " width="800" height="600" frameborder="0" scrolling="no"></iframe>
                         </div>
-                        <p>Zum Ändern der Routine, bitte mit dem Login "henry.strands@hanheide.net" <a href="https://www.google.com/calendar">hier</a> einloggen. </p>
                     </div>
                 </div>
             </div>
         </div>
+ -->    
     </div>
 </div>
 

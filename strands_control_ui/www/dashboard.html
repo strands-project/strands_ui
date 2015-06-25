@@ -1,4 +1,4 @@
-$var title: Status
+$var title: Dashboard
 $var jsfiles: webtools/roslibjs/include/EventEmitter2/eventemitter2.js webtools/ros2djs/include/EaselJS/easeljs.js webtools/roslibjs/build/roslib.js webtools/ros2djs/build/ros2d.js webtools/nav2djs/build/nav2d.js webtools/mjpegcanvasjs/build/mjpegcanvas.min.js static/dashboard.js
 
 
@@ -15,7 +15,7 @@ document.onready = function() {
             <div class="col-md-6">
                 <div class="panel panel-primary">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Übersichtskarte</h3>
+                        <h3 class="panel-title">$LC['sec_map']</h3>
                     </div>
                     <div class="panel-body">
                     	<div id="nav"></div>
@@ -24,7 +24,7 @@ document.onready = function() {
             </div>
             <div class="col-md-6">
                 <div class="row">
-                    <button data-toggle="modal" data-target="#emergency_dlg" class="btn btn-default col-md-12 btn-lg btn-danger">Notstopp</button>
+                    <button data-toggle="modal" data-target="#emergency_dlg" class="btn btn-default col-md-12 btn-lg btn-danger">$LC['but_emergency']</button>
                     <br/>
                     <br/>
                     <br/>
@@ -33,16 +33,16 @@ document.onready = function() {
 	            <div class="row">
 	                <div class="panel panel-primary">
 	                    <div class="panel-heading">
-	                        <h3 class="panel-title">Kameras</h3>
+	                        <h3 class="panel-title">$LC['sec_camera']</h3>
 	                    </div>
 	                    <div class="panel-body">
-                                <div class="embed-responsive embed-responsive-4by3">
-				<H3>Interaktions-Kamera</H3>
-                                    <!--<div id="mjpeg"></div>-->
+<!--                             <div class="embed-responsive embed-responsive-4by3">
+				                <H3>Interaktions-Kamera</H3>
+                                    <div id="mjpeg"></div>
                                 <img width="100%" src="/video/stream?topic=/interaction_camera/throttled/image?width=320?height=240"/>
-                                </div><br/>
-	                        <div class="embed-responsive embed-responsive-4by3">
-                                <H3>Kopf-Kamera</H3>
+                            </div><br/>
+ -->	                        
+                            <div class="embed-responsive embed-responsive-4by3">
 	                            <!--<div id="mjpeg"></div>-->
                                 <img width="100%" src="/video/stream?topic=/head_camera/throttled/image?width=320?height=240"/>
 	                        </div>
@@ -54,16 +54,12 @@ document.onready = function() {
                 <div class="row">
 	                <div class="panel panel-primary">
 	                    <div class="panel-heading">
-	                        <h3 class="panel-title">Anstehende Aufgaben</h3>
+	                        <h3 class="panel-title">$LC['sec_tasks']</h3>
 	                    </div>
 	                    <div class="panel-body">
 	                        <table class="table table-condensed table-striped">
 	                            <thead>
-	                                <tr>
-	                                    <th>#</th>
-	                                    <th>Aufgabe</th>
-	                                    <th>Ort</th>
-	                                    <th>Erwarteter Beginn</th>
+	                                <tr>$:LC['table_tasks']
 	                                </tr>
 	                            </thead>
 	                            <tbody id="tasklist">
@@ -89,29 +85,29 @@ document.onready = function() {
             <div class="col-md-12">
                 <div class="panel panel-primary">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Roboter Status</h3>
+                        <h3 class="panel-title">$LC['sec_state']</h3>
                     </div>
                     <div class="panel-body">
                         <table class="table table-condensed table-striped">
                             <tbody>
                                 <tr>
-                                    <td class="col-md-3">Aktuelle Aufgabe:</td>
+                                    <td class="col-md-3">$LC['label_task']:</td>
                                     <td class="col-md-9"><p id="tasktext">-</p></td>
                                 </tr>
                                 <tr>
-                                    <td class="col-md-3">Zuletzt gesagt:</td>
+                                    <td class="col-md-3">$LC['label_said']:</td>
                                     <td class="col-md-9"><p id="saytext">-</p></td>
                                 </tr>
                                 <tr>
-                                    <td class="col-md-3">Batterie-Stand:</td>
+                                    <td class="col-md-3">$LC['label_batt']:</td>
                                     <td class="col-md-9"><p id="batterytext">xx%</p></td>
                                 </tr>
                                 <tr>
-                                    <td class="col-md-3">Aktueller Wegpunkt:</td>
+                                    <td class="col-md-3">$LC['label_wp']:</td>
                                     <td class="col-md-9"><p id="currentnodetext">XXX</p></td>
                                 </tr>
                                 <tr>
-                                    <td class="col-md-3">Letzte Fehlermeldung:</td>
+                                    <td class="col-md-3">$LC['label_roserr']:</td>
                                     <td class="col-md-9"><p id="rosouttext"></p></td>
                                 </tr>
                             </tbody>
@@ -129,7 +125,7 @@ document.onready = function() {
             <div class="col-md-12">
                 <div class="panel panel-primary">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Roboter Bildschirm</h3>
+                        <h3 class="panel-title">$LC['sec_screen']</h3>
                     </div>
                     <div class="panel-body">
                         <div class="embed-responsive embed-responsive-4by3">
@@ -147,14 +143,14 @@ document.onready = function() {
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Notfall-Progamm aktivieren?</h4>
+        <h4 class="modal-title">$LC['title_emergency']</h4>
       </div>
       <div class="modal-body">
-        <p>Soll das Notfall-Programm aktiviert werden? Der Roboter wird zur naechsten Sicherheitszone fahren und sich dort abschalten. Sollte er dort im Weg sein, kann er einfach weg geschoben werden. Bitte informieren Sie nach der Aktivierung das Roboter-Admin Team, damit zu einem späteren Zeitpunkt der Betrieb wieder aufgenommen werden kann.</p>
+        <p>$LC['text_emergency']</p>
       </div>
       <div class="modal-footer">
-        <button onclick="emergency_stop();" type="button" class="btn btn-danger btn-default" data-dismiss="modal">Notfall auslösen</button>
-        <button type="button" class="btn" data-dismiss="modal">Zurück zum Normalbetrieb</button>
+        <button onclick="emergency_stop();" type="button" class="btn btn-danger btn-default" data-dismiss="modal">$LC['but_emergency_yes']</button>
+        <button type="button" class="btn" data-dismiss="modal">$LC['but_emergency_no']</button>
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->

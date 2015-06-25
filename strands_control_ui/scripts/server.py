@@ -7,28 +7,29 @@ import web
 import signal
 from os import chdir
 from os.path import join
+from yaml import load 
 from strands_control_ui.srv import DemandTask
 from strands_control_ui.srv import DemandTaskResponse
 
-from strands_executive_msgs.srv import CreateTask
-from strands_executive_msgs.msg import Task
-
-from strands_executive_msgs.srv import AddTasks
-from strands_executive_msgs.srv import AddTasksRequest
 
 #from strands_executive_msgs.srv import DemandTask as SchedulerDemandTask
 #from strands_executive_msgs.srv import DemandTaskRequest as SchedulerDemandTaskRequest
 
 ### Templates
 TEMPLATE_DIR = roslib.packages.get_pkg_dir('strands_control_ui') + '/www'
+CFG_DIR = roslib.packages.get_pkg_dir('strands_control_ui') + '/cfg'
 WEBTOOLS_DIR = roslib.packages.get_pkg_dir('strands_webtools')
 
 
 html_config = {
     'rosws_suffix': ':9090',
     'mjpeg_suffix': ':8181',
-    'rosws_protocol': 'ws'
+    'rosws_protocol': 'ws',
 }
+
+LC = {}
+config = {}
+
 
 render = web.template.render(TEMPLATE_DIR, base='base', globals=globals())
 chdir(TEMPLATE_DIR)
@@ -58,6 +59,11 @@ class ControlServer(web.application):
         print "aaf_control_server stopped."
 
     def demand_task(self, req):
+        from strands_executive_msgs.srv import CreateTask
+        from strands_executive_msgs.msg import Task
+        from strands_executive_msgs.srv import AddTasks
+        from strands_executive_msgs.srv import AddTasksRequest
+
         factory_name = '/' + req.action + "_create"
         start_after = rospy.Time.now()+rospy.Duration(secs=30)
         rospy.loginfo(req)
@@ -84,8 +90,8 @@ class ControlServer(web.application):
         # use maximum duration of the one given here and the one returned from the constructor
         t.max_duration.secs = max(t.max_duration.secs, req.duration)
         t.max_duration.nsecs = 0
-	t.start_node_id = req.waypoint
-	t.end_node_id = req.waypoint
+        t.start_node_id = req.waypoint
+        t.end_node_id = req.waypoint
         # allow to end this 60 seconds after the duration 
         # to give some slack for scheduling
         #t.end_before = t.end_before + rospy.Duration(secs=60)
@@ -161,10 +167,29 @@ class Webtools(object):
 if __name__ == "__main__":
     rospy.init_node("strands_control_ui_server")
     port = rospy.get_param('~port', 8127)
-    html_config['rosws_suffix'] = rospy.get_param('~rosws_suffix', "/rosws")
-    html_config['mjpeg_suffix'] = rospy.get_param('~mjpeg_suffix', "/video")
-    html_config['rosws_protocol'] = rospy.get_param('~rosws_protocol', "wss")
+    html_config['rosws_suffix'] = rospy.get_param('~rosws_suffix', ":9090")
+    html_config['mjpeg_suffix'] = rospy.get_param('~mjpeg_suffix', ":8181")
+    html_config['rosws_protocol'] = rospy.get_param('~rosws_protocol', "ws")
 
-    rospy.loginfo("aaf_control_server started.")
+    config_file = rospy.get_param('~config_file', join(CFG_DIR, 'config.yaml'))
+    try:
+        with open(config_file, 'r') as stream:
+            l = load(stream)
+            config.update(l)
+            print config
+    except:
+        rospy.logerr('failed to load config file from %s' % lf)
+        raise
+
+    lang = rospy.get_param('~lang', "EN").lower()
+    lf = join(CFG_DIR, lang+'.yaml')
+    try:
+        with open(lf, 'r') as stream:
+            l = load(stream)
+            LC.update(l)
+    except:
+        rospy.logerr('failed to load language config from %s' % lf)
+        raise
+    rospy.loginfo("strands_control_ui_server started.")
     app = ControlServer()
     app.run(port=port)

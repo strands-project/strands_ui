@@ -1,0 +1,9 @@
+demand_tasks:
+- label:        "Walking Group"
+  task:         walking_group
+  duration:     1800
+  waypoint:     walking_group_start
+- label:        "Charging (30 min)"
+  task:         info_task_server
+  duration:     1800
+  waypoint:     ChargingPoint
