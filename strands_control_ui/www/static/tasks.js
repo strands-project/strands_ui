@@ -24,7 +24,7 @@
 
   function demand_task(action, waypoint, duration) {
     console.log("demand_task");
-    var service = new ROSLIB.Service({ros : ros, name : '/aaf_control_ui_server/demand_task', serviceType : 'aaf_control_ui/DemandTask'}); 
+    var service = new ROSLIB.Service({ros : ros, name : '/strands_control_ui_server/demand_task', serviceType : 'strands_control_ui/DemandTask'}); 
     var request = new ROSLIB.ServiceRequest();
     request.action = action;
     request.waypoint = waypoint;

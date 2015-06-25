@@ -7,8 +7,8 @@ import web
 import signal
 from os import chdir
 from os.path import join
-from aaf_control_ui.srv import DemandTask
-from aaf_control_ui.srv import DemandTaskResponse
+from strands_control_ui.srv import DemandTask
+from strands_control_ui.srv import DemandTaskResponse
 
 from strands_executive_msgs.srv import CreateTask
 from strands_executive_msgs.msg import Task
@@ -20,7 +20,7 @@ from strands_executive_msgs.srv import AddTasksRequest
 #from strands_executive_msgs.srv import DemandTaskRequest as SchedulerDemandTaskRequest
 
 ### Templates
-TEMPLATE_DIR = roslib.packages.get_pkg_dir('aaf_control_ui') + '/www'
+TEMPLATE_DIR = roslib.packages.get_pkg_dir('strands_control_ui') + '/www'
 WEBTOOLS_DIR = roslib.packages.get_pkg_dir('strands_webtools')
 
 
@@ -159,7 +159,7 @@ class Webtools(object):
 
 
 if __name__ == "__main__":
-    rospy.init_node("aaf_control_ui_server")
+    rospy.init_node("strands_control_ui_server")
     port = rospy.get_param('~port', 8127)
     html_config['rosws_suffix'] = rospy.get_param('~rosws_suffix', "/rosws")
     html_config['mjpeg_suffix'] = rospy.get_param('~mjpeg_suffix', "/video")
