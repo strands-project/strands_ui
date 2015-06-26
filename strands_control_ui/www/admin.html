@@ -1,0 +1,63 @@
+$var title: Administration
+$var jsfiles: webtools/roslibjs/include/EventEmitter2/eventemitter2.js webtools/ros2djs/include/EaselJS/easeljs.js webtools/roslibjs/build/roslib.js static/admin.js
+
+
+
+
+<script>
+document.onready = function() {
+ init();
+}
+</script>
+
+<div class="section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Logs</h3>
+                    </div>
+                    <div class="panel-body log-table">
+                        <table class="table  table-striped log-table">
+                            <tbody id="rosout" class="log-table-body">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Scheduler Events</h3>
+                    </div>
+                    <div class="panel-body log-table">
+                        <table class="table  table-striped">
+                            <thead>
+                                <tr>
+                                    <th>event time</th>
+                                    <th>event</th>
+                                    <th>description</th>
+                                    <th>Task ID</th>
+                                    <th>action</th>
+                                    <th>waypoint</th>
+                                    <th>start_after</th>
+                                    <th>exec_time</th>
+                                    <th>end_before</th>
+                                    <th>priority</th>
+                                </tr>
+                            </thead>
+                            <tbody id="taskevent" class="log-table-body">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+

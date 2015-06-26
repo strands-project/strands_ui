@@ -1,0 +1,23 @@
+sec_map:        "Map"
+sec_tasks:      "Tasks"
+sec_camera:     "Camera"
+sec_state:      "Robot State"
+sec_screen:     "Robot Screen"
+sec_dem_task:   "On-demand Tasks"
+#
+but_emergency:  "Emergency Stop"
+but_task_clear: "Clear Task List"
+#
+text_demand:    "On-demand tasks will be scheduled as soon as possible"
+table_tasks:    "<th>#</th><th>Task</th><th>Place</th><th>Planned Start</th>"
+#
+label_task:     "Current task"
+label_said:     "Last said"
+label_batt:     "Battery level"
+label_wp:       "Current waypoint"
+label_roserr:   "Last error"
+#
+text_emergency: "Do you really want to trigger an emergency stop?"
+title_emergency: "Emergency Stop?"
+but_emergency_yes: "trigger emergency"
+but_emergency_no: "back to normal operation"
