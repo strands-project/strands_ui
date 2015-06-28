@@ -7,10 +7,10 @@ import web
 import signal
 from os import chdir
 from os.path import join
-from yaml import load 
+from yaml import load, dump
+from json import loads as json_load
 from strands_control_ui.srv import DemandTask
 from strands_control_ui.srv import DemandTaskResponse
-
 
 #from strands_executive_msgs.srv import DemandTask as SchedulerDemandTask
 #from strands_executive_msgs.srv import DemandTaskRequest as SchedulerDemandTaskRequest
@@ -67,35 +67,54 @@ class ControlServer(web.application):
 
         factory_name = '/' + req.action + "_create"
         start_after = rospy.Time.now()+rospy.Duration(secs=30)
-        rospy.loginfo(req)
         end_before = start_after + rospy.Duration(secs=req.duration)
-        sa = "start_after: {secs: %d, nsecs: %d}" % \
-             (start_after.secs, start_after.nsecs)
-        eb = "end_before: {secs: %d, nsecs: %d}" % \
-                 (end_before.secs, end_before.nsecs)
-        sn = "start_node_id: '%s'" % req.waypoint
-        en = "end_node_id: '%s'" % req.waypoint
-        yaml = "{%s, %s, %s, %s}" % (sa, eb, sn, en) 
+        # prepare the YAML
+        y = {
+            "start_after": {"secs": start_after.secs, "nsecs": start_after.nsecs},
+            "end_before": {"secs": end_before.secs, "nsecs": end_before.nsecs},
+            "start_node_id": req.waypoint,
+            "end_node_id": req.waypoint,
+        }
+
+
+        yaml = dump(y) 
+
         rospy.loginfo("calling with pre-populated yaml: %s" % yaml)
 
+        t = Task()
         try:
             factory = rospy.ServiceProxy(factory_name, CreateTask)
             t = factory.call(yaml).task
             rospy.loginfo("got the task back: %s" % str(t))
         except Exception as e:
-            rospy.logerr("Couldn't instantiate task from factory %s."
+            rospy.logwarn("Couldn't instantiate task from factory %s."
                           "error: %s."
                           "This is an error." %
                           (factory_name, str(e)))
-            raise
+            t.start_after = start_after
+            t.end_before = end_before
+            t.action = req.action
+
         # use maximum duration of the one given here and the one returned from the constructor
-        t.max_duration.secs = max(t.max_duration.secs, req.duration)
+        t.max_duration.secs = max(t.max_duration.secs, req.duration-30)
         t.max_duration.nsecs = 0
         t.start_node_id = req.waypoint
         t.end_node_id = req.waypoint
-        # allow to end this 60 seconds after the duration 
-        # to give some slack for scheduling
-        #t.end_before = t.end_before + rospy.Duration(secs=60)
+
+        # add parameters
+        from strands_executive_msgs import task_utils
+        params = json_load(req.parms_json)
+        
+        print params
+        for p in params:
+            for k, v in p.items():
+                rospy.loginfo('add %s parameter: %s' % (k, v)) 
+                if (k == "string"):
+                    task_utils.add_string_argument(t, v)
+                elif (k == "int"):
+                    task_utils.add_int_argument(t, int(v))
+                elif (k == "float"):
+                    task_utils.add_float_argument(t, float(v))
 
         t.priority = self.demand_priority
         tasks = [t]

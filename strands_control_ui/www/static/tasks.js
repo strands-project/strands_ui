@@ -22,15 +22,44 @@
   });
 
 
-  function demand_task(action, waypoint, duration) {
+  function demand_task(r) {
     console.log("demand_task");
+    console.log(r);
+    var action = r["task"];
+    var waypoint = r["waypoint"];
+    var duration = r["duration"];
+    var task_no = r["task_no"];
+    var settings = $('.settings_' + task_no).serializeArray();
+    var parameters = $('.params_' + task_no).serializeArray();
+
+    for (var i in settings) {
+      p = settings[i];
+      console.log( p);
+      if (p["name"] == "waypoint") {
+        waypoint = p["value"];
+      }
+      if (p["name"] == "duration") {
+        duration = parseInt(p["value"]);
+      }
+    }      
+
+    parms = [];
+    for (var i in parameters) {
+      p = parameters[i];
+      parms[i] = {};
+      parms[i][p["name"]] = p["value"];
+      i++;
+    }
+    var parms_json = JSON.stringify(parms);
     var service = new ROSLIB.Service({ros : ros, name : '/strands_control_ui_server/demand_task', serviceType : 'strands_control_ui/DemandTask'}); 
     var request = new ROSLIB.ServiceRequest();
     request.action = action;
     request.waypoint = waypoint;
     request.duration = duration;
+    request.parms_json = parms_json;
     service.callService(request, function(result) {
-      console.log('Called demand_task service');
+      console.log('Called demand_task service: ');
+      console.log(request)
     });
   }
 

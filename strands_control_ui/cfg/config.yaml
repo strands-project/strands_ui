@@ -1,9 +1,25 @@
 demand_tasks:
 - label:        "Walking Group"
-  task:         walking_group
+  task:         walking_group_slow
   duration:     1800
-  waypoint:     walking_group_start
+  waypoint:     GhostKitchen
+  params:       []
 - label:        "Charging (30 min)"
   task:         info_task_server
   duration:     1800
   waypoint:     ChargingPoint
+  params:       []
+- label:        "Object Search"
+  task:         info_task_server
+  duration:     1800
+  waypoint:     ChargingPoint
+  params:       
+  - string:     Cup
+  - string:     "[GhostKitchen, Station]"
+  - int:        2
+  - float:      0.2
+- label:        "Object Learning"
+  task:         info_task_server
+  duration:     1800
+  waypoint:     ChargingPoint
+  params:       []
