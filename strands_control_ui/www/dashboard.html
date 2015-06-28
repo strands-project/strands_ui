@@ -12,45 +12,47 @@ document.onready = function() {
 <div class="section">
     <div class="container">
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <div class="panel panel-primary">
                     <div class="panel-heading">
                         <h3 class="panel-title">$LC['sec_map']</h3>
                     </div>
                     <div class="panel-body">
-                    	<div id="nav"></div>
+                        <div align="center">
+                            <div id="nav"></div>
+                        </div>
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="row">
             <div class="col-md-6">
-                <div class="row">
+<!--                 <div class="row">
                     <button data-toggle="modal" data-target="#emergency_dlg" class="btn btn-default col-md-12 btn-lg btn-danger">$LC['but_emergency']</button>
                     <br/>
                     <br/>
                     <br/>
                 </div>
-
-	            <div class="row">
-	                <div class="panel panel-primary">
-	                    <div class="panel-heading">
-	                        <h3 class="panel-title">$LC['sec_camera']</h3>
-	                    </div>
-	                    <div class="panel-body">
+ -->
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">$LC['sec_camera']</h3>
+                    </div>
+                    <div class="panel-body">
 <!--                             <div class="embed-responsive embed-responsive-4by3">
-				                <H3>Interaktions-Kamera</H3>
-                                    <div id="mjpeg"></div>
-                                <img width="100%" src="/video/stream?topic=/interaction_camera/throttled/image?width=320?height=240"/>
-                            </div><br/>
- -->	                        
-                            <div class="embed-responsive embed-responsive-4by3">
-	                            <!--<div id="mjpeg"></div>-->
-                                <img width="100%" src="/video/stream?topic=/head_camera/throttled/image?width=320?height=240"/>
-	                        </div>
-	                    </div>
-	                </div>
-	            </div>
-
-
+			                <H3>Interaktions-Kamera</H3>
+                                <div id="mjpeg"></div>
+                            <img width="100%" src="/video/stream?topic=/interaction_camera/throttled/image?width=320?height=240"/>
+                        </div><br/>
+-->	                        
+                        <div class="embed-responsive embed-responsive-4by3">
+                            <!--<div id="mjpeg"></div>-->
+                            <img width="100%" src="/video/stream?topic=/head_xtion/rgb/image_color?width=320?height=240"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
                 <div class="row">
 	                <div class="panel panel-primary">
 	                    <div class="panel-heading">
@@ -119,7 +121,7 @@ document.onready = function() {
     </div>
 </div>
 
-<div class="section">
+<!-- <div class="section">
     <div class="container">
         <div class="row">
             <div class="col-md-12">
@@ -137,7 +139,7 @@ document.onready = function() {
         </div>
     </div>
 </div>
-
+ -->
 <div class="modal fade" id="emergency_dlg">
   <div class="modal-dialog">
     <div class="modal-content">

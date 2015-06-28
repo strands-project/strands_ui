@@ -160,9 +160,10 @@
     // Create the main viewer.
     var viewer = new ROS2D.Viewer({
       divID : 'nav',
-      width : 400,
-      height : 800
+      width : 800,
+      height : 250
     });
+    var initScaleSet = false;
 
     // Subscribes to the robot's OccupancyGrid, which is ROS representation of
     // the map, and renders the map in the scene.
@@ -172,9 +173,16 @@
     });
     gridClient.on('change', function() {
       // scale the viewer to fit the map
-      viewer.scaleToDimensions(gridClient.currentGrid.width, 
-        gridClient.currentGrid.height);
-      viewer.shift(gridClient.currentGrid.x, gridClient.currentGrid.y-10);
+      var aspect_ratio = gridClient.currentGrid.width / gridClient.currentGrid.height;
+      var scale_x = gridClient.currentGrid.width / viewer.width;
+      var scale_y = gridClient.currentGrid.height / viewer.height;
+      var scale = (scale_x > scale_y) ? scale_x : scale_y;
+
+      initScaleSet = false;
+
+      viewer.scaleToDimensions(scale * viewer.width, 
+        scale * viewer.height);
+      viewer.shift(gridClient.currentGrid.x, -gridClient.currentGrid.height-gridClient.currentGrid.y);
     });
 
     // get a handle to the stage
@@ -195,7 +203,6 @@
     robotMarker.visible = false;
    
     viewer.scene.addChild(robotMarker);
-    var initScaleSet = false;
     // setup a listener for the robot pose
     var poseListener = new ROSLIB.Topic({
       ros : ros,
