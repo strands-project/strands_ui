@@ -123,7 +123,9 @@ def set_ws_protocol():
 class DashboardPage(object):
     def GET(self):
         set_ws_protocol()
-        html_config['host'] = web.ctx.host.split(':')[0]
+        s = web.ctx.homedomain.split(':')
+        print s
+        html_config['host'] = s[0] + ':' + s[1]
         return render.dashboard()
 
 
