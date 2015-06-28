@@ -9,7 +9,8 @@ but_emergency:  "Emergency Stop"
 but_task_clear: "Clear Task List"
 #
 text_demand:    "On-demand tasks will be scheduled as soon as possible"
-table_tasks:    "<th>#</th><th>Task</th><th>Place</th><th>Planned Start</th>"
+table_tasks_short:    "<th>#</th><th>Task</th><th>Place</th><th>Planned Start</th>"
+table_tasks:    "<th>#</th><th>Task</th><th>Place</th><th>Priority</th><th>Duration</th><th>Planned Start</th>"
 #
 label_task:     "Current task"
 label_said:     "Last said"

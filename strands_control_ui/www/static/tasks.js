@@ -88,10 +88,13 @@
         for (var t=0; t < message.execution_queue.length; t++) {
             var task = message.execution_queue[t];
             var date = new Date(task.execution_time.secs*1000).toLocaleString('de-AT', { timeZone: 'Europe/Vienna' });
-            html += "<tr data-toggle=\"modal\" data-target=\"#deletetask\" data-whatever=\" * task.task_id + \">";
+//            html += "<tr data-toggle=\"modal\" data-target=\"#deletetask\" data-whatever=\" * task.task_id + \">";
+            html += "<tr>";
             html += "<td>" + task.task_id + "</td>";
             html += "<td>" + task.action + "</td>";
             html += "<td>" + task.start_node_id + "</td>";
+            html += "<td>" + task.priority + "</td>";
+            html += "<td>" + task.duration.secs + "</td>";
             html += "<td>" + date + "</td>";
             html += "</tr>";
            
