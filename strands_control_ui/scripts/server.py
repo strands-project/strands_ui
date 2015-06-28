@@ -25,6 +25,7 @@ html_config = {
     'rosws_suffix': ':9090',
     'mjpeg_suffix': ':8181',
     'rosws_protocol': 'ws',
+    'host': 'localhost'
 }
 
 LC = {}
@@ -122,6 +123,7 @@ def set_ws_protocol():
 class DashboardPage(object):
     def GET(self):
         set_ws_protocol()
+        html_config['host'] = web.ctx.host.split(':')[0]
         return render.dashboard()
 
 
