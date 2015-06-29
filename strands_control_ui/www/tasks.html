@@ -45,7 +45,7 @@ document.onready = function() {
                                 <div class="panel panel-default">
                                     $for c in config['demand_tasks']:
                                     $ task_no = loop.index
-                                    $if task_no % 2 == 1:
+                                    $if task_no % 2 == 0:
                                         $continue
                                     $ c['task_no'] = task_no
                                         <!-- <div class="panel-body"> -->
@@ -83,7 +83,7 @@ document.onready = function() {
                                 <div class="panel panel-default">
                                     $for c in config['demand_tasks']:
                                     $ task_no = loop.index
-                                    $if task_no % 2 == 0:
+                                    $if task_no % 2 == 1:
                                         $continue
                                     $ c['task_no'] = task_no
                                         <!-- <div class="panel-body"> -->

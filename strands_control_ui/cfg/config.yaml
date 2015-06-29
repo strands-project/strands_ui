@@ -4,22 +4,32 @@ demand_tasks:
   duration:     1800
   waypoint:     GhostKitchen
   params:       []
+- label:        "Object Search"
+  task:         object_search_mdp
+  duration:     1800
+  waypoint:     LesserCoders
+  params:       
+  - string:     "[cup1, mug1]" 
+  - string:     "[GhostKitchen, Room102, Room103]"
+- label:        "Object Learning"
+  task:         learn_object_action
+  duration:     600
+  waypoint:     FoodStation
+  params:       []
+- label:        "Metric Map"
+  task:         ptu_pan_tilt_metric_map
+  duration:     600
+  waypoint:     ChargingPoint
+  params:       
+  - int: -160
+  - int: 20
+  - int: 160
+  - int: -30
+  - int: 30
+  - int: 30
 - label:        "Charging (30 min)"
   task:         info_task_server
   duration:     1800
   waypoint:     ChargingPoint
   params:       []
-- label:        "Object Search"
-  task:         info_task_server
-  duration:     1800
-  waypoint:     ChargingPoint
-  params:       
-  - string:     Cup
-  - string:     "[GhostKitchen, Station]"
-  - int:        2
-  - float:      0.2
-- label:        "Object Learning"
-  task:         info_task_server
-  duration:     1800
-  waypoint:     ChargingPoint
-  params:       []
+

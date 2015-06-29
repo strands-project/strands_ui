@@ -94,7 +94,7 @@
             html += "<td>" + task.action + "</td>";
             html += "<td>" + task.start_node_id + "</td>";
             html += "<td>" + task.priority + "</td>";
-            html += "<td>" + task.duration.secs + "</td>";
+            html += "<td>" + task.max_duration.secs + "</td>";
             html += "<td>" + date + "</td>";
             html += "</tr>";
            
