@@ -9,13 +9,14 @@ demand_tasks:
   duration:     1800
   waypoint:     LesserCoders
   params:       
-  - string:     "[cup1, mug1]" 
-  - string:     "[GhostKitchen, Room102, Room103]"
+  - string:     "[asus_box, jasmine_green_tea]" 
+  - string:     "[GhostKitchen, Room102, Room106Exit]"
 - label:        "Object Learning"
-  task:         learn_object_action
+  task:         learn_object
   duration:     600
-  waypoint:     FoodStation
-  params:       []
+  waypoint:     Room102
+  params:       
+  - string:     Room102
 - label:        "Metric Map"
   task:         ptu_pan_tilt_metric_map
   duration:     600
@@ -27,8 +28,13 @@ demand_tasks:
   - int: -30
   - int: 30
   - int: 30
-- label:        "Charging (30 min)"
-  task:         info_task_server
+- label:        "Observe"
+  task:         wait_action
+  duration:     1800
+  waypoint:     HigherCoders
+  params:       []
+- label:        "Charging"
+  task:         wait_action
   duration:     1800
   waypoint:     ChargingPoint
   params:       []
