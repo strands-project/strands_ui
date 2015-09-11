@@ -47,3 +47,10 @@ It means that mary was started when it could not determine which pulse resource 
 * mary was started remotely without logging in as the same user on the PC or robot. Only one user can access pulse on a PC. Who that user is decided by who is currently logged in. If no one is logged in then pulse is not running, therefore you have to log in to the PC before starting mary remotely.
 * mary was started as a different user than the one that is logged in. If `user1` is logged in and `user2` logs in remotely starting mary, mary won't work because pulse is held by `user1`.
 * If you are using `tmux`, as done by most of the STRANDS systems, not only the two points above apply but if you start `tmux` via ssh with activated X forwarding, mary will try to access the pulse resource on the remote machine. try to always start the tmux session on the robot or PC that is supposed to run mary as the user that is supposed to run mary and is currently logged in. If you want to start it remotely, make sure not to use X forwarding.
+
+
+If MARY server is only binding to IP6, you can force it to bind to IP4 (from http://superuser.com/a/453329):
+
+```
+export _JAVA_OPTIONS="-Djava.net.preferIPv4Stack=true"
+```
