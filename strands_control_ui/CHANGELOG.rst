@@ -2,8 +2,8 @@
 Changelog for package strands_control_ui
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.0.26 (2016-02-07)
+-------------------
 * version fixed
 * changed to throttled topic
 * added task definitions for review
