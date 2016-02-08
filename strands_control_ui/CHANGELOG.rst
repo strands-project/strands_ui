@@ -2,8 +2,8 @@
 Changelog for package strands_control_ui
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.0.27 (2016-02-08)
+-------------------
 * fixed package.xml
 * Contributors: Marc Hanheide
 
