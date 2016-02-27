@@ -112,6 +112,7 @@ $def with (name)
                     }
 
                 });
+                register_model_dlg_topic();
                 document.getElementById("content").innerHTML = "Ready; display = "+window.display_number;
             }
 
@@ -119,6 +120,32 @@ $def with (name)
                 page_topic.unsubscribe();
                 console.log("Stoped subscription.");
             }
+
+
+          function register_model_dlg_topic() {
+            var dlgTopic = new ROSLIB.Topic({
+                ros : ros,
+                name : '$:name/modal_dialog',
+                messageType : 'strands_webserver/ModalDlg'
+            });
+            console.log("register DLG");
+            dlgTopic.subscribe(function(message) {
+                // Formats the pose for outputting.
+                document.getElementById("modal-body-title").innerHTML=message.title;
+                document.getElementById("modal-body-text").innerHTML=message.content;
+
+                if (message.show) {
+                    $$('#notification_dlg').modal('show');
+                }
+                else {
+                    $$('#notification_dlg').modal('hide');
+                }
+
+            });
+            console.log("register DLG done");
+
+          }
+
 
 
             // Register the display with the manager
@@ -157,6 +184,24 @@ $def with (name)
 
 
         </script>
+
+<div class="modal fade" id="notification_dlg">
+  <div class="modal-dialog">
+    <div class="modal-content" >
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title"><div id="modal-body-title">Notification</div></h4>
+      </div>
+      <div class="modal-body">
+        <div id="modal-body-text"></div>
+      </div>
+<!--       <div class="modal-footer">
+        <button onclick="emergency_stop();" type="button" class="btn btn-danger btn-default" data-dismiss="modal">Notfall auslösen</button>
+        <button type="button" class="btn" data-dismiss="modal">Zurück zum Normalbetrieb</button>
+      </div>
+ -->    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+
 
 	</body>
 </html>

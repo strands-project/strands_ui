@@ -224,5 +224,32 @@ Then you can call the `marathon_touch_gui` functions. To test you can cycle thro
 ```bash
 rosrun marathon_touch_gui demo.py 
 ```
+## Modal Dialog
+
+By publishing a `strands_webserver/ModalDlg` message on the `/strands_webserver/modal_dialog` topic a modal dialog can be triggered hovering above any window display. This is useful for system notifications. The `strands_webserver/ModalDlg` is defined as follows:
+
+```
+string title
+string content
+bool show
+```
+
+The modal dialog can be closed by the user using a little close item in the top right corner, it can remotely be hidden, by setting `show` to false. Here is an example to display the dialog box:
+
+```
+rostopic pub /strands_webserver/modal_dialog strands_webserver/ModalDlg "title: 'Nice Title'
+content: '<b>test</b> <a href="https://github.com/strands-project/aaf_deployment">AAF</a>'
+show: true"
+```
+
+To hide it again, simply publish
+
+```
+rostopic pub /strands_webserver/modal_dialog strands_webserver/ModalDlg "title: ''
+content: ''
+show: false"
+```
+
+Both, title and content can contain valid HTML.
 
 
