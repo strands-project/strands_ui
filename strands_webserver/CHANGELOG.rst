@@ -14,6 +14,11 @@ Changelog for package strands_webserver
 * Added correct information to package.xml.
 * Contributors: Jenkins, Nick Hawes
 
+Forthcoming
+-----------
+* a modal dialog can be displayed (see README.md for details)
+* Contributors: Marc Hanheide
+
 0.0.27 (2016-02-08)
 -------------------
 
