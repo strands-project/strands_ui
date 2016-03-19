@@ -14,8 +14,8 @@ Changelog for package strands_webserver
 * Added correct information to package.xml.
 * Contributors: Jenkins, Nick Hawes
 
-Forthcoming
------------
+0.0.29 (2016-03-19)
+-------------------
 * fix `#99 <https://github.com/strands-project/strands_ui/issues/99>`_
   removed close button
 * Contributors: Marc Hanheide
