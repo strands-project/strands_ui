@@ -135,7 +135,7 @@ $def with (name)
                 document.getElementById("modal-body-text").innerHTML=message.content;
 
                 if (message.show) {
-                    $$('#notification_dlg').modal('show');
+                    $$('#notification_dlg').modal({backdrop: 'static', keyboard: false});
                 }
                 else {
                     $$('#notification_dlg').modal('hide');
