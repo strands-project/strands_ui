@@ -14,6 +14,12 @@ Changelog for package strands_webserver
 * Added correct information to package.xml.
 * Contributors: Jenkins, Nick Hawes
 
+Forthcoming
+-----------
+* fix `#99 <https://github.com/strands-project/strands_ui/issues/99>`_
+  removed close button
+* Contributors: Marc Hanheide
+
 0.0.28 (2016-03-01)
 -------------------
 * a modal dialog can be displayed (see README.md for details)
