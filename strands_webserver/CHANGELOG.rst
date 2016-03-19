@@ -14,6 +14,11 @@ Changelog for package strands_webserver
 * Added correct information to package.xml.
 * Contributors: Jenkins, Nick Hawes
 
+Forthcoming
+-----------
+* made dialog static, so it cannot be closed by the user
+* Contributors: Marc Hanheide
+
 0.0.29 (2016-03-19)
 -------------------
 * fix `#99 <https://github.com/strands-project/strands_ui/issues/99>`_

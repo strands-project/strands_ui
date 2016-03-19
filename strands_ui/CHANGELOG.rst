@@ -11,6 +11,9 @@ Changelog for package strands_ui
 * updated changelogs
 * Contributors: Jenkins
 
+Forthcoming
+-----------
+
 0.0.29 (2016-03-19)
 -------------------
 
