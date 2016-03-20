@@ -13,6 +13,7 @@ from os import makedirs
 
 import pygame
 import roslib
+import random
 
 class MusicPlayerServer(object):
     def __init__(self):
@@ -58,6 +59,8 @@ class MusicPlayerServer(object):
             outfile.close()
 
         self.file_names = [join(self.audio_folder, f[0]) for f in file_set]
+        if rospy.get_param("~shuffle", False):
+            random.shuffle(self.file_names)
 
         self.paused = True
         self.playing = False
