@@ -2,6 +2,9 @@
 Changelog for package pygame_managed_player
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+
 0.0.30 (2016-03-19)
 -------------------
 
