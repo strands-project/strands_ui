@@ -15,10 +15,24 @@ Commandline interface `rtalk.py`
 Please run the following command for help:
 
 ```
-$ rosrun robot_talk rtalk.py 
+$ rosrun robot_talk rtalk.py -h
 usage: rtalk.py [-h]
                 {add,remove,update,list,search,play,play_random,topics} ...
-rtalk.py: error: too few arguments
+
+positional arguments:
+  {add,remove,update,list,search,play,play_random,topics}
+                        sub-command -h|--help
+    add                 add -h|--help
+    remove              remove -h|--help
+    update              update -h|--help
+    list                list -h|--help
+    search              search -h|--help
+    play                play -h|--help
+    play_random         play_random -h|--help
+    topics              topics -h|--help
+
+optional arguments:
+  -h, --help            show this help message and exit
 ```
 
 RobotTalkProxy (Python API)
