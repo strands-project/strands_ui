@@ -2,8 +2,8 @@
 Changelog for package robot_talk
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.0.32 (2016-06-06)
+-------------------
 * sorting out for release
 * Update README.md
 * add README
