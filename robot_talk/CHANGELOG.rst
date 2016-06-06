@@ -1,18 +1,29 @@
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Changelog for package mongodb_media_server
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Changelog for package robot_talk
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Forthcoming
 -----------
+* sorting out for release
+* Update README.md
+* add README
+* add robot_talk package
+* Contributors: Lars Kunze, Nick Hawes
+
+* sorting out for release
+* Update README.md
+* add README
+* add robot_talk package
+* Contributors: Lars Kunze, Nick Hawes
 
 0.0.31 (2016-03-20)
 -------------------
 
-0.0.30 (2016-03-19)
--------------------
+0.0.30 (2016-03-19 19:08)
+-------------------------
 
-0.0.29 (2016-03-19)
--------------------
+0.0.29 (2016-03-19 13:00)
+-------------------------
 
 0.0.28 (2016-03-01)
 -------------------
@@ -31,8 +42,6 @@ Forthcoming
 
 0.0.23 (2015-04-27)
 -------------------
-* Add content headers for video.
-* Contributors: Chris Burbridge
 
 0.0.22 (2015-04-22)
 -------------------
@@ -45,32 +54,21 @@ Forthcoming
 
 0.0.19 (2015-03-31)
 -------------------
-* Change web interface page title.
-* Fix file set selection by name.
-* Contributors: Chris Burbridge
 
 0.0.18 (2015-03-28)
 -------------------
-* Merge pull request `#76 <https://github.com/strands-project/strands_ui/issues/76>`_ from cburbridge/hydro-devel
-  [media_server] Add get by filename.
-* Update readme.
-* Add get by filename.
-* Contributors: Chris Burbridge, Marc Hanheide
 
 0.0.17 (2015-03-24)
 -------------------
-* Add expression matching for file set types.
-* Contributors: Chris Burbridge
 
-0.0.15 (2015-03-09)
+0.0.16 (2015-03-23)
 -------------------
-* added mongodb_store as build_depend as it is needed for cmake step
-* Contributors: Marc Hanheide
 
-0.0.14 (2015-03-09)
--------------------
-* Rename media_server to mongodb_media_server.
-* Contributors: Chris Burbridge
+0.0.15 (2015-03-09 21:16)
+-------------------------
+
+0.0.14 (2015-03-09 16:37)
+-------------------------
 
 0.0.13 (2015-02-17)
 -------------------
