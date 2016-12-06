@@ -58,8 +58,12 @@ $def with (name)
     
     <div class="container">
 
-    <div id="header">
-    	<a onclick="send('emergency');"><img src="emergency-stop.png"></a>
+    <div style="z-index: 9999;" id="header">
+    	<a onclick="call_service('/safety_stop');">
+            <img width="32px" style="position:absolute; right: 1px; top:1px;z-index: 9999;  -webkit-filter: drop-shadow(-5px 5px 3px #222);
+  filter: drop-shadow(-5px 5px 3px #222);
+"src="static/emergency-stop.png">
+        </a>
     </div>
 
     <!-- <div id="content" style="width: 100%; height: 100%;"> -->
@@ -87,6 +91,20 @@ $def with (name)
                 // url : '<dynamic>bridge_server</dynamic>'
                 url : 'ws://'+hostname+':9090'
             });
+
+            function call_service(s) {
+                // Register the display with the manager
+                var client = new ROSLIB.Service({
+                    ros : ros,
+                    name : s,
+                    serviceType : 'std_srvs/Emtpy'
+                });
+
+                var request = new ROSLIB.ServiceRequest({});
+
+                console.log("Calling service....", s);
+                client.callService(request);
+            }
 
             var setup = function() {
                 // Subscribing to page topic

@@ -31,9 +31,10 @@ from std_msgs.msg import String
 
 from BaseHTTPServer import HTTPServer
 from SimpleHTTPServer import SimpleHTTPRequestHandler
-
+from mimetypes import guess_type
 
 template_dir = roslib.packages.get_pkg_dir('strands_webserver') + '/data'
+pkg_dir = roslib.packages.get_pkg_dir('strands_webserver')
 render = web.template.render(template_dir)
 
 
@@ -69,31 +70,43 @@ class DisplayWebHandler(SimpleHTTPRequestHandler):
             #                                            {'bridge_server':'ws://%s:9090'%hostname})
             self.wfile.write(data)
             return
+        elif self.path.startswith('/static'):
+            self.send_response(200)
+            self.send_header('Content-type', guess_type(self.path)[0])
+            self.send_header('Content-Encoding', guess_type(self.path)[1])
+            print '*****', guess_type(self.path)
+            self.end_headers()
+            with open(os.path.join(pkg_dir, self.path[1:]), "r") as f:
+                data = f.read()
+            self.wfile.write(data)
+            return
         # A request for Twitter Bootstrap bits
         elif self.path.startswith('/bootstrap'):
             self.send_response(200)
             # Request for bootstrap css
-            if self.path.endswith('css'):                
-                print "doing bootstrap css"            
-                self.send_header('Content-type','text/css')
-            #assuming everything else in their is javascript -- will probably be wrong at some point    
-            else:   
-                print "doing bootstrap javascript"              
-                self.send_header('Content-type','text/javascript')
+            if self.path.endswith('css'):
+                print "doing bootstrap css"
+                self.send_header('Content-type', 'text/css')
+                # assuming everything else in their is javascript
+                # will probably be wrong at some point
+            else:
+                print "doing bootstrap javascript"
+                self.send_header('Content-type', 'text/javascript')
             self.end_headers()
-            with open(os.path.join(roslib.packages.get_pkg_dir("twitter_bootstrap"),self.path[1:]),"r") as f:
+            with open(os.path.join(roslib.packages.get_pkg_dir("twitter_bootstrap"),
+                                   self.path[1:]), "r") as f:
                 data = f.read()
             self.wfile.write(data)
             return
         # A request for Javascript bits
-        elif self.path.endswith('.js'):               
+        elif self.path.endswith('.js'):
             try:
                 target = os.path.join(roslib.packages.get_pkg_dir("strands_webtools"), self.path[1:])
                 with open(target,"r") as f:
-                    print "doing JAVASCRIPT"          
+                    print "doing JAVASCRIPT"
                     self.send_response(200)
                     self.send_header('Content-type','text/javascript')
-                    self.end_headers()                    
+                    self.end_headers()
                     data = f.read()
                     self.wfile.write(data)
                 return
@@ -205,10 +218,10 @@ class RosControlInterface(object):
 
 
     def republish_last_req(self):
-		rospy.loginfo("republish")
-		if self._last_req is None:
-			return
-		display_page_srv_cb(self,self._last_req)
+        rospy.loginfo("republish")
+        if self._last_req is None:
+            return
+        display_page_srv_cb(self,self._last_req)
 
     """ Display provided content in selected display. This is done by publishing to the subscriber that was created in that page """                                           
     def display_page_srv_cb(self,req):
