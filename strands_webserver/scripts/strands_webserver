@@ -22,14 +22,14 @@ import web
 
 import roslib
 import rospy
-from  threading import Timer
+from threading import Timer
 from urlparse import urlparse
 from threading import Thread
 
 from strands_webserver.srv import *
 from std_msgs.msg import String
 
-from  BaseHTTPServer import HTTPServer
+from BaseHTTPServer import HTTPServer
 from SimpleHTTPServer import SimpleHTTPRequestHandler
 
 
