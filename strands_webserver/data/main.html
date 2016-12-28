@@ -125,9 +125,15 @@ $def with (name)
 					  this.modalDlgServer.on('goal', function(goalMessage) {
 	    				  console.log(goalMessage);
 	    				  console.log("goal received");
-					      that.modalDlgServer.sendFeedback('displayed');
+					      //that.modalDlgServer.sendFeedback('displayed');
 			              document.getElementById("modal-body-title").innerHTML=goalMessage.title;
 			              document.getElementById("modal-body-text").innerHTML=goalMessage.text;
+			              $$('#notification_dlg').on('click', function(e) {
+			              	console.log('clicked');
+			              	var result = { button: 'ok', button_id: 0};
+	                        $$('#notification_dlg').modal('hide');
+			              	that.modalDlgServer.setSucceeded(result);
+			              });
 
 	                      $$('#notification_dlg').modal({backdrop: 'static', keyboard: false});
 					    
