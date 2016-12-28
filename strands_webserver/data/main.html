@@ -113,6 +113,38 @@ $def with (name)
 
                 });
                 register_model_dlg_topic();
+
+					  this.modalDlgServer = new ROSLIB.SimpleActionServer({
+					    ros : ros,
+					    serverName : '/strands_webserver/modal_dialog',
+					    actionName : 'strands_webserver/ModalDialogSrvAction'
+					  });
+					  var that=this;
+					  console.log(that);
+					  //handle fibonacci action request.
+					  this.modalDlgServer.on('goal', function(goalMessage) {
+	    				  console.log(goalMessage);
+	    				  console.log("goal received");
+					      that.modalDlgServer.sendFeedback('displayed');
+			              document.getElementById("modal-body-title").innerHTML=goalMessage.title;
+			              document.getElementById("modal-body-text").innerHTML=goalMessage.text;
+
+	                      $$('#notification_dlg').modal({backdrop: 'static', keyboard: false});
+					    
+						  //send result
+						  //var result = { sequence: fibonacciSequence};
+						  //that.modalDlgServer.setSucceeded(result);
+					  });
+					  this.modalDlgServer.on('cancel', function(goalMessage){
+					  	console.log('hide modal dialog')
+                        $$('#notification_dlg').modal('hide');
+					  	that.modalDlgServer.setPreempted();
+					  });                
+
+
+
+
+
                 document.getElementById("content").innerHTML = "Ready; display = "+window.display_number;
             }
 

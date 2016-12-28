@@ -52,6 +52,7 @@ add_action_files(
   WebloaderTmpPage.action
   WebloaderBack.action
   WebloaderReload.action
+  ModalDialogSrv.action
 )
 
 ## Generate added messages and services with any dependencies listed here
