@@ -1,8 +1,15 @@
+# the title of the dialog (can be full HTML)
 string title
+# the main body of the dialog (HTML)
 string text
+# the HTML definition for the individual buttons (usually just a text)
 string[] buttons
+# option bootstrap button class, e.g. 'btn-default' or 'btn-success'
+string[] buttons_class
 ---
+# returns the HTML definition of the selected button
 string button
+# returns the index of the selected button
 uint32 button_id
 ---
 string feedback

@@ -126,16 +126,32 @@ $def with (name)
 	    				  console.log(goalMessage);
 	    				  console.log("goal received");
 					      //that.modalDlgServer.sendFeedback('displayed');
-			              document.getElementById("modal-body-title").innerHTML=goalMessage.title;
-			              document.getElementById("modal-body-text").innerHTML=goalMessage.text;
-			              $$('#notification_dlg').on('click', function(e) {
-			              	console.log('clicked');
-			              	var result = { button: 'ok', button_id: 0};
-	                        $$('#notification_dlg').modal('hide');
-			              	that.modalDlgServer.setSucceeded(result);
-			              });
-
-	                      $$('#notification_dlg').modal({backdrop: 'static', keyboard: false});
+			              document.getElementById("modal-title").innerHTML=goalMessage.title;
+			              document.getElementById("modal-text").innerHTML=goalMessage.text;
+			              var btn_str = "";
+			              var btns = goalMessage.buttons;
+			              var btn_cls = goalMessage.buttons_class;
+			              for (var i in btns) {
+			              	if (i <= btn_cls.length) {
+			              		cls = btn_cls[i];
+			              	} else {
+			              		cls = "btn-default";
+			              	}
+			              	btn_str += "<button name=\"" + i + "\" id=\"button_" + i + "\" type=\"button\" class=\"btn " + cls + "\">" + btns[i] + "</button>";
+			              }
+			              console.log(btn_str);
+			              document.getElementById("modal-buttons").innerHTML=btn_str;
+			              for (var i in btns) {
+				              $$('#button_' + i).on('click', function(e) {
+				              	console.log(e.currentTarget.name);
+				              	var result = { button: e.currentTarget.innerHTML, button_id: Number(e.currentTarget.name)};
+		                        $$('#modal_dlg').modal('hide');
+				              	that.modalDlgServer.setSucceeded(result);
+				              });
+			              }
+	                      $$('#modal_dlg').modal({backdrop: 'static', keyboard: false});
+			              var feedback = { feedback: document.getElementById("modal_dlg").innerHTML };
+      					  that.modalDlgServer.sendFeedback(feedback);
 					    
 						  //send result
 						  //var result = { sequence: fibonacciSequence};
@@ -143,7 +159,7 @@ $def with (name)
 					  });
 					  this.modalDlgServer.on('cancel', function(goalMessage){
 					  	console.log('hide modal dialog')
-                        $$('#notification_dlg').modal('hide');
+                        $$('#modal_dlg').modal('hide');
 					  	that.modalDlgServer.setPreempted();
 					  });                
 
@@ -239,7 +255,27 @@ $def with (name)
       </div>
  -->    </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
+</div>
 
+<div class="modal fade" id="modal_dlg">
+  <div class="modal-dialog">
+    <div class="modal-content" >
+      <div class="modal-header">
+        <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>-->
+        <h4 class="modal-title"><div id="modal-title">Notification</div></h4>
+      </div>
+      <div class="modal-body">
+        <div id="modal-text"></div>
+      </div>
+      <div class="modal-footer">
+      	<div id="modal-buttons">
+        <!--<button onclick="emergency_stop();" type="button" class="btn btn-danger btn-default" data-dismiss="modal">Notfall auslösen</button>
+        <button type="button" class="btn" data-dismiss="modal">Zurück zum Normalbetrieb</button>-->
+        </div>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div>
 
 	</body>
 </html>
