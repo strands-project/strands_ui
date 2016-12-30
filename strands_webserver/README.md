@@ -14,6 +14,8 @@ buttons_class: ['btn-success']
 
 ```
 
+`buttons_class` can be used to set [Bootstrap button classes](http://getbootstrap.com/css/#buttons-options)
+
 The full action is defined as `ModalDialogSrv.action`:
 
 ```

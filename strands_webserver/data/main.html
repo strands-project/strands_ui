@@ -120,30 +120,27 @@ $def with (name)
 					    actionName : 'strands_webserver/ModalDialogSrvAction'
 					  });
 					  var that=this;
-					  console.log(that);
-					  //handle fibonacci action request.
+
 					  this.modalDlgServer.on('goal', function(goalMessage) {
-	    				  console.log(goalMessage);
-	    				  console.log("goal received");
 					      //that.modalDlgServer.sendFeedback('displayed');
 			              document.getElementById("modal-title").innerHTML=goalMessage.title;
 			              document.getElementById("modal-text").innerHTML=goalMessage.text;
 			              var btn_str = "";
 			              var btns = goalMessage.buttons;
 			              var btn_cls = goalMessage.buttons_class;
+			              var cls = "btn-default";
 			              for (var i in btns) {
-			              	if (i <= btn_cls.length) {
+			              	if (i < btn_cls.length) {
 			              		cls = btn_cls[i];
 			              	} else {
 			              		cls = "btn-default";
 			              	}
+
 			              	btn_str += "<button name=\"" + i + "\" id=\"button_" + i + "\" type=\"button\" class=\"btn " + cls + "\">" + btns[i] + "</button>";
 			              }
-			              console.log(btn_str);
 			              document.getElementById("modal-buttons").innerHTML=btn_str;
 			              for (var i in btns) {
 				              $$('#button_' + i).on('click', function(e) {
-				              	console.log(e.currentTarget.name);
 				              	var result = { button: e.currentTarget.innerHTML, button_id: Number(e.currentTarget.name)};
 		                        $$('#modal_dlg').modal('hide');
 				              	that.modalDlgServer.setSucceeded(result);
