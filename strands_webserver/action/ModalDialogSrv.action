@@ -6,6 +6,9 @@ string text
 string[] buttons
 # option bootstrap button class, e.g. 'btn-default' or 'btn-success'
 string[] buttons_class
+# timeout in seconds, 0 means infinitly waiting for user input
+uint32 timeout
+
 ---
 # returns the HTML definition of the selected button
 string button

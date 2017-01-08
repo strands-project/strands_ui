@@ -142,11 +142,22 @@ $def with (name)
 			              for (var i in btns) {
 				              $$('#button_' + i).on('click', function(e) {
 				              	var result = { button: e.currentTarget.innerHTML, button_id: Number(e.currentTarget.name)};
+		  		                clearTimeout($$('#modal_dlg').data('hideInterval'));
 		                        $$('#modal_dlg').modal('hide');
 				              	that.modalDlgServer.setSucceeded(result);
 				              });
 			              }
+			              // clear timeout
+			              clearTimeout($$('#modal_dlg').data('hideInterval'));
+			              // show dialog
 	                      $$('#modal_dlg').modal({backdrop: 'static', keyboard: false});
+	                      if (goalMessage.timeout > 0) {
+					          $$('#modal_dlg').data('hideInterval', setTimeout(function(){
+							  	console.log('timeout modal dialog')
+		                        $$('#modal_dlg').modal('hide');
+							  	that.modalDlgServer.setPreempted();
+					          }, goalMessage.timeout * 1000));
+				  		  }
 			              var feedback = { feedback: document.getElementById("modal_dlg").innerHTML };
       					  that.modalDlgServer.sendFeedback(feedback);
 					    
@@ -156,6 +167,7 @@ $def with (name)
 					  });
 					  this.modalDlgServer.on('cancel', function(goalMessage){
 					  	console.log('hide modal dialog')
+  		                clearTimeout($$('#modal_dlg').data('hideInterval'));
                         $$('#modal_dlg').modal('hide');
 					  	that.modalDlgServer.setPreempted();
 					  });                
