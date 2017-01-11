@@ -14,6 +14,15 @@ Changelog for package strands_webserver
 * Added correct information to package.xml.
 * Contributors: Jenkins, Nick Hawes
 
+Forthcoming
+-----------
+* implemented timeout
+* more documentation and also removed debug messages
+* buttons work with feedback and README added
+* click to close
+* added ActionServer for modal dialog
+* Contributors: Marc Hanheide
+
 0.0.32 (2016-06-06)
 -------------------
 
