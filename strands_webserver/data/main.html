@@ -113,6 +113,69 @@ $def with (name)
 
                 });
                 register_model_dlg_topic();
+
+					  this.modalDlgServer = new ROSLIB.SimpleActionServer({
+					    ros : ros,
+					    serverName : '/strands_webserver/modal_dialog',
+					    actionName : 'strands_webserver/ModalDialogSrvAction'
+					  });
+					  var that=this;
+
+					  this.modalDlgServer.on('goal', function(goalMessage) {
+					      //that.modalDlgServer.sendFeedback('displayed');
+			              document.getElementById("modal-title").innerHTML=goalMessage.title;
+			              document.getElementById("modal-text").innerHTML=goalMessage.text;
+			              var btn_str = "";
+			              var btns = goalMessage.buttons;
+			              var btn_cls = goalMessage.buttons_class;
+			              var cls = "btn-default";
+			              for (var i in btns) {
+			              	if (i < btn_cls.length) {
+			              		cls = btn_cls[i];
+			              	} else {
+			              		cls = "btn-default";
+			              	}
+
+			              	btn_str += "<button name=\"" + i + "\" id=\"button_" + i + "\" type=\"button\" class=\"btn " + cls + "\">" + btns[i] + "</button>";
+			              }
+			              document.getElementById("modal-buttons").innerHTML=btn_str;
+			              for (var i in btns) {
+				              $$('#button_' + i).on('click', function(e) {
+				              	var result = { button: e.currentTarget.innerHTML, button_id: Number(e.currentTarget.name)};
+		  		                clearTimeout($$('#modal_dlg').data('hideInterval'));
+		                        $$('#modal_dlg').modal('hide');
+				              	that.modalDlgServer.setSucceeded(result);
+				              });
+			              }
+			              // clear timeout
+			              clearTimeout($$('#modal_dlg').data('hideInterval'));
+			              // show dialog
+	                      $$('#modal_dlg').modal({backdrop: 'static', keyboard: false});
+	                      if (goalMessage.timeout > 0) {
+					          $$('#modal_dlg').data('hideInterval', setTimeout(function(){
+							  	console.log('timeout modal dialog')
+		                        $$('#modal_dlg').modal('hide');
+							  	that.modalDlgServer.setPreempted();
+					          }, goalMessage.timeout * 1000));
+				  		  }
+			              var feedback = { feedback: document.getElementById("modal_dlg").innerHTML };
+      					  that.modalDlgServer.sendFeedback(feedback);
+					    
+						  //send result
+						  //var result = { sequence: fibonacciSequence};
+						  //that.modalDlgServer.setSucceeded(result);
+					  });
+					  this.modalDlgServer.on('cancel', function(goalMessage){
+					  	console.log('hide modal dialog')
+  		                clearTimeout($$('#modal_dlg').data('hideInterval'));
+                        $$('#modal_dlg').modal('hide');
+					  	that.modalDlgServer.setPreempted();
+					  });                
+
+
+
+
+
                 document.getElementById("content").innerHTML = "Ready; display = "+window.display_number;
             }
 
@@ -201,7 +264,27 @@ $def with (name)
       </div>
  -->    </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
+</div>
 
+<div class="modal fade" id="modal_dlg">
+  <div class="modal-dialog">
+    <div class="modal-content" >
+      <div class="modal-header">
+        <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>-->
+        <h4 class="modal-title"><div id="modal-title">Notification</div></h4>
+      </div>
+      <div class="modal-body">
+        <div id="modal-text"></div>
+      </div>
+      <div class="modal-footer">
+      	<div id="modal-buttons">
+        <!--<button onclick="emergency_stop();" type="button" class="btn btn-danger btn-default" data-dismiss="modal">Notfall auslösen</button>
+        <button type="button" class="btn" data-dismiss="modal">Zurück zum Normalbetrieb</button>-->
+        </div>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div>
 
 	</body>
 </html>

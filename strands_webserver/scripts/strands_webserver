@@ -29,7 +29,7 @@ from threading import Thread
 from strands_webserver.srv import *
 from std_msgs.msg import String
 
-from  BaseHTTPServer import HTTPServer
+from BaseHTTPServer import HTTPServer
 from SimpleHTTPServer import SimpleHTTPRequestHandler
 
 
