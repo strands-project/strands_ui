@@ -2,6 +2,9 @@
 Changelog for package strands_control_ui
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+
 0.0.33 (2017-01-11)
 -------------------
 
