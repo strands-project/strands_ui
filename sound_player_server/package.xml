@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package>
   <name>sound_player_server</name>
-  <version>0.0.33</version>
+  <version>0.0.34</version>
   <description>The media player for AAF, working with general mp3 folders</description>
 
   <maintainer email="nilsbore@gmail.com">Nils Bore</maintainer>
