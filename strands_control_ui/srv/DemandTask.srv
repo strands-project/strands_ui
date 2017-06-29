@@ -1,6 +1,0 @@
-string action
-string waypoint
-int32 duration
-string parms_json
----
-
