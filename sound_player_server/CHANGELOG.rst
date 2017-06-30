@@ -2,6 +2,9 @@
 Changelog for package sound_player_server
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+
 0.0.34 (2017-06-26)
 -------------------
 
