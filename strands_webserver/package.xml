@@ -4,12 +4,12 @@
   <version>0.1.0</version>
   <description>A webserver which responds to ROS service calls to display content.</description>
 
-  <maintainer email="n.a.hawes@cs.bham.ac.uk">Nick Hawes</maintainer>
+  <maintainer email="nickh@robots.ox.ac.uk">Nick Hawes</maintainer>
   <maintainer email="c.j.c.burbridge@cs.bham.ac.uk">Chris Burbridge</maintainer> 
 
   <license>MIT</license>
 
-  <author email="n.a.hawes@cs.bham.ac.uk">Nick Hawes</author>
+  <author email="nickh@robots.ox.ac.uk">Nick Hawes</author>
   <author email="c.j.c.burbridge@cs.bham.ac.uk">Chris Burbridge</author> 
 
   <buildtool_depend>catkin</buildtool_depend>
