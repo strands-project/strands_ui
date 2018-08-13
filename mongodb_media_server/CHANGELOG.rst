@@ -2,6 +2,9 @@
 Changelog for package mongodb_media_server
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+
 0.1.0 (2017-06-30)
 ------------------
 
