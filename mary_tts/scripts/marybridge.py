@@ -231,9 +231,11 @@ class maryclient:
             rospy.logwarn("mary_tts was asked to produce an empty string.")
             self._as.set_aborted()
             return
+        while not replyQueue.empty():
+            replyQueue.get()
         speakQueue.put(goal.text)
         try:
-            replyQueue.get(True, 10)
+            replyQueue.get(True, rospy.get_param("~timeout", 120))
         except Empty:
             rospy.logwarn("mary speach action failed; maybe took too long (more than 10 seconds), maybe pulse is broke.")
             self._as.set_succeeded(False)
