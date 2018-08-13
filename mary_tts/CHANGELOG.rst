@@ -11,8 +11,8 @@ Changelog for package mary_tts
 * updated changelogs
 * Contributors: Jenkins
 
-Forthcoming
------------
+0.1.1 (2018-08-13)
+------------------
 * Merge pull request `#107 <https://github.com/strands-project/strands_ui/issues/107>`_ from strands-project/sync_reply
   resolved sync issue with clearing queue
 * resolved sync issue with clearing queue

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package>
   <name>mongodb_media_server</name>
-  <version>0.1.0</version>
+  <version>0.1.1</version>
   <description>The mongodb_media_server package provides a web based interface for 
   storing and retrieving media files in a mongodb database.</description>
 
