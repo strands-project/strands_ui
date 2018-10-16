@@ -24,7 +24,7 @@ import pygame.mixer as mixer
 
 speakQueue = Queue()
 replyQueue = Queue()
-
+_finished_playing = False
 
 class RosMary(object):
     def __init__(self, mary_client):
@@ -123,6 +123,8 @@ class maryclient:
                                                 mary_tts.msg.maryttsAction,
                                                 execute_cb=self.execute_cb,
                                                 auto_start=False)
+        self._as.register_preempt_callback(self.preempt_cb)
+
         self._as.start()
 
     def set_host(self, a_host):
@@ -243,6 +245,14 @@ class maryclient:
         rospy.loginfo("finished speaking...")
         self._as.set_succeeded()
 
+    def preempt_cb(self):
+        rospy.logwarn("Preemption request received, stopping mary speech")
+
+    def is_preempt_requested(self):
+        return self._as.is_preempt_requested()
+
+def finished_playing_cb():
+    _finished_playing = True
 
 if __name__ == "__main__":
     rospy.init_node('mary_tts')
@@ -256,13 +266,19 @@ if __name__ == "__main__":
 
     player = PyGamePlayer(min_vol=1.0, max_vol=1.0, priority=1.0,
                           frequency=16000)
+    player.stop_callback = finished_playing_cb
 
     while not rospy.is_shutdown():
         try:
             req = speakQueue.get(True, 1)
             rospy.loginfo("say " + req)
             the_sound = mixer.Sound(StringIO.StringIO(client.generate(req)))
-            player.play_sound(the_sound, blocking=True)
+            player.play_sound(the_sound, blocking=False)
+            _finished_playing = False
+            rate = rospy.Rate(5)
+            while (not _finished_playing and not client.is_preempt_requested()):
+                rate.sleep()
+            player.stop()
             rospy.loginfo("played")
             replyQueue.put(True)
         except Empty:
