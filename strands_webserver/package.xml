@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package>
   <name>strands_webserver</name>
-  <version>0.1.1</version>
+  <version>0.2.0</version>
   <description>A webserver which responds to ROS service calls to display content.</description>
 
   <maintainer email="nickh@robots.ox.ac.uk">Nick Hawes</maintainer>
