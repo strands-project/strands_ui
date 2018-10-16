@@ -11,6 +11,13 @@ Changelog for package mary_tts
 * updated changelogs
 * Contributors: Jenkins
 
+Forthcoming
+-----------
+* Merge pull request `#108 <https://github.com/strands-project/strands_ui/issues/108>`_ from francescodelduchetto/pull-req
+  Catch cancel_goal of the action and stop the player accordingly.
+* goal preemption stops marytts speaking
+* Contributors: Marc Hanheide, francescodelduchetto
+
 0.1.1 (2018-08-13)
 ------------------
 * Merge pull request `#107 <https://github.com/strands-project/strands_ui/issues/107>`_ from strands-project/sync_reply
