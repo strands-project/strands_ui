@@ -252,6 +252,7 @@ class maryclient:
         return self._as.is_preempt_requested()
 
 def finished_playing_cb():
+    global _finished_playing
     _finished_playing = True
 
 if __name__ == "__main__":
