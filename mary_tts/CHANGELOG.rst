@@ -11,6 +11,13 @@ Changelog for package mary_tts
 * updated changelogs
 * Contributors: Jenkins
 
+Forthcoming
+-----------
+* Merge pull request `#109 <https://github.com/strands-project/strands_ui/issues/109>`_ from francescodelduchetto/pull-req
+  fix global variable declaration missing
+* fix global variable declaration missing
+* Contributors: Marc Hanheide, francescodelduchetto
+
 0.2.0 (2018-10-16)
 ------------------
 * Merge pull request `#108 <https://github.com/strands-project/strands_ui/issues/108>`_ from francescodelduchetto/pull-req
